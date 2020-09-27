@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200927154403_Initial.cs" />
+    <Compile Remove="Migrations\20200927154403_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200927154632_Initial.cs" />
+    <Compile Remove="Migrations\20200927154632_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200927155921_Initial.cs" />
+    <Compile Remove="Migrations\20200927155921_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200927161728_Initial.cs" />
+    <Compile Remove="Migrations\20200927161728_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200927162040_Second.cs" />
+    <Compile Remove="Migrations\20200927162040_Second.Designer.cs" />
+    <Compile Remove="Migrations\20200927162111_Initial.cs" />
+    <Compile Remove="Migrations\20200927162111_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200927162703_Initial.cs" />
+    <Compile Remove="Migrations\20200927162703_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200927163139_Initial_Create.cs" />
+    <Compile Remove="Migrations\20200927163139_Initial_Create.Designer.cs" />
+    <Compile Remove="Migrations\20200927164009_initial.cs" />
+    <Compile Remove="Migrations\20200927164009_initial.Designer.cs" />
+    <Compile Remove="Migrations\20200927164025_InitCreate.cs" />
+    <Compile Remove="Migrations\20200927164025_InitCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200927182129_AddManyToManyCourse.cs" />
+    <Compile Remove="Migrations\20200927182129_AddManyToManyCourse.Designer.cs" />
+    <Compile Remove="Migrations\20200927185002_ManyToManyCourse.cs" />
+    <Compile Remove="Migrations\20200927185002_ManyToManyCourse.Designer.cs" />
+    <Compile Remove="Migrations\20200927195827_ManyToMany_Course.cs" />
+    <Compile Remove="Migrations\20200927195827_ManyToMany_Course.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>
