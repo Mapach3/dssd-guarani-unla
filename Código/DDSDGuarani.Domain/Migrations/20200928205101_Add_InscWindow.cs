@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DDSDGuarani.Domain.Migrations
 {
-    public partial class UpToManyToMany_Course : Migration
+    public partial class Add_InscWindow : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,20 +25,17 @@ namespace DDSDGuarani.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Subject",
+                name: "InscriptionWindow",
                 columns: table => new
                 {
-                    IdSubject = table.Column<long>(nullable: false)
+                    IdInscriptionWindow = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StartTime = table.Column<DateTime>(nullable: false),
-                    EndTime = table.Column<DateTime>(nullable: false),
-                    Year = table.Column<int>(nullable: false),
-                    Period = table.Column<int>(nullable: false),
-                    Shift = table.Column<int>(nullable: false)
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Subject", x => x.IdSubject);
+                    table.PrimaryKey("PK_InscriptionWindow", x => x.IdInscriptionWindow);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,6 +62,30 @@ namespace DDSDGuarani.Domain.Migrations
                         principalTable: "Address",
                         principalColumn: "IdAddress",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subject",
+                columns: table => new
+                {
+                    IdSubject = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StartTime = table.Column<DateTime>(nullable: false),
+                    EndTime = table.Column<DateTime>(nullable: false),
+                    Year = table.Column<int>(nullable: false),
+                    Period = table.Column<int>(nullable: false),
+                    Shift = table.Column<int>(nullable: false),
+                    IdInscriptionWindow = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subject", x => x.IdSubject);
+                    table.ForeignKey(
+                        name: "FK_Subject_InscriptionWindow_IdInscriptionWindow",
+                        column: x => x.IdInscriptionWindow,
+                        principalTable: "InscriptionWindow",
+                        principalColumn: "IdInscriptionWindow",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,6 +119,11 @@ namespace DDSDGuarani.Domain.Migrations
                 column: "IdUser");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Subject_IdInscriptionWindow",
+                table: "Subject",
+                column: "IdInscriptionWindow");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_User_IdAddress",
                 table: "User",
                 column: "IdAddress",
@@ -114,6 +140,9 @@ namespace DDSDGuarani.Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "User");
+
+            migrationBuilder.DropTable(
+                name: "InscriptionWindow");
 
             migrationBuilder.DropTable(
                 name: "Address");

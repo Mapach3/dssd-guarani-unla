@@ -31,6 +31,12 @@
     <Compile Remove="Migrations\20200927185002_ManyToManyCourse.Designer.cs" />
     <Compile Remove="Migrations\20200927195827_ManyToMany_Course.cs" />
     <Compile Remove="Migrations\20200927195827_ManyToMany_Course.Designer.cs" />
+    <Compile Remove="Migrations\20200927200403_UpToManyToMany_Course.cs" />
+    <Compile Remove="Migrations\20200927200403_UpToManyToMany_Course.Designer.cs" />
+    <Compile Remove="Migrations\20200928202553_InscWindow.cs" />
+    <Compile Remove="Migrations\20200928202553_InscWindow.Designer.cs" />
+    <Compile Remove="Migrations\20200928202946_AddInscWindow.cs" />
+    <Compile Remove="Migrations\20200928202946_AddInscWindow.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Proyectos\\Visual Studio\\DDSDGuarani.Domain\\DDSDGuarani.Domain.csproj": {}
+    "C:\\Proyectos\\Visual Studio\\dssd-guarani-unla\\Código\\DDSDGuarani.Domain\\DDSDGuarani.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Proyectos\\Visual Studio\\DDSDGuarani.Domain\\DDSDGuarani.Domain.csproj": {
+    "C:\\Proyectos\\Visual Studio\\dssd-guarani-unla\\Código\\DDSDGuarani.Domain\\DDSDGuarani.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Proyectos\\Visual Studio\\DDSDGuarani.Domain\\DDSDGuarani.Domain.csproj",
+        "projectUniqueName": "C:\\Proyectos\\Visual Studio\\dssd-guarani-unla\\Código\\DDSDGuarani.Domain\\DDSDGuarani.Domain.csproj",
         "projectName": "DDSDGuarani.Domain",
-        "projectPath": "C:\\Proyectos\\Visual Studio\\DDSDGuarani.Domain\\DDSDGuarani.Domain.csproj",
+        "projectPath": "C:\\Proyectos\\Visual Studio\\dssd-guarani-unla\\Código\\DDSDGuarani.Domain\\DDSDGuarani.Domain.csproj",
         "packagesPath": "C:\\Users\\Dogui\\.nuget\\packages\\",
-        "outputPath": "C:\\Proyectos\\Visual Studio\\DDSDGuarani.Domain\\obj\\",
+        "outputPath": "C:\\Proyectos\\Visual Studio\\dssd-guarani-unla\\Código\\DDSDGuarani.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Dogui\\AppData\\Roaming\\NuGet\\NuGet.Config",

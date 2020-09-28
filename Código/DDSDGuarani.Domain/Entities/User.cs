@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DDSDGuarani.Domain
+namespace DDSDGuarani.Domain.Entities
 {
     public class User
     {
@@ -16,8 +16,7 @@ namespace DDSDGuarani.Domain
         public String Surname { get; set; }
         public bool Active { get; set; }
         public bool PasswordChanged { get; set; }
-        
-        public List<Course> SubjectCourses { get; set; }
+        public List<Course> UserCourses { get; set; }
 
         public UserRole Role { get; set; }
         

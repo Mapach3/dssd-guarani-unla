@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace DDSDGuarani.Domain
+namespace DDSDGuarani.Domain.Entities
 {
     public class MyContext : DbContext
     {
@@ -12,6 +12,7 @@ namespace DDSDGuarani.Domain
         public DbSet<Address> Address { get; set; }
         public DbSet<Subject> Subject { get; set; }
         public DbSet<Course> Course { get; set; }
+        public DbSet<InscriptionWindow> InscriptionWindow { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -26,7 +27,7 @@ namespace DDSDGuarani.Domain
 
             modelBuilder.Entity<Course>()
                 .HasOne(co => co.User)
-                .WithMany( u => u.SubjectCourses)
+                .WithMany( u => u.UserCourses)
                 .HasForeignKey(co => co.IdUser);
 
             modelBuilder.Entity<Course>()

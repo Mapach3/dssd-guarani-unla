@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace DDSDGuarani.Domain
+namespace DDSDGuarani.Domain.Entities
 {
     public class Course
     {

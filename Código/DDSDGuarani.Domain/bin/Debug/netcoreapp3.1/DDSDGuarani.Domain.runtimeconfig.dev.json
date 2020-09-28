@@ -1,8 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\Dogui\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\Dogui\\.nuget\\packages"
-    ]
-  }
-}
