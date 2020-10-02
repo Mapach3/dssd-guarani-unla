@@ -9,3 +9,15 @@ C:\Proyectos\Visual Studio\DDSDGuarani.Domain\obj\Debug\netcoreapp3.1\DDSDGuaran
 C:\Proyectos\Visual Studio\DDSDGuarani.Domain\obj\Debug\netcoreapp3.1\DDSDGuarani.Domain.dll
 C:\Proyectos\Visual Studio\DDSDGuarani.Domain\obj\Debug\netcoreapp3.1\DDSDGuarani.Domain.pdb
 C:\Proyectos\Visual Studio\DDSDGuarani.Domain\obj\Debug\netcoreapp3.1\DDSDGuarani.Domain.genruntimeconfig.cache
+C:\Proyectos\Visual Studio\dssd-guarani-unla\Código\DDSDGuarani.Domain\bin\Debug\netcoreapp3.1\DDSDGuarani.Domain.deps.json
+C:\Proyectos\Visual Studio\dssd-guarani-unla\Código\DDSDGuarani.Domain\bin\Debug\netcoreapp3.1\DDSDGuarani.Domain.runtimeconfig.json
+C:\Proyectos\Visual Studio\dssd-guarani-unla\Código\DDSDGuarani.Domain\bin\Debug\netcoreapp3.1\DDSDGuarani.Domain.runtimeconfig.dev.json
+C:\Proyectos\Visual Studio\dssd-guarani-unla\Código\DDSDGuarani.Domain\bin\Debug\netcoreapp3.1\DDSDGuarani.Domain.dll
+C:\Proyectos\Visual Studio\dssd-guarani-unla\Código\DDSDGuarani.Domain\bin\Debug\netcoreapp3.1\DDSDGuarani.Domain.pdb
+C:\Proyectos\Visual Studio\dssd-guarani-unla\Código\DDSDGuarani.Domain\obj\Debug\netcoreapp3.1\DDSDGuarani.Domain.AssemblyInfoInputs.cache
+C:\Proyectos\Visual Studio\dssd-guarani-unla\Código\DDSDGuarani.Domain\obj\Debug\netcoreapp3.1\DDSDGuarani.Domain.AssemblyInfo.cs
+C:\Proyectos\Visual Studio\dssd-guarani-unla\Código\DDSDGuarani.Domain\obj\Debug\netcoreapp3.1\DDSDGuarani.Domain.csproj.CoreCompileInputs.cache
+C:\Proyectos\Visual Studio\dssd-guarani-unla\Código\DDSDGuarani.Domain\obj\Debug\netcoreapp3.1\DDSDGuarani.Domain.dll
+C:\Proyectos\Visual Studio\dssd-guarani-unla\Código\DDSDGuarani.Domain\obj\Debug\netcoreapp3.1\DDSDGuarani.Domain.pdb
+C:\Proyectos\Visual Studio\dssd-guarani-unla\Código\DDSDGuarani.Domain\obj\Debug\netcoreapp3.1\DDSDGuarani.Domain.genruntimeconfig.cache
+C:\Proyectos\Visual Studio\dssd-guarani-unla\Código\DDSDGuarani.Domain\obj\Debug\netcoreapp3.1\DDSDGuarani.Domain.csprojAssemblyReference.cache

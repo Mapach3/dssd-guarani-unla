@@ -37,6 +37,22 @@
     <Compile Remove="Migrations\20200928202553_InscWindow.Designer.cs" />
     <Compile Remove="Migrations\20200928202946_AddInscWindow.cs" />
     <Compile Remove="Migrations\20200928202946_AddInscWindow.Designer.cs" />
+    <Compile Remove="Migrations\20200928205101_Add_InscWindow.cs" />
+    <Compile Remove="Migrations\20200928205101_Add_InscWindow.Designer.cs" />
+    <Compile Remove="Migrations\20201002194557_AddFinalCall.cs" />
+    <Compile Remove="Migrations\20201002194557_AddFinalCall.Designer.cs" />
+    <Compile Remove="Migrations\20201002194811_AddFinalCall.cs" />
+    <Compile Remove="Migrations\20201002194811_AddFinalCall.Designer.cs" />
+    <Compile Remove="Migrations\20201002200433_test.cs" />
+    <Compile Remove="Migrations\20201002200433_test.Designer.cs" />
+    <Compile Remove="Migrations\20201002201514_initial.cs" />
+    <Compile Remove="Migrations\20201002201514_initial.Designer.cs" />
+    <Compile Remove="Migrations\20201002203451_initial.cs" />
+    <Compile Remove="Migrations\20201002203451_initial.Designer.cs" />
+    <Compile Remove="Migrations\20201002203610_initial.cs" />
+    <Compile Remove="Migrations\20201002203610_initial.Designer.cs" />
+    <Compile Remove="Migrations\20201002204608_initial.cs" />
+    <Compile Remove="Migrations\20201002204608_initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,11 +8,14 @@ namespace DDSDGuarani.Domain.Entities
     public class InscriptionWindow
     {
         [Key]
-        public long IdInscriptionWindow { get; set; }
+        public int IdInscriptionWindow { get; set; }
+        
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        
         public List<Subject> Subjects { get; set; }
 
+        public List<FinalCall> Finals { get; set; }
 
     }
 }

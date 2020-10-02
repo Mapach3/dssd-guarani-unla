@@ -5,8 +5,8 @@ namespace DDSDGuarani.Domain.Entities
 {
     public class Course
     {
-        public long IdSubject { get; set; }
-        public long IdUser { get; set; }
+        public int IdSubject { get; set; }
+        public int IdUser { get; set; }
         
         public Subject Subject { get; set; }      
         public User User { get; set; }

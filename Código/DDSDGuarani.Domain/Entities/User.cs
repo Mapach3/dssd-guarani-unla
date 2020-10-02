@@ -8,7 +8,7 @@ namespace DDSDGuarani.Domain.Entities
     public class User
     {
         [Key]
-        public long IdUser { get; set; }
+        public int IdUser { get; set; }
        
         public String Email { get; set; }
         public String Password { get; set; }
@@ -17,6 +17,7 @@ namespace DDSDGuarani.Domain.Entities
         public bool Active { get; set; }
         public bool PasswordChanged { get; set; }
         public List<Course> UserCourses { get; set; }
+        public List<InscriptionFinal> UserInscriptionFinals { get; set; }
 
         public UserRole Role { get; set; }
         

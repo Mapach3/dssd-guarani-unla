@@ -10,7 +10,7 @@ namespace DDSDGuarani.Domain.Entities
     public class Subject
     {
         [Key]
-        public long IdSubject { get; set; }
+        public int IdSubject { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public int Year { get; set; }
@@ -18,8 +18,12 @@ namespace DDSDGuarani.Domain.Entities
         public SubjectShift Shift { get; set; }
         public List<Course> SubjectCourses { get; set; }
         
+        public List<FinalCall> SubjectFinals { get; set; }
+
         [ForeignKey("IdInscriptionWindow")]
         public InscriptionWindow InscriptionWindow { get; set; }
+
+        
 
 
         public enum SubjectShift { 

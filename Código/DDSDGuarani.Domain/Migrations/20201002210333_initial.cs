@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DDSDGuarani.Domain.Migrations
 {
-    public partial class Add_InscWindow : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace DDSDGuarani.Domain.Migrations
                 name: "Address",
                 columns: table => new
                 {
-                    IdAddress = table.Column<long>(nullable: false)
+                    IdAddress = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StreetAndNumber = table.Column<string>(nullable: true),
                     Location = table.Column<string>(nullable: true),
@@ -28,7 +28,7 @@ namespace DDSDGuarani.Domain.Migrations
                 name: "InscriptionWindow",
                 columns: table => new
                 {
-                    IdInscriptionWindow = table.Column<long>(nullable: false)
+                    IdInscriptionWindow = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false)
@@ -42,7 +42,7 @@ namespace DDSDGuarani.Domain.Migrations
                 name: "User",
                 columns: table => new
                 {
-                    IdUser = table.Column<long>(nullable: false)
+                    IdUser = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
@@ -51,7 +51,7 @@ namespace DDSDGuarani.Domain.Migrations
                     Active = table.Column<bool>(nullable: false),
                     PasswordChanged = table.Column<bool>(nullable: false),
                     Role = table.Column<int>(nullable: false),
-                    IdAddress = table.Column<long>(nullable: false)
+                    IdAddress = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,14 +68,14 @@ namespace DDSDGuarani.Domain.Migrations
                 name: "Subject",
                 columns: table => new
                 {
-                    IdSubject = table.Column<long>(nullable: false)
+                    IdSubject = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StartTime = table.Column<DateTime>(nullable: false),
                     EndTime = table.Column<DateTime>(nullable: false),
                     Year = table.Column<int>(nullable: false),
                     Period = table.Column<int>(nullable: false),
                     Shift = table.Column<int>(nullable: false),
-                    IdInscriptionWindow = table.Column<long>(nullable: true)
+                    IdInscriptionWindow = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -92,8 +92,8 @@ namespace DDSDGuarani.Domain.Migrations
                 name: "Course",
                 columns: table => new
                 {
-                    IdSubject = table.Column<long>(nullable: false),
-                    IdUser = table.Column<long>(nullable: false),
+                    IdSubject = table.Column<int>(nullable: false),
+                    IdUser = table.Column<int>(nullable: false),
                     CourseAverage = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
@@ -113,10 +113,76 @@ namespace DDSDGuarani.Domain.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "FinalCall",
+                columns: table => new
+                {
+                    IdFinalCall = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(nullable: false),
+                    IdSubject = table.Column<int>(nullable: false),
+                    IdInscriptionWindow = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FinalCall", x => x.IdFinalCall);
+                    table.ForeignKey(
+                        name: "FK_FinalCall_InscriptionWindow_IdInscriptionWindow",
+                        column: x => x.IdInscriptionWindow,
+                        principalTable: "InscriptionWindow",
+                        principalColumn: "IdInscriptionWindow",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FinalCall_Subject_IdSubject",
+                        column: x => x.IdSubject,
+                        principalTable: "Subject",
+                        principalColumn: "IdSubject",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InscriptionFinal",
+                columns: table => new
+                {
+                    IdUser = table.Column<int>(nullable: false),
+                    IdFinal = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InscriptionFinal", x => new { x.IdUser, x.IdFinal });
+                    table.ForeignKey(
+                        name: "FK_InscriptionFinal_FinalCall_IdFinal",
+                        column: x => x.IdFinal,
+                        principalTable: "FinalCall",
+                        principalColumn: "IdFinalCall",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InscriptionFinal_User_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "User",
+                        principalColumn: "IdUser",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Course_IdUser",
                 table: "Course",
                 column: "IdUser");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FinalCall_IdInscriptionWindow",
+                table: "FinalCall",
+                column: "IdInscriptionWindow");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FinalCall_IdSubject",
+                table: "FinalCall",
+                column: "IdSubject");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InscriptionFinal_IdFinal",
+                table: "InscriptionFinal",
+                column: "IdFinal");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subject_IdInscriptionWindow",
@@ -136,16 +202,22 @@ namespace DDSDGuarani.Domain.Migrations
                 name: "Course");
 
             migrationBuilder.DropTable(
-                name: "Subject");
+                name: "InscriptionFinal");
+
+            migrationBuilder.DropTable(
+                name: "FinalCall");
 
             migrationBuilder.DropTable(
                 name: "User");
 
             migrationBuilder.DropTable(
-                name: "InscriptionWindow");
+                name: "Subject");
 
             migrationBuilder.DropTable(
                 name: "Address");
+
+            migrationBuilder.DropTable(
+                name: "InscriptionWindow");
         }
     }
 }

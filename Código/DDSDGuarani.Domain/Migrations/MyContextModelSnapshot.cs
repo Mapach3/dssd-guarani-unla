@@ -21,9 +21,9 @@ namespace DDSDGuarani.Domain.Migrations
 
             modelBuilder.Entity("DDSDGuarani.Domain.Entities.Address", b =>
                 {
-                    b.Property<long>("IdAddress")
+                    b.Property<int>("IdAddress")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("City")
@@ -48,11 +48,11 @@ namespace DDSDGuarani.Domain.Migrations
 
             modelBuilder.Entity("DDSDGuarani.Domain.Entities.Course", b =>
                 {
-                    b.Property<long>("IdSubject")
-                        .HasColumnType("bigint");
+                    b.Property<int>("IdSubject")
+                        .HasColumnType("int");
 
-                    b.Property<long>("IdUser")
-                        .HasColumnType("bigint");
+                    b.Property<int>("IdUser")
+                        .HasColumnType("int");
 
                     b.Property<double>("CourseAverage")
                         .HasColumnType("float");
@@ -64,11 +64,51 @@ namespace DDSDGuarani.Domain.Migrations
                     b.ToTable("Course");
                 });
 
+            modelBuilder.Entity("DDSDGuarani.Domain.Entities.FinalCall", b =>
+                {
+                    b.Property<int>("IdFinalCall")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdInscriptionWindow")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdSubject")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdFinalCall");
+
+                    b.HasIndex("IdInscriptionWindow");
+
+                    b.HasIndex("IdSubject");
+
+                    b.ToTable("FinalCall");
+                });
+
+            modelBuilder.Entity("DDSDGuarani.Domain.Entities.InscriptionFinal", b =>
+                {
+                    b.Property<int>("IdUser")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdFinal")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdUser", "IdFinal");
+
+                    b.HasIndex("IdFinal");
+
+                    b.ToTable("InscriptionFinal");
+                });
+
             modelBuilder.Entity("DDSDGuarani.Domain.Entities.InscriptionWindow", b =>
                 {
-                    b.Property<long>("IdInscriptionWindow")
+                    b.Property<int>("IdInscriptionWindow")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("EndDate")
@@ -84,16 +124,16 @@ namespace DDSDGuarani.Domain.Migrations
 
             modelBuilder.Entity("DDSDGuarani.Domain.Entities.Subject", b =>
                 {
-                    b.Property<long>("IdSubject")
+                    b.Property<int>("IdSubject")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("IdInscriptionWindow")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("IdInscriptionWindow")
+                        .HasColumnType("int");
 
                     b.Property<int>("Period")
                         .HasColumnType("int");
@@ -116,9 +156,9 @@ namespace DDSDGuarani.Domain.Migrations
 
             modelBuilder.Entity("DDSDGuarani.Domain.Entities.User", b =>
                 {
-                    b.Property<long>("IdUser")
+                    b.Property<int>("IdUser")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("Active")
@@ -127,9 +167,9 @@ namespace DDSDGuarani.Domain.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("IdAddress")
+                    b.Property<int?>("IdAddress")
                         .IsRequired()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -164,6 +204,36 @@ namespace DDSDGuarani.Domain.Migrations
 
                     b.HasOne("DDSDGuarani.Domain.Entities.User", "User")
                         .WithMany("UserCourses")
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DDSDGuarani.Domain.Entities.FinalCall", b =>
+                {
+                    b.HasOne("DDSDGuarani.Domain.Entities.InscriptionWindow", "InscriptionWindow")
+                        .WithMany("Finals")
+                        .HasForeignKey("IdInscriptionWindow")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DDSDGuarani.Domain.Entities.Subject", "Subject")
+                        .WithMany("SubjectFinals")
+                        .HasForeignKey("IdSubject")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DDSDGuarani.Domain.Entities.InscriptionFinal", b =>
+                {
+                    b.HasOne("DDSDGuarani.Domain.Entities.FinalCall", "FinalCall")
+                        .WithMany("FinallCallInscriptionFinals")
+                        .HasForeignKey("IdFinal")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DDSDGuarani.Domain.Entities.User", "User")
+                        .WithMany("UserInscriptionFinals")
                         .HasForeignKey("IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
