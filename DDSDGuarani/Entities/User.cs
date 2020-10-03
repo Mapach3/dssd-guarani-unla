@@ -18,6 +18,7 @@ namespace DDSDGuarani.Entities
         public bool PasswordChanged { get; set; }
         public List<Course> UserCourses { get; set; }
         public List<InscriptionFinal> UserInscriptionFinals { get; set; }
+        public List<EvaluationInstance> UserEvaluations { get; set; }
 
         public UserRole Role { get; set; }
         

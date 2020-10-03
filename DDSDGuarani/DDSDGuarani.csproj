@@ -12,6 +12,15 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Remove="Migrations\20201003214431_Initial.cs" />
+    <Compile Remove="Migrations\20201003214431_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20201003214733_Initial.cs" />
+    <Compile Remove="Migrations\20201003214733_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20201003214916_Initial.cs" />
+    <Compile Remove="Migrations\20201003214916_Initial.Designer.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
@@ -31,7 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\" />
     <Folder Include="DTOResponse\" />
     <Folder Include="Requests\" />
   </ItemGroup>

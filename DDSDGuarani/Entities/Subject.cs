@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace DDSDGuarani.Entities
 {
@@ -16,6 +15,7 @@ namespace DDSDGuarani.Entities
         public int Period { get; set; }
         public SubjectShift Shift { get; set; }
         public List<Course> SubjectCourses { get; set; }
+        public List<EvaluationInstance> SubjectEvaluations { get; set; }
         
         public List<FinalCall> SubjectFinals { get; set; }
 
