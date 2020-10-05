@@ -10,52 +10,52 @@ using System.Linq;
 namespace DDSDGuarani.Controllers
 {
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class InscriptionFinalController : Controller
     {
         private readonly MyContext context;
         private readonly IMapper _mapper;
 
-        public UserController(MyContext context, IMapper mapper)
+        public InscriptionFinalController(MyContext context, IMapper mapper)
         {
             this.context = context;
             this._mapper = mapper;
         }
 
         /// <summary>
-        /// Trae Listado de Usuarios
+        /// Trae Listado de Inscripciones a Finales
         /// </summary>
         [HttpGet]
-        public IEnumerable<UserResponse> Get()
+        public IEnumerable<InscriptionFinalResponse> Get()
         {
-            IEnumerable<UserResponse> response = new List<UserResponse>();
-            var resultDb = context.User.ToList().OrderBy(x => x.IdUser);
-            response = _mapper.Map<IEnumerable<User>, IEnumerable<UserResponse>>(resultDb);
+            IEnumerable<InscriptionFinalResponse> response = new List<InscriptionFinalResponse>();
+            var resultDb = context.InscriptionFinal.ToList().OrderBy(x => x.IdFinal);
+            response = _mapper.Map<IEnumerable<InscriptionFinal>, IEnumerable<InscriptionFinalResponse>>(resultDb);
             return response;
         }
 
         /// <summary>
-        /// Trae Listado de Usuarios por ID
+        /// Trae Inscripcion a Final por ID
         /// </summary>
         /// <param name="id"></param>  
         [HttpGet("{id}")]
-        public UserResponse Get(int id)
+        public InscriptionFinalResponse Get(int id)
         {
-            UserResponse response = new UserResponse();
-            var resultDb = context.User.FirstOrDefault(u => u.IdUser == id);
-            response = _mapper.Map<User, UserResponse>(resultDb);
+            InscriptionFinalResponse response = new InscriptionFinalResponse();
+            var resultDb = context.InscriptionFinal.FirstOrDefault(u => u.IdFinal == id);
+            response = _mapper.Map<InscriptionFinal, InscriptionFinalResponse>(resultDb);
             return response;
         }
 
         /// <summary>
-        /// Inserta un Usuario
+        /// Inserta una Inscripcion de Final
         /// </summary>
-        /// <param name="user"></param>  
+        /// <param name="inscriptionFinal"></param>  
         [HttpPost]
-        public ActionResult Post([FromBody] User user)
+        public ActionResult Post([FromBody] InscriptionFinal inscriptionFinal)
         {
             try
             {
-                context.User.Add(user);
+                context.InscriptionFinal.Add(inscriptionFinal);
                 context.SaveChanges();
                 return Ok();
             }
@@ -67,18 +67,18 @@ namespace DDSDGuarani.Controllers
 
 
         /// <summary>
-        /// Modifica un Usuario
+        /// Modifica una Inscripcion de Final
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="user"></param>
+        /// <param name="inscriptionFinal"></param>
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] User user)
+        public ActionResult Put(int id, [FromBody] InscriptionFinal inscriptionFinal)
         {
             try
             {
-                if (user.IdUser == id)
+                if (inscriptionFinal.IdFinal == id)
                 {
-                    context.Entry(user).State = EntityState.Modified;
+                    context.Entry(inscriptionFinal).State = EntityState.Modified;
                     context.SaveChanges();
                     return Ok();
                 }
@@ -95,7 +95,7 @@ namespace DDSDGuarani.Controllers
         }
 
         /// <summary>
-        /// Elimina un Usuario
+        /// Elimina una Inscripcion de Final
         /// </summary>
         /// <param name="id"></param>  
         [HttpDelete("{id}")]
@@ -103,10 +103,10 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                var user = context.User.FirstOrDefault(u => u.IdUser == id);
-                if (user != null)
+                var inscriptionFinal = context.InscriptionFinal.FirstOrDefault(u => u.IdFinal == id);
+                if (inscriptionFinal != null)
                 {
-                    context.User.Remove(user);
+                    context.InscriptionFinal.Remove(inscriptionFinal);
                     context.SaveChanges();
                     return Ok();
                 }

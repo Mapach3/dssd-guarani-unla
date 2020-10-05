@@ -10,52 +10,52 @@ using System.Linq;
 namespace DDSDGuarani.Controllers
 {
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class EvaluationInstanceController : Controller
     {
         private readonly MyContext context;
         private readonly IMapper _mapper;
 
-        public UserController(MyContext context, IMapper mapper)
+        public EvaluationInstanceController(MyContext context, IMapper mapper)
         {
             this.context = context;
-            this._mapper = mapper;
+            _mapper = mapper;
         }
 
         /// <summary>
-        /// Trae Listado de Usuarios
+        /// Trae Listado de Instancias de Evaluacion
         /// </summary>
         [HttpGet]
-        public IEnumerable<UserResponse> Get()
+        public IEnumerable<EvaluationInstanceResponse> Get()
         {
-            IEnumerable<UserResponse> response = new List<UserResponse>();
-            var resultDb = context.User.ToList().OrderBy(x => x.IdUser);
-            response = _mapper.Map<IEnumerable<User>, IEnumerable<UserResponse>>(resultDb);
+            IEnumerable<EvaluationInstanceResponse> response = new List<EvaluationInstanceResponse>();
+            var resultDb = context.EvaluationInstance.ToList().OrderBy(x => x.IdEvaluationInstance);
+            response = _mapper.Map<IEnumerable<EvaluationInstance>, IEnumerable<EvaluationInstanceResponse>>(resultDb);
             return response;
         }
 
         /// <summary>
-        /// Trae Listado de Usuarios por ID
+        /// Trae Instancia de Evaluacion por ID
         /// </summary>
         /// <param name="id"></param>  
         [HttpGet("{id}")]
-        public UserResponse Get(int id)
+        public EvaluationInstanceResponse Get(int id)
         {
-            UserResponse response = new UserResponse();
-            var resultDb = context.User.FirstOrDefault(u => u.IdUser == id);
-            response = _mapper.Map<User, UserResponse>(resultDb);
+            EvaluationInstanceResponse response = new EvaluationInstanceResponse();
+            var resultDb = context.EvaluationInstance.FirstOrDefault(u => u.IdEvaluationInstance == id);
+            response = _mapper.Map<EvaluationInstance, EvaluationInstanceResponse>(resultDb);
             return response;
         }
 
         /// <summary>
-        /// Inserta un Usuario
+        /// Inserta una Instancia de Evaluacion
         /// </summary>
-        /// <param name="user"></param>  
+        /// <param name="evaluationInstance"></param>  
         [HttpPost]
-        public ActionResult Post([FromBody] User user)
+        public ActionResult Post([FromBody] EvaluationInstance evaluationInstance)
         {
             try
             {
-                context.User.Add(user);
+                context.EvaluationInstance.Add(evaluationInstance);
                 context.SaveChanges();
                 return Ok();
             }
@@ -67,18 +67,18 @@ namespace DDSDGuarani.Controllers
 
 
         /// <summary>
-        /// Modifica un Usuario
+        /// Modifica una Instancia de Evaluacion
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="user"></param>
+        /// <param name="evaluationInstance"></param>
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] User user)
+        public ActionResult Put(int id, [FromBody] EvaluationInstance evaluationInstance)
         {
             try
             {
-                if (user.IdUser == id)
+                if (evaluationInstance.IdEvaluationInstance == id)
                 {
-                    context.Entry(user).State = EntityState.Modified;
+                    context.Entry(evaluationInstance).State = EntityState.Modified;
                     context.SaveChanges();
                     return Ok();
                 }
@@ -95,7 +95,7 @@ namespace DDSDGuarani.Controllers
         }
 
         /// <summary>
-        /// Elimina un Usuario
+        /// Elimina una Instancia de Evaluacion
         /// </summary>
         /// <param name="id"></param>  
         [HttpDelete("{id}")]
@@ -103,10 +103,10 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                var user = context.User.FirstOrDefault(u => u.IdUser == id);
-                if (user != null)
+                var evaluationInstance = context.EvaluationInstance.FirstOrDefault(u => u.IdEvaluationInstance == id);
+                if (evaluationInstance != null)
                 {
-                    context.User.Remove(user);
+                    context.EvaluationInstance.Remove(evaluationInstance);
                     context.SaveChanges();
                     return Ok();
                 }

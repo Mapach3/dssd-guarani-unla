@@ -10,52 +10,52 @@ using System.Linq;
 namespace DDSDGuarani.Controllers
 {
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class FinalCallController : Controller
     {
         private readonly MyContext context;
         private readonly IMapper _mapper;
 
-        public UserController(MyContext context, IMapper mapper)
+        public FinalCallController(MyContext context, IMapper mapper)
         {
             this.context = context;
-            this._mapper = mapper;
+            _mapper = mapper;
         }
 
         /// <summary>
-        /// Trae Listado de Usuarios
+        /// Trae Listado de Llamados de Finales
         /// </summary>
         [HttpGet]
-        public IEnumerable<UserResponse> Get()
+        public IEnumerable<FinalCallResponse> Get()
         {
-            IEnumerable<UserResponse> response = new List<UserResponse>();
-            var resultDb = context.User.ToList().OrderBy(x => x.IdUser);
-            response = _mapper.Map<IEnumerable<User>, IEnumerable<UserResponse>>(resultDb);
+            IEnumerable<FinalCallResponse> response = new List<FinalCallResponse>();
+            var resultDb = context.FinalCall.ToList().OrderBy(x => x.IdFinalCall);
+            response = _mapper.Map<IEnumerable<FinalCall>, IEnumerable<FinalCallResponse>>(resultDb);
             return response;
         }
 
         /// <summary>
-        /// Trae Listado de Usuarios por ID
+        /// Trae Llamado a Final por ID
         /// </summary>
         /// <param name="id"></param>  
         [HttpGet("{id}")]
-        public UserResponse Get(int id)
+        public FinalCallResponse Get(int id)
         {
-            UserResponse response = new UserResponse();
-            var resultDb = context.User.FirstOrDefault(u => u.IdUser == id);
-            response = _mapper.Map<User, UserResponse>(resultDb);
+            FinalCallResponse response = new FinalCallResponse();
+            var resultDb = context.FinalCall.FirstOrDefault(u => u.IdFinalCall == id);
+            response = _mapper.Map<FinalCall, FinalCallResponse>(resultDb);
             return response;
         }
 
         /// <summary>
-        /// Inserta un Usuario
+        /// Inserta un Llamado a Final
         /// </summary>
-        /// <param name="user"></param>  
+        /// <param name="finalCall"></param>  
         [HttpPost]
-        public ActionResult Post([FromBody] User user)
+        public ActionResult Post([FromBody] FinalCall finalCall)
         {
             try
             {
-                context.User.Add(user);
+                context.FinalCall.Add(finalCall);
                 context.SaveChanges();
                 return Ok();
             }
@@ -67,18 +67,18 @@ namespace DDSDGuarani.Controllers
 
 
         /// <summary>
-        /// Modifica un Usuario
+        /// Modifica un Llamado a Final
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="user"></param>
+        /// <param name="finalCall"></param>
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] User user)
+        public ActionResult Put(int id, [FromBody] FinalCall finalCall)
         {
             try
             {
-                if (user.IdUser == id)
+                if (finalCall.IdFinalCall == id)
                 {
-                    context.Entry(user).State = EntityState.Modified;
+                    context.Entry(finalCall).State = EntityState.Modified;
                     context.SaveChanges();
                     return Ok();
                 }
@@ -95,7 +95,7 @@ namespace DDSDGuarani.Controllers
         }
 
         /// <summary>
-        /// Elimina un Usuario
+        /// Elimina una Inscripcion de Final
         /// </summary>
         /// <param name="id"></param>  
         [HttpDelete("{id}")]
@@ -103,10 +103,10 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                var user = context.User.FirstOrDefault(u => u.IdUser == id);
-                if (user != null)
+                var finalCall = context.FinalCall.FirstOrDefault(u => u.IdFinalCall == id);
+                if (finalCall != null)
                 {
-                    context.User.Remove(user);
+                    context.FinalCall.Remove(finalCall);
                     context.SaveChanges();
                     return Ok();
                 }

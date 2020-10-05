@@ -23,6 +23,7 @@ namespace DDSDGuarani.Entities
         public DbSet<FinalCall> FinalCall { get; set; }
         public DbSet<Course> Course { get; set; }
         public DbSet<InscriptionFinal> InscriptionFinal { get; set; }
+        public DbSet<EvaluationInstance> EvaluationInstance { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

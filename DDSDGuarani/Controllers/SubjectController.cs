@@ -10,52 +10,52 @@ using System.Linq;
 namespace DDSDGuarani.Controllers
 {
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class SubjectController : Controller
     {
         private readonly MyContext context;
         private readonly IMapper _mapper;
 
-        public UserController(MyContext context, IMapper mapper)
+        public SubjectController(MyContext context, IMapper mapper)
         {
             this.context = context;
             this._mapper = mapper;
         }
 
         /// <summary>
-        /// Trae Listado de Usuarios
+        /// Trae Listado de Materias
         /// </summary>
         [HttpGet]
-        public IEnumerable<UserResponse> Get()
+        public IEnumerable<SubjectResponse> Get()
         {
-            IEnumerable<UserResponse> response = new List<UserResponse>();
-            var resultDb = context.User.ToList().OrderBy(x => x.IdUser);
-            response = _mapper.Map<IEnumerable<User>, IEnumerable<UserResponse>>(resultDb);
+            IEnumerable<SubjectResponse> response = new List<SubjectResponse>();
+            var resultDb = context.Subject.ToList().OrderBy(x => x.IdSubject);
+            response = _mapper.Map<IEnumerable<Subject>, IEnumerable<SubjectResponse>>(resultDb);
             return response;
         }
 
         /// <summary>
-        /// Trae Listado de Usuarios por ID
+        /// Trae Materia por ID
         /// </summary>
         /// <param name="id"></param>  
         [HttpGet("{id}")]
-        public UserResponse Get(int id)
+        public SubjectResponse Get(int id)
         {
-            UserResponse response = new UserResponse();
-            var resultDb = context.User.FirstOrDefault(u => u.IdUser == id);
-            response = _mapper.Map<User, UserResponse>(resultDb);
+            SubjectResponse response = new SubjectResponse();
+            var resultDb = context.Subject.FirstOrDefault(u => u.IdSubject == id);
+            response = _mapper.Map<Subject, SubjectResponse>(resultDb);
             return response;
         }
 
         /// <summary>
-        /// Inserta un Usuario
+        /// Inserta una Materia
         /// </summary>
-        /// <param name="user"></param>  
+        /// <param name="subject"></param>  
         [HttpPost]
-        public ActionResult Post([FromBody] User user)
+        public ActionResult Post([FromBody] Subject subject)
         {
             try
             {
-                context.User.Add(user);
+                context.Subject.Add(subject);
                 context.SaveChanges();
                 return Ok();
             }
@@ -67,18 +67,18 @@ namespace DDSDGuarani.Controllers
 
 
         /// <summary>
-        /// Modifica un Usuario
+        /// Modifica una Materia
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="user"></param>
+        /// <param name="subject"></param>
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] User user)
+        public ActionResult Put(int id, [FromBody] Subject subject)
         {
             try
             {
-                if (user.IdUser == id)
+                if (subject.IdSubject == id)
                 {
-                    context.Entry(user).State = EntityState.Modified;
+                    context.Entry(subject).State = EntityState.Modified;
                     context.SaveChanges();
                     return Ok();
                 }
@@ -95,7 +95,7 @@ namespace DDSDGuarani.Controllers
         }
 
         /// <summary>
-        /// Elimina un Usuario
+        /// Elimina una Materia
         /// </summary>
         /// <param name="id"></param>  
         [HttpDelete("{id}")]
@@ -103,10 +103,10 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                var user = context.User.FirstOrDefault(u => u.IdUser == id);
-                if (user != null)
+                var subject = context.Subject.FirstOrDefault(u => u.IdSubject == id);
+                if (subject != null)
                 {
-                    context.User.Remove(user);
+                    context.Subject.Remove(subject);
                     context.SaveChanges();
                     return Ok();
                 }

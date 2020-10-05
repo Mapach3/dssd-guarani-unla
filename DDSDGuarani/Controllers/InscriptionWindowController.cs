@@ -10,52 +10,52 @@ using System.Linq;
 namespace DDSDGuarani.Controllers
 {
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class InscriptionWindowController : Controller
     {
         private readonly MyContext context;
         private readonly IMapper _mapper;
 
-        public UserController(MyContext context, IMapper mapper)
+        public InscriptionWindowController(MyContext context, IMapper mapper)
         {
             this.context = context;
             this._mapper = mapper;
         }
 
         /// <summary>
-        /// Trae Listado de Usuarios
+        /// Trae Listado de Ventana de Inscripciones
         /// </summary>
         [HttpGet]
-        public IEnumerable<UserResponse> Get()
+        public IEnumerable<InscriptionWindowResponse> Get()
         {
-            IEnumerable<UserResponse> response = new List<UserResponse>();
-            var resultDb = context.User.ToList().OrderBy(x => x.IdUser);
-            response = _mapper.Map<IEnumerable<User>, IEnumerable<UserResponse>>(resultDb);
+            IEnumerable<InscriptionWindowResponse> response = new List<InscriptionWindowResponse>();
+            var resultDb = context.InscriptionWindow.ToList().OrderBy(x => x.IdInscriptionWindow);
+            response = _mapper.Map<IEnumerable<InscriptionWindow>, IEnumerable<InscriptionWindowResponse>>(resultDb);
             return response;
         }
 
         /// <summary>
-        /// Trae Listado de Usuarios por ID
+        /// Trae Ventana de Inscripcion por ID
         /// </summary>
         /// <param name="id"></param>  
         [HttpGet("{id}")]
-        public UserResponse Get(int id)
+        public InscriptionWindowResponse Get(int id)
         {
-            UserResponse response = new UserResponse();
-            var resultDb = context.User.FirstOrDefault(u => u.IdUser == id);
-            response = _mapper.Map<User, UserResponse>(resultDb);
+            InscriptionWindowResponse response = new InscriptionWindowResponse();
+            var resultDb = context.InscriptionWindow.FirstOrDefault(u => u.IdInscriptionWindow == id);
+            response = _mapper.Map<InscriptionWindow, InscriptionWindowResponse>(resultDb);
             return response;
         }
 
         /// <summary>
-        /// Inserta un Usuario
+        /// Inserta una Ventana de Inscripcion
         /// </summary>
-        /// <param name="user"></param>  
+        /// <param name="inscriptionWindow"></param>  
         [HttpPost]
-        public ActionResult Post([FromBody] User user)
+        public ActionResult Post([FromBody] InscriptionWindow inscriptionWindow)
         {
             try
             {
-                context.User.Add(user);
+                context.InscriptionWindow.Add(inscriptionWindow);
                 context.SaveChanges();
                 return Ok();
             }
@@ -67,18 +67,18 @@ namespace DDSDGuarani.Controllers
 
 
         /// <summary>
-        /// Modifica un Usuario
+        /// Modifica una Inscripcion
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="user"></param>
+        /// <param name="inscriptionWindow"></param>
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] User user)
+        public ActionResult Put(int id, [FromBody] InscriptionWindow inscriptionWindow)
         {
             try
             {
-                if (user.IdUser == id)
+                if (inscriptionWindow.IdInscriptionWindow == id)
                 {
-                    context.Entry(user).State = EntityState.Modified;
+                    context.Entry(inscriptionWindow).State = EntityState.Modified;
                     context.SaveChanges();
                     return Ok();
                 }
@@ -95,7 +95,7 @@ namespace DDSDGuarani.Controllers
         }
 
         /// <summary>
-        /// Elimina un Usuario
+        /// Elimina una Inscripcion
         /// </summary>
         /// <param name="id"></param>  
         [HttpDelete("{id}")]
@@ -103,10 +103,10 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                var user = context.User.FirstOrDefault(u => u.IdUser == id);
-                if (user != null)
+                var inscriptionWindow = context.InscriptionWindow.FirstOrDefault(u => u.IdInscriptionWindow == id);
+                if (inscriptionWindow != null)
                 {
-                    context.User.Remove(user);
+                    context.InscriptionWindow.Remove(inscriptionWindow);
                     context.SaveChanges();
                     return Ok();
                 }
