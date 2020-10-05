@@ -22,68 +22,67 @@ namespace DDSDGuarani.Controllers
         public AuthController(MyContext context, IMapper mapper, IConfiguration configuration)
         {
             this.context = context;
-            this._mapper = mapper;
-            this._configuration = configuration;
+            _mapper = mapper;
+            _configuration = configuration;
         }
 
-        //[HttpPost]
-        //[Route("[action]")]
-        //public Response Login([FromBody]User usuario)
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <param name="usuario"></param>
+        [HttpPost]
+        [Route("[action]")]
+        public Response Login([FromBody] User usuario)
 
-        //{
-        //    Response responseLogin = new Response();
-        //    try { 
-        //        //UsuarioResponse user = new UsuarioResponse();
-        //        //var resultDb = context.Usuario.FirstOrDefault(u => u.Mail == usuario.Mail);
-        //        //user = _mapper.Map<Usuario, UsuarioResponse>(resultDb);
+        {
+            Response responseLogin = new Response();
+            try
+            {
+                UserResponse user = new UserResponse();
+                var resultDb = context.User.FirstOrDefault(u => u.Email == usuario.Email);
+                user = _mapper.Map<User, UserResponse>(resultDb);
 
-        //        if (user != null && user.Contraseña.Equals(usuario.Password))
-        //        {
-        //            // Leemos el secret_key desde nuestro appseting
-        //            var secretKey = _configuration.GetValue<string>("SecretKey");
-        //            var key = Encoding.ASCII.GetBytes(secretKey);
+                if (user != null && user.Password.Equals(usuario.Password))
+                {
+                    // Leemos el secret_key desde nuestro appseting
+                    var secretKey = _configuration.GetValue<string>("SecretKey");
+                    var key = Encoding.ASCII.GetBytes(secretKey);
 
-        //            // Creamos los claims (pertenencias, características) del usuario
+                    // Creamos los claims (pertenencias, características) del usuario
+                    ClaimsIdentity claims = new ClaimsIdentity();
+                    Claim datos = new Claim("UserData", JsonConvert.SerializeObject(user));
 
+                    claims.AddClaim(datos);
 
-        //            /* var claims = new[]
-        //             {
+                    var tokenDescriptor = new SecurityTokenDescriptor
+                    {
+                        Subject = claims,
+                        // Nuestro token va a durar un día
+                        Expires = DateTime.UtcNow.AddDays(1),
+                        // Credenciales para generar el token usando nuestro secretykey y el algoritmo hash 256
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                    };
 
-        //             new System.Security.Claims.ClaimsIdentity("UserData", JsonConvert.SerializeObject(user))
-        //              };*/
-        //            ClaimsIdentity claims = new ClaimsIdentity();
-        //            Claim datos =  new Claim("UserData", JsonConvert.SerializeObject(user));
-                 
-        //            claims.AddClaim(datos);
-
-        //            var tokenDescriptor = new SecurityTokenDescriptor
-        //            {
-        //                Subject = claims,
-        //                // Nuestro token va a durar un día
-        //                Expires = DateTime.UtcNow.AddDays(1),
-        //                // Credenciales para generar el token usando nuestro secretykey y el algoritmo hash 256
-        //                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        //            };
-
-        //            var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
-        //            var createdToken = tokenHandler.CreateToken(tokenDescriptor);
-        //            responseLogin.Cod = 200;
-        //            responseLogin.Data = tokenHandler.WriteToken(createdToken);
-        //            responseLogin.Mensaje = "OK";
-        //        }
-        //        else
-        //        {
-        //            responseLogin.Cod = 401;
-        //            responseLogin.Data = null;
-        //            responseLogin.Mensaje = "Credenciales invalidas";
-        //        }
-        //    }catch(Exception)
-        //    {
-        //        responseLogin.Cod = 502;
-        //        responseLogin.Data = null;
-        //        responseLogin.Mensaje = "Error al intentar verificar el usuario";
-        //    }
-        //    return responseLogin;
-        //}
+                    var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+                    var createdToken = tokenHandler.CreateToken(tokenDescriptor);
+                    responseLogin.Cod = 200;
+                    responseLogin.Data = tokenHandler.WriteToken(createdToken);
+                    responseLogin.Mensaje = "OK";
+                }
+                else
+                {
+                    responseLogin.Cod = 401;
+                    responseLogin.Data = null;
+                    responseLogin.Mensaje = "Credenciales invalidas";
+                }
+            }
+            catch (Exception)
+            {
+                responseLogin.Cod = 502;
+                responseLogin.Data = null;
+                responseLogin.Mensaje = "Error al intentar verificar el usuario";
+            }
+            return responseLogin;
+        }
     }
 }

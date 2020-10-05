@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DDSDGuarani.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,11 +26,5 @@ namespace DDSDGuarani.Entities
         [ForeignKey("IdAddress")]
         [Required]
         public Address Address { get; set; }
-
-        public enum UserRole {
-            ADMIN = 0,
-            STUDENT = 1,
-            TEACHER = 2
-        }
     }
 }

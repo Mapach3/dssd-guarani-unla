@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DDSDGuarani.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,12 +19,5 @@ namespace DDSDGuarani.Entities
 
         [ForeignKey("IdUser")]
         public User User { get; set; }
-
-
-        public enum EIType { 
-            COURSE=0,
-            SUBJECT=1
-        }
-
     }
 }

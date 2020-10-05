@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DDSDGuarani.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,15 +22,5 @@ namespace DDSDGuarani.Entities
 
         [ForeignKey("IdInscriptionWindow")]
         public InscriptionWindow InscriptionWindow { get; set; }
-
-        
-
-
-        public enum SubjectShift { 
-            MORNING   = 1,
-            AFTERNOON = 2,
-            EVENING   = 3 
-        }
-
     }
 }

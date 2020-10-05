@@ -21,6 +21,10 @@
     <Compile Remove="Migrations\20201003214916_Initial.cs" />
     <Compile Remove="Migrations\20201003214916_Initial.Designer.cs" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <None Remove="DTOResponse\UserResponse.cs~RF18ca840.TMP" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
@@ -40,7 +44,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOResponse\" />
     <Folder Include="Requests\" />
   </ItemGroup>
 
