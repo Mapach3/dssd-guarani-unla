@@ -196,6 +196,24 @@ namespace DDSDGuarani.MappingProfiles
             .ForMember(dest => dest.Subject, opts => opts.MapFrom(src => src.Subject.IdSubject))
             .ForMember(dest => dest.User, opts => opts.MapFrom(src => src.User.IdUser));
             #endregion
+
+            #region Map Address
+            CreateMap<Address, AddressResponse>()
+            .ForMember(dest => dest.IdAddress, opts => opts.MapFrom(src => src.IdAddress))
+            .ForMember(dest => dest.StreetAndNumber, opts => opts.MapFrom(src => src.StreetAndNumber))
+            .ForMember(dest => dest.Location, opts => opts.MapFrom(src => src.Location))
+            .ForMember(dest => dest.City, opts => opts.MapFrom(src => src.City))
+            .ForMember(dest => dest.Country, opts => opts.MapFrom(src => src.Country))
+            .ForMember(dest => dest.User, opts => opts.MapFrom(src => src.User.IdUser))
+            .ForMember(dest => dest.PostalCode, opts => opts.MapFrom(src => src.PostalCode));
+            #endregion
+
+            #region Map Course
+            CreateMap<Course, CourseResponse>()
+            .ForMember(dest => dest.IdUser, opts => opts.MapFrom(src => src.IdUser))
+            .ForMember(dest => dest.IdSubject, opts => opts.MapFrom(src => src.IdSubject))
+            .ForMember(dest => dest.CourseAverage, opts => opts.MapFrom(src => src.CourseAverage));
+            #endregion
         }
     }
 }
