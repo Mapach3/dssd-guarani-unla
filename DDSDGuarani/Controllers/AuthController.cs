@@ -27,17 +27,19 @@ namespace DDSDGuarani.Controllers
         }
 
         /// <summary>
-        /// Login
+        /// Recibe Email y Contraseña de un User y realiza el Login devolviendo un Token
         /// </summary>
+        /// <param name="User"/>
         [HttpPost]
         [Route("[action]")]
-        public Response Login([FromBody] User usuario)
+        public Response Login([FromBody] User user)
 
         {
-            //TODO: Traer los parametros desde HttpContext.Request.Body porque [FromBody] lo pasa a un model... o de ultima traer un User..
+           
+            //GC 13/10: Traemos los parametros d
             Response responseLogin = new Response();
             responseLogin.Cod = 200;
-           // responseLogin.Data = email + " -- " + password;
+            responseLogin.Data = user.Email + " -- " + user.Password;
             //try
             //{
             //    UserResponse user = new UserResponse();
