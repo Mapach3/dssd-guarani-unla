@@ -1,12 +1,13 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 
 import Container from '@material-ui/core/Container';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
-import {__API_LOGIN} from '../../consts/consts'
+import {__API_LOGIN} from '../../consts/consts';
 
 
 export class Login extends Component{
@@ -27,18 +28,31 @@ export class Login extends Component{
     }
 
     performLogin(){
+        debugger;
         const options = {
             method: "POST",
-            url: 
-
-
+            url: __API_LOGIN,
+            headers : {
+                'Content-Type' : 'application/json',
+                'Access-Control-Allow-Origin' : '*'
+            },
+            
+            data: {
+                email : this.state.formEmail,
+                password : this.state.formPassword
+            }
         }
+
+        axios(options).then( resp => {
+            console.log("Login Response: ", resp)
+
+        }).catch( error => {
+            console.error("Error during Login: ",error)
+        })
 
 
     }
 
-
-    
     render(){
         return (
             <Container maxWidth="md">
@@ -50,7 +64,7 @@ export class Login extends Component{
                     </FormControl> <br />
                     <FormControl>
                         <InputLabel htmlFor="component-simple">Contraseña</InputLabel>
-                        <Input id="component-simple" type="password" onChange={this.handlePassword}/>
+                        <Input id="component-simple" type="password" onChange={this.handlePasswordChange}/>
                     </FormControl> <br /> < br />
                     <Button variant="contained" color="primary" onClick={() => this.performLogin()}>
                         Ingresar
