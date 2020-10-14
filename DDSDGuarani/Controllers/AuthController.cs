@@ -37,54 +37,55 @@ namespace DDSDGuarani.Controllers
         {
            
             Response responseLogin = new Response();
-            responseLogin.Cod = 200;
-            responseLogin.Data = user.Email + " -- " + user.Password;
-            //try
-            //{
-            //    UserResponse user = new UserResponse();
-            //    var resultDb = context.User.FirstOrDefault(u => u.Email == usuario.Email);
-            //    user = _mapper.Map<User, UserResponse>(resultDb);
 
-            //    if (user != null && user.Password.Equals(usuario.Password))
-            //    {
-            //        // Leemos el secret_key desde nuestro appseting
-            //        var secretKey = _configuration.GetValue<string>("SecretKey");
-            //        var key = Encoding.ASCII.GetBytes(secretKey);
+            try
+            {
+                UserResponse userResp = new UserResponse();
+                var resultDb = context.User.FirstOrDefault(u => u.Email == user.Email);
+                userResp = _mapper.Map<User, UserResponse>(resultDb);
 
-            //        // Creamos los claims (pertenencias, características) del usuario
-            //        ClaimsIdentity claims = new ClaimsIdentity();
-            //        Claim datos = new Claim("UserData", JsonConvert.SerializeObject(user));
+                if (userResp != null && userResp.Password.Equals(user.Password))
+                {
+                    // Leemos el secret_key desde nuestro appseting
+                    var secretKey = _configuration.GetValue<string>("SecretKey");
+                    var key = Encoding.ASCII.GetBytes(secretKey);
 
-            //        claims.AddClaim(datos);
+                    // Creamos los claims (pertenencias, características) del usuario
+                    ClaimsIdentity claims = new ClaimsIdentity();
+                    Claim datos = new Claim("UserData", JsonConvert.SerializeObject(userResp));
 
-            //        var tokenDescriptor = new SecurityTokenDescriptor
-            //        {
-            //            Subject = claims,
-            //            // Nuestro token va a durar un día
-            //            Expires = DateTime.UtcNow.AddDays(1),
-            //            // Credenciales para generar el token usando nuestro secretykey y el algoritmo hash 256
-            //            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            //        };
+                    claims.AddClaim(datos);
 
-            //        var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
-            //        var createdToken = tokenHandler.CreateToken(tokenDescriptor);
-            //        responseLogin.Cod = 200;
-            //        responseLogin.Data = tokenHandler.WriteToken(createdToken);
-            //        responseLogin.Mensaje = "OK";
-            //    }
-            //    else
-            //    {
-            //        responseLogin.Cod = 401;
-            //        responseLogin.Data = null;
-            //        responseLogin.Mensaje = "Credenciales invalidas";
-            //    }
-            //}
-            //catch (Exception)
-            //{
-            //    responseLogin.Cod = 502;
-            //    responseLogin.Data = null;
-            //    responseLogin.Mensaje = "Error al intentar verificar el usuario";
-            //}
+                    var tokenDescriptor = new SecurityTokenDescriptor
+                    {
+                        Subject = claims,
+                        // Nuestro token va a durar un día
+                        Expires = DateTime.UtcNow.AddDays(1),
+                        // Credenciales para generar el token usando nuestro secretykey y el algoritmo hash 256
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                    };
+
+                    var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+                    var createdToken = tokenHandler.CreateToken(tokenDescriptor);
+                    
+                    responseLogin.Cod = 200;
+                    responseLogin.Data = tokenHandler.WriteToken(createdToken);
+                    responseLogin.Mensaje = "OK";
+                }
+                else
+                {
+                    responseLogin.Cod = 401;
+                    responseLogin.Data = null;
+                    responseLogin.Mensaje = "Credenciales inválidas";
+                }
+            }
+            catch (Exception e)
+            {
+                responseLogin.Cod = 502;
+                responseLogin.Data = e.Message;
+                responseLogin.Mensaje = "Error al intentar verificar el usuario";
+            }
+
             return responseLogin;
         }
     }
