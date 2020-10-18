@@ -8,13 +8,15 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
 import {__API_LOGIN} from '../../consts/consts';
+import {Storage} from '../../consts/Storage'
 
 
 export class Login extends Component{
 
     state = {
         formEmail : '',
-        formPassword : ''
+        formPassword : '',
+        wrongCredentials : false,
     }
 
     handleMailChange = (ev) => {
@@ -28,6 +30,7 @@ export class Login extends Component{
     }
 
     performLogin(){
+        this.setState({wrongCredentials : false})
         debugger;
         const options = {
             method: "POST",
@@ -44,7 +47,17 @@ export class Login extends Component{
         }
 
         axios(options).then( resp => {
+            debugger;
             console.log("Login Response: ", resp)
+            var loginResponse = resp.data
+            if (loginResponse.cod === 200){
+                Storage.setJwtToken(loginResponse.data)
+                this.props.setToken(loginResponse.data)
+            }
+            else
+                this.setState({wrongCredentials : true})
+
+
 
         }).catch( error => {
             console.error("Error during Login: ",error)
@@ -66,9 +79,13 @@ export class Login extends Component{
                         <InputLabel htmlFor="component-simple">Contraseña</InputLabel>
                         <Input id="component-simple" type="password" onChange={this.handlePasswordChange}/>
                     </FormControl> <br /> < br />
+                    {this.state.wrongCredentials ? 
+                    <><p>CREDENCIALES INVÁLIDAS</p> <br /></>: 
+                    null}
                     <Button variant="contained" color="primary" onClick={() => this.performLogin()}>
                         Ingresar
                     </Button>
+                    
 
                 </form>
 
