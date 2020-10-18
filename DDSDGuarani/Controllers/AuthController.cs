@@ -33,9 +33,7 @@ namespace DDSDGuarani.Controllers
         [HttpPost]
         [Route("[action]")]
         public Response Login([FromBody] User user)
-
         {
-           
             Response responseLogin = new Response();
 
             try
