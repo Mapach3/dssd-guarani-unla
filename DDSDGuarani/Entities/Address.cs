@@ -17,6 +17,7 @@ namespace DDSDGuarani.Entities
         public string City { get; set; }
         public string Country { get; set; }
         
+        
         public User User { get; set; }
     }
 }

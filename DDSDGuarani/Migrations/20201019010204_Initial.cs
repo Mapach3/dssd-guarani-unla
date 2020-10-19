@@ -48,6 +48,7 @@ namespace DDSDGuarani.Migrations
                     Password = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Surname = table.Column<string>(nullable: true),
+                    Dni = table.Column<string>(nullable: true),
                     Active = table.Column<bool>(nullable: false),
                     PasswordChanged = table.Column<bool>(nullable: false),
                     Role = table.Column<int>(nullable: false),
@@ -70,6 +71,7 @@ namespace DDSDGuarani.Migrations
                 {
                     IdSubject = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
                     StartTime = table.Column<DateTime>(nullable: false),
                     EndTime = table.Column<DateTime>(nullable: false),
                     Year = table.Column<int>(nullable: false),

@@ -166,6 +166,9 @@ namespace DDSDGuarani.Migrations
                     b.Property<int?>("IdInscriptionWindow")
                         .HasColumnType("int");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Period")
                         .HasColumnType("int");
 
@@ -194,6 +197,9 @@ namespace DDSDGuarani.Migrations
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Dni")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");

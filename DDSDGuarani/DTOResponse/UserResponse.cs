@@ -13,6 +13,7 @@ namespace DDSDGuarani.DTOResponse
         public string Password { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string Dni { get; set; }
         public bool Active { get; set; }
         public bool PasswordChanged { get; set; }
         public List<CourseResponse> UserCourses { get; set; }

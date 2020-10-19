@@ -10,6 +10,7 @@ namespace DDSDGuarani.Entities
     {
         [Key]
         public int IdSubject { get; set; }
+        public string Name { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public int Year { get; set; }

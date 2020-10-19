@@ -15,6 +15,7 @@ namespace DDSDGuarani.MappingProfiles
             .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
             .ForMember(dest => dest.Password, opts => opts.MapFrom(src => src.Password))
             .ForMember(dest => dest.PasswordChanged, opts => opts.MapFrom(src => src.PasswordChanged))
+            .ForMember(dest => dest.Dni, opts => opts.MapFrom(src => src.Dni))
             .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Email))
             .ForMember(dest => dest.Surname, opts => opts.MapFrom(src => src.Surname))
             .ForMember(dest => dest.Active, opts => opts.MapFrom(src => src.Active))
@@ -78,6 +79,7 @@ namespace DDSDGuarani.MappingProfiles
             #region Map Subject
             CreateMap<Subject, SubjectResponse>()
             .ForMember(dest => dest.IdSubject, opts => opts.MapFrom(src => src.IdSubject))
+            .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
             .ForMember(dest => dest.StartTime, opts => opts.MapFrom(src => src.StartTime))
             .ForMember(dest => dest.EndTime, opts => opts.MapFrom(src => src.EndTime))
             .ForMember(dest => dest.Year, opts => opts.MapFrom(src => src.Year))
