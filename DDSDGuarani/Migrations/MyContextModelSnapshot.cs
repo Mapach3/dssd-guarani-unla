@@ -225,8 +225,7 @@ namespace DDSDGuarani.Migrations
 
                     b.HasKey("IdUser");
 
-                    b.HasIndex("IdAddress")
-                        .IsUnique();
+                    b.HasIndex("IdAddress");
 
                     b.ToTable("User");
                 });
@@ -297,8 +296,8 @@ namespace DDSDGuarani.Migrations
             modelBuilder.Entity("DDSDGuarani.Entities.User", b =>
                 {
                     b.HasOne("DDSDGuarani.Entities.Address", "Address")
-                        .WithOne("User")
-                        .HasForeignKey("DDSDGuarani.Entities.User", "IdAddress")
+                        .WithMany()
+                        .HasForeignKey("IdAddress")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

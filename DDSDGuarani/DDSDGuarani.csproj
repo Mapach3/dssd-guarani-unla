@@ -22,6 +22,8 @@
     <Compile Remove="Migrations\20201003214916_Initial.Designer.cs" />
     <Compile Remove="Migrations\20201003220123_Initial.cs" />
     <Compile Remove="Migrations\20201003220123_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20201019010204_Initial.cs" />
+    <Compile Remove="Migrations\20201019010204_Initial.Designer.cs" />
   </ItemGroup>
   
   <ItemGroup>
@@ -46,7 +48,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="Requests\" />
   </ItemGroup>
 

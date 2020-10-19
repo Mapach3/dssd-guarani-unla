@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DDSDGuarani.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20201019010204_Initial")]
+    [Migration("20201019011836_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -227,8 +227,7 @@ namespace DDSDGuarani.Migrations
 
                     b.HasKey("IdUser");
 
-                    b.HasIndex("IdAddress")
-                        .IsUnique();
+                    b.HasIndex("IdAddress");
 
                     b.ToTable("User");
                 });
@@ -299,8 +298,8 @@ namespace DDSDGuarani.Migrations
             modelBuilder.Entity("DDSDGuarani.Entities.User", b =>
                 {
                     b.HasOne("DDSDGuarani.Entities.Address", "Address")
-                        .WithOne("User")
-                        .HasForeignKey("DDSDGuarani.Entities.User", "IdAddress")
+                        .WithMany()
+                        .HasForeignKey("IdAddress")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -233,8 +233,7 @@ namespace DDSDGuarani.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_User_IdAddress",
                 table: "User",
-                column: "IdAddress",
-                unique: true);
+                column: "IdAddress");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
