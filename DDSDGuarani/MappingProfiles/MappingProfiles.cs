@@ -28,8 +28,7 @@ namespace DDSDGuarani.MappingProfiles
                 IdAddress = src.Address.IdAddress,
                 Location = src.Address.Location,
                 PostalCode = src.Address.PostalCode,
-                StreetAndNumber = src.Address.StreetAndNumber,
-                User = src.Address.User.IdUser
+                StreetAndNumber = src.Address.StreetAndNumber
             }))
 
             .AfterMap((src, dest) =>
@@ -206,7 +205,6 @@ namespace DDSDGuarani.MappingProfiles
             .ForMember(dest => dest.Location, opts => opts.MapFrom(src => src.Location))
             .ForMember(dest => dest.City, opts => opts.MapFrom(src => src.City))
             .ForMember(dest => dest.Country, opts => opts.MapFrom(src => src.Country))
-            .ForMember(dest => dest.User, opts => opts.MapFrom(src => src.User.IdUser))
             .ForMember(dest => dest.PostalCode, opts => opts.MapFrom(src => src.PostalCode));
             #endregion
 
