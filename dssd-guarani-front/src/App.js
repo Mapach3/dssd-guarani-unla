@@ -9,8 +9,9 @@ import {
   Route,
   Switch
 } from "react-router-dom";
+import Home from './pages/Home';
 
-function App() {
+const App = () => {
 
   const [userToken,setUserToken] = useState(Storage.getJwtToken());
   
@@ -42,6 +43,8 @@ function App() {
 
     </div>
     </Router>
+    
+    // <Home></Home>
   );
 }
 
