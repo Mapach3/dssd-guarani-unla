@@ -7,8 +7,8 @@ namespace DDSDGuarani.DTOResponse
 {
     public class CourseResponse
     {
-        public int IdSubject { get; set; }
-        public int IdUser { get; set; }
+        public int SubjectId { get; set; }
+        public int UserId { get; set; }
         public double CourseAverage { get; set; }
     }
 }

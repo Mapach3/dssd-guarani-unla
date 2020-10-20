@@ -28,14 +28,32 @@ namespace DDSDGuarani.Migrations
                 name: "InscriptionWindow",
                 columns: table => new
                 {
-                    IdInscriptionWindow = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InscriptionWindow", x => x.IdInscriptionWindow);
+                    table.PrimaryKey("PK_InscriptionWindow", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subject",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    StartTime = table.Column<DateTime>(nullable: false),
+                    EndTime = table.Column<DateTime>(nullable: false),
+                    Year = table.Column<int>(nullable: false),
+                    Period = table.Column<int>(nullable: false),
+                    Shift = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subject", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,50 +84,52 @@ namespace DDSDGuarani.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Subject",
+                name: "FinalCall",
                 columns: table => new
                 {
-                    IdSubject = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    StartTime = table.Column<DateTime>(nullable: false),
-                    EndTime = table.Column<DateTime>(nullable: false),
-                    Year = table.Column<int>(nullable: false),
-                    Period = table.Column<int>(nullable: false),
-                    Shift = table.Column<int>(nullable: false),
-                    IdInscriptionWindow = table.Column<int>(nullable: true)
+                    Date = table.Column<DateTime>(nullable: false),
+                    SubjectId = table.Column<int>(nullable: false),
+                    InscriptionWindowId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Subject", x => x.IdSubject);
+                    table.PrimaryKey("PK_FinalCall", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Subject_InscriptionWindow_IdInscriptionWindow",
-                        column: x => x.IdInscriptionWindow,
+                        name: "FK_FinalCall_InscriptionWindow_InscriptionWindowId",
+                        column: x => x.InscriptionWindowId,
                         principalTable: "InscriptionWindow",
-                        principalColumn: "IdInscriptionWindow",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FinalCall_Subject_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subject",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Course",
                 columns: table => new
                 {
-                    IdSubject = table.Column<int>(nullable: false),
-                    IdUser = table.Column<int>(nullable: false),
+                    SubjectId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     CourseAverage = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Course", x => new { x.IdSubject, x.IdUser });
+                    table.PrimaryKey("PK_Course", x => new { x.SubjectId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_Course_Subject_IdSubject",
-                        column: x => x.IdSubject,
+                        name: "FK_Course_Subject_SubjectId",
+                        column: x => x.SubjectId,
                         principalTable: "Subject",
-                        principalColumn: "IdSubject",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Course_User_IdUser",
-                        column: x => x.IdUser,
+                        name: "FK_Course_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -119,55 +139,28 @@ namespace DDSDGuarani.Migrations
                 name: "EvaluationInstance",
                 columns: table => new
                 {
-                    IdEvaluationInstance = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Score = table.Column<double>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     Type = table.Column<int>(nullable: false),
-                    IdSubject = table.Column<int>(nullable: true),
-                    IdUser = table.Column<int>(nullable: true)
+                    SubjectId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EvaluationInstance", x => x.IdEvaluationInstance);
+                    table.PrimaryKey("PK_EvaluationInstance", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EvaluationInstance_Subject_IdSubject",
-                        column: x => x.IdSubject,
+                        name: "FK_EvaluationInstance_Subject_SubjectId",
+                        column: x => x.SubjectId,
                         principalTable: "Subject",
-                        principalColumn: "IdSubject",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_EvaluationInstance_User_IdUser",
-                        column: x => x.IdUser,
-                        principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FinalCall",
-                columns: table => new
-                {
-                    IdFinalCall = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(nullable: false),
-                    IdSubject = table.Column<int>(nullable: false),
-                    IdInscriptionWindow = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FinalCall", x => x.IdFinalCall);
-                    table.ForeignKey(
-                        name: "FK_FinalCall_InscriptionWindow_IdInscriptionWindow",
-                        column: x => x.IdInscriptionWindow,
-                        principalTable: "InscriptionWindow",
-                        principalColumn: "IdInscriptionWindow",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_FinalCall_Subject_IdSubject",
-                        column: x => x.IdSubject,
-                        principalTable: "Subject",
-                        principalColumn: "IdSubject",
+                        name: "FK_EvaluationInstance_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -175,60 +168,55 @@ namespace DDSDGuarani.Migrations
                 name: "InscriptionFinal",
                 columns: table => new
                 {
-                    IdUser = table.Column<int>(nullable: false),
-                    IdFinal = table.Column<int>(nullable: false)
+                    UserId = table.Column<int>(nullable: false),
+                    FinalId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InscriptionFinal", x => new { x.IdUser, x.IdFinal });
+                    table.PrimaryKey("PK_InscriptionFinal", x => new { x.UserId, x.FinalId });
                     table.ForeignKey(
-                        name: "FK_InscriptionFinal_FinalCall_IdFinal",
-                        column: x => x.IdFinal,
+                        name: "FK_InscriptionFinal_FinalCall_FinalId",
+                        column: x => x.FinalId,
                         principalTable: "FinalCall",
-                        principalColumn: "IdFinalCall",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_InscriptionFinal_User_IdUser",
-                        column: x => x.IdUser,
+                        name: "FK_InscriptionFinal_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Course_IdUser",
+                name: "IX_Course_UserId",
                 table: "Course",
-                column: "IdUser");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EvaluationInstance_IdSubject",
+                name: "IX_EvaluationInstance_SubjectId",
                 table: "EvaluationInstance",
-                column: "IdSubject");
+                column: "SubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EvaluationInstance_IdUser",
+                name: "IX_EvaluationInstance_UserId",
                 table: "EvaluationInstance",
-                column: "IdUser");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FinalCall_IdInscriptionWindow",
+                name: "IX_FinalCall_InscriptionWindowId",
                 table: "FinalCall",
-                column: "IdInscriptionWindow");
+                column: "InscriptionWindowId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FinalCall_IdSubject",
+                name: "IX_FinalCall_SubjectId",
                 table: "FinalCall",
-                column: "IdSubject");
+                column: "SubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InscriptionFinal_IdFinal",
+                name: "IX_InscriptionFinal_FinalId",
                 table: "InscriptionFinal",
-                column: "IdFinal");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Subject_IdInscriptionWindow",
-                table: "Subject",
-                column: "IdInscriptionWindow");
+                column: "FinalId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_AddressId",
@@ -255,13 +243,13 @@ namespace DDSDGuarani.Migrations
                 name: "User");
 
             migrationBuilder.DropTable(
+                name: "InscriptionWindow");
+
+            migrationBuilder.DropTable(
                 name: "Subject");
 
             migrationBuilder.DropTable(
                 name: "Address");
-
-            migrationBuilder.DropTable(
-                name: "InscriptionWindow");
         }
     }
 }

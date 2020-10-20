@@ -32,32 +32,30 @@ namespace DDSDGuarani.Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Course>()
-                .HasKey(co => new { co.IdSubject, co.IdUser });
+                .HasKey(co => new { co.SubjectId, co.UserId });
 
             modelBuilder.Entity<Course>()
                 .HasOne(co => co.User)
-                .WithMany(u => u.UserCourses)
-                .HasForeignKey(co => co.IdUser);
+                .WithMany(u => u.Courses)
+                .HasForeignKey(co => co.UserId);
 
             modelBuilder.Entity<Course>()
                 .HasOne(co => co.Subject)
-                .WithMany(s => s.SubjectCourses)
-                .HasForeignKey(co => co.IdSubject);
+                .WithMany(s => s.Courses)
+                .HasForeignKey(co => co.SubjectId);
 
             modelBuilder.Entity<InscriptionFinal>()
-                .HasKey(co => new { co.IdUser, co.IdFinal });
+                .HasKey(co => new { co.UserId, co.FinalId });
 
             modelBuilder.Entity<InscriptionFinal>()
                 .HasOne(co => co.User)
-                .WithMany(u => u.UserInscriptionFinals)
-                .HasForeignKey(co => co.IdUser);
+                .WithMany(u => u.InscriptionFinals)
+                .HasForeignKey(co => co.UserId);
 
             modelBuilder.Entity<InscriptionFinal>()
                 .HasOne(co => co.FinalCall)
-                .WithMany(s => s.FinallCallInscriptionFinals)
-                .HasForeignKey(co => co.IdFinal);
-
+                .WithMany(s => s.InscriptionFinals)
+                .HasForeignKey(co => co.FinalId);
         }
     }
-
 }

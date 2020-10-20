@@ -28,7 +28,7 @@ namespace DDSDGuarani.Controllers
         public IEnumerable<CourseResponse> Get()
         {
             IEnumerable<CourseResponse> response = new List<CourseResponse>();
-            var resultDb = context.Course.ToList().OrderBy(x => x.IdUser);
+            var resultDb = context.Course.Include(x=>x.Subject).Include(x=>x.User).ToList().OrderBy(x => x.UserId);
             response = _mapper.Map<IEnumerable<Course>, IEnumerable<CourseResponse>>(resultDb);
             return response;
         }
@@ -41,7 +41,7 @@ namespace DDSDGuarani.Controllers
         public CourseResponse Get(int id)
         {
             CourseResponse response = new CourseResponse();
-            var resultDb = context.Course.FirstOrDefault(u => u.IdUser == id);
+            var resultDb = context.Course.Include(x => x.Subject).Include(x => x.User).FirstOrDefault(u => u.UserId == id);
             response = _mapper.Map<Course, CourseResponse>(resultDb);
             return response;
         }
@@ -76,7 +76,7 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                if (course.IdUser == id)
+                if (course.UserId == id)
                 {
                     context.Entry(course).State = EntityState.Modified;
                     context.SaveChanges();
@@ -103,7 +103,7 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                var course = context.Course.FirstOrDefault(u => u.IdUser == id);
+                var course = context.Course.FirstOrDefault(u => u.UserId == id);
                 if (course != null)
                 {
                     context.Course.Remove(course);

@@ -28,7 +28,7 @@ namespace DDSDGuarani.Controllers
         public IEnumerable<EvaluationInstanceResponse> Get()
         {
             IEnumerable<EvaluationInstanceResponse> response = new List<EvaluationInstanceResponse>();
-            var resultDb = context.EvaluationInstance.ToList().OrderBy(x => x.IdEvaluationInstance);
+            var resultDb = context.EvaluationInstance.Include(x => x.Subject).Include(x => x.User).ToList().OrderBy(x => x.Id);
             response = _mapper.Map<IEnumerable<EvaluationInstance>, IEnumerable<EvaluationInstanceResponse>>(resultDb);
             return response;
         }
@@ -41,7 +41,7 @@ namespace DDSDGuarani.Controllers
         public EvaluationInstanceResponse Get(int id)
         {
             EvaluationInstanceResponse response = new EvaluationInstanceResponse();
-            var resultDb = context.EvaluationInstance.FirstOrDefault(u => u.IdEvaluationInstance == id);
+            var resultDb = context.EvaluationInstance.Include(x => x.Subject).Include(x => x.User).FirstOrDefault(u => u.Id == id);
             response = _mapper.Map<EvaluationInstance, EvaluationInstanceResponse>(resultDb);
             return response;
         }
@@ -76,7 +76,7 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                if (evaluationInstance.IdEvaluationInstance == id)
+                if (evaluationInstance.Id == id)
                 {
                     context.Entry(evaluationInstance).State = EntityState.Modified;
                     context.SaveChanges();
@@ -103,7 +103,7 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                var evaluationInstance = context.EvaluationInstance.FirstOrDefault(u => u.IdEvaluationInstance == id);
+                var evaluationInstance = context.EvaluationInstance.FirstOrDefault(u => u.Id == id);
                 if (evaluationInstance != null)
                 {
                     context.EvaluationInstance.Remove(evaluationInstance);

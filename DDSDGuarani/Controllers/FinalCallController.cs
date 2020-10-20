@@ -28,7 +28,7 @@ namespace DDSDGuarani.Controllers
         public IEnumerable<FinalCallResponse> Get()
         {
             IEnumerable<FinalCallResponse> response = new List<FinalCallResponse>();
-            var resultDb = context.FinalCall.ToList().OrderBy(x => x.IdFinalCall);
+            var resultDb = context.FinalCall.Include(x => x.Subject).Include(x => x.InscriptionWindow).Include(x=>x.InscriptionFinals).ToList().OrderBy(x => x.Id);
             response = _mapper.Map<IEnumerable<FinalCall>, IEnumerable<FinalCallResponse>>(resultDb);
             return response;
         }
@@ -41,7 +41,7 @@ namespace DDSDGuarani.Controllers
         public FinalCallResponse Get(int id)
         {
             FinalCallResponse response = new FinalCallResponse();
-            var resultDb = context.FinalCall.FirstOrDefault(u => u.IdFinalCall == id);
+            var resultDb = context.FinalCall.Include(x => x.Subject).Include(x => x.InscriptionWindow).Include(x => x.InscriptionFinals).FirstOrDefault(u => u.Id == id);
             response = _mapper.Map<FinalCall, FinalCallResponse>(resultDb);
             return response;
         }
@@ -76,7 +76,7 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                if (finalCall.IdFinalCall == id)
+                if (finalCall.Id == id)
                 {
                     context.Entry(finalCall).State = EntityState.Modified;
                     context.SaveChanges();
@@ -103,7 +103,7 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                var finalCall = context.FinalCall.FirstOrDefault(u => u.IdFinalCall == id);
+                var finalCall = context.FinalCall.FirstOrDefault(u => u.Id == id);
                 if (finalCall != null)
                 {
                     context.FinalCall.Remove(finalCall);

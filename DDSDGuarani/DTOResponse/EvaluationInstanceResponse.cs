@@ -8,7 +8,7 @@ namespace DDSDGuarani.DTOResponse
 {
     public class EvaluationInstanceResponse
     {
-        public int IdEvaluationInstance { get; set; }
+        public int Id { get; set; }
         public double Score { get; set; }
         public DateTime Date { get; set; }
         public EIType Type { get; set; }

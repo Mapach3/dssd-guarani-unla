@@ -6,10 +6,12 @@ namespace DDSDGuarani.Entities
 {
     public class InscriptionFinal
     {
-        public int IdUser { get; set; }
-        public int IdFinal { get; set; }
-
+        //Relation - ManyToOne - User
+        public int UserId { get; set; }
         public User User { get; set; }
+
+        //Relation - ManyToOne - FinalCall
+        public int FinalId { get; set; }
         public FinalCall FinalCall { get; set; }
     }
 }

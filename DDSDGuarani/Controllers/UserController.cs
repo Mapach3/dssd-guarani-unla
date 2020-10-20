@@ -28,7 +28,7 @@ namespace DDSDGuarani.Controllers
         public IEnumerable<UserResponse> Get()
         {
             IEnumerable<UserResponse> response = new List<UserResponse>();
-            var resultDb = context.User.ToList().OrderBy(x => x.Id);
+            var resultDb = context.User.Include(x => x.Address).Include(x => x.InscriptionFinals).Include(x => x.EvaluationInstances).Include(x => x.Courses).ToList().OrderBy(x => x.Id);
             response = _mapper.Map<IEnumerable<User>, IEnumerable<UserResponse>>(resultDb);
             return response;
         }
@@ -41,7 +41,7 @@ namespace DDSDGuarani.Controllers
         public UserResponse Get(int id)
         {
             UserResponse response = new UserResponse();
-            var resultDb = context.User.FirstOrDefault(u => u.Id == id);
+            var resultDb = context.User.Include(x => x.Address).Include(x => x.InscriptionFinals).Include(x => x.EvaluationInstances).Include(x => x.Courses).FirstOrDefault(u => u.Id == id);
             response = _mapper.Map<User, UserResponse>(resultDb);
             return response;
         }

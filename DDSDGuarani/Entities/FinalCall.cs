@@ -8,21 +8,18 @@ namespace DDSDGuarani.Entities
 {
     public class FinalCall
     {
-        [Key]
-        public int IdFinalCall { get; set; }
-        
-        [AllowNull]
+        public int Id { get; set; }
         public DateTime Date { get; set; }
 
-        [ForeignKey("IdSubject")]
-        [Required]
+        //Relation - ManyToOne - Subject
+        public int SubjectId { get; set; }
         public Subject Subject { get; set; }
 
-        [ForeignKey("IdInscriptionWindow")]
-        [Required]
+        //Relation - ManyToOne - InscriptionWindow
+        public int InscriptionWindowId { get; set; }
         public InscriptionWindow InscriptionWindow { get; set; }
 
-        public List<InscriptionFinal> FinallCallInscriptionFinals { get; set; }
-
+        //Relation - OneToMany - InscriptionFinal
+        public List<InscriptionFinal> InscriptionFinals { get; set; } = new List<InscriptionFinal>();
     }
 }

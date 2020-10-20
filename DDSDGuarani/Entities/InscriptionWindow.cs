@@ -7,15 +7,11 @@ namespace DDSDGuarani.Entities
 {
     public class InscriptionWindow
     {
-        [Key]
-        public int IdInscriptionWindow { get; set; }
-        
+        public int Id { get; set; }  
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        
-        public List<Subject> Subjects { get; set; }
 
-        public List<FinalCall> Finals { get; set; }
-
+        //Relation - OneToMany - FinalCall
+        public List<FinalCall> Finals { get; set; } = new List<FinalCall>();
     }
 }

@@ -7,7 +7,7 @@ namespace DDSDGuarani.DTOResponse
 {
     public class AddressResponse
     {
-        public int IdAddress { get; set; }
+        public int Id { get; set; }
         public string StreetAndNumber { get; set; }
         public string Location { get; set; }
         public string PostalCode { get; set; }

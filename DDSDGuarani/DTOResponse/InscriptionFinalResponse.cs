@@ -7,7 +7,7 @@ namespace DDSDGuarani.DTOResponse
 {
     public class InscriptionFinalResponse
     {
-        public int IdUser { get; set; }
-        public int IdFinal { get; set; }
+        public int UserId { get; set; }
+        public int FinalId { get; set; }
     }
 }

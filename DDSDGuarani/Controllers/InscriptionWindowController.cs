@@ -28,7 +28,7 @@ namespace DDSDGuarani.Controllers
         public IEnumerable<InscriptionWindowResponse> Get()
         {
             IEnumerable<InscriptionWindowResponse> response = new List<InscriptionWindowResponse>();
-            var resultDb = context.InscriptionWindow.ToList().OrderBy(x => x.IdInscriptionWindow);
+            var resultDb = context.InscriptionWindow.Include(x => x.Finals).ToList().OrderBy(x => x.Id);
             response = _mapper.Map<IEnumerable<InscriptionWindow>, IEnumerable<InscriptionWindowResponse>>(resultDb);
             return response;
         }
@@ -41,7 +41,7 @@ namespace DDSDGuarani.Controllers
         public InscriptionWindowResponse Get(int id)
         {
             InscriptionWindowResponse response = new InscriptionWindowResponse();
-            var resultDb = context.InscriptionWindow.FirstOrDefault(u => u.IdInscriptionWindow == id);
+            var resultDb = context.InscriptionWindow.Include(x => x.Finals).FirstOrDefault(u => u.Id == id);
             response = _mapper.Map<InscriptionWindow, InscriptionWindowResponse>(resultDb);
             return response;
         }
@@ -76,7 +76,7 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                if (inscriptionWindow.IdInscriptionWindow == id)
+                if (inscriptionWindow.Id == id)
                 {
                     context.Entry(inscriptionWindow).State = EntityState.Modified;
                     context.SaveChanges();
@@ -103,7 +103,7 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                var inscriptionWindow = context.InscriptionWindow.FirstOrDefault(u => u.IdInscriptionWindow == id);
+                var inscriptionWindow = context.InscriptionWindow.FirstOrDefault(u => u.Id == id);
                 if (inscriptionWindow != null)
                 {
                     context.InscriptionWindow.Remove(inscriptionWindow);

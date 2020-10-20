@@ -7,10 +7,10 @@ namespace DDSDGuarani.DTOResponse
 {
     public class FinalCallResponse
     {
-        public int IdFinalCall { get; set; }
+        public int Id { get; set; }
         public DateTime Date { get; set; }
         public int Subject { get; set; }
         public InscriptionWindowResponse InscriptionWindow { get; set; }
-        public List<InscriptionFinalResponse> FinallCallInscriptionFinals { get; set; }
+        public List<InscriptionFinalResponse> InscriptionFinals { get; set; }
     }
 }

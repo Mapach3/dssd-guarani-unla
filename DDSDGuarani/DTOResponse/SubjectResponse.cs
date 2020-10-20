@@ -8,16 +8,16 @@ namespace DDSDGuarani.DTOResponse
 {
     public class SubjectResponse
     {
-        public int IdSubject { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }   
         public int Year { get; set; }
         public int Period { get; set; }
         public SubjectShift Shift { get; set; }
-        public List<CourseResponse> SubjectCourses { get; set; }
-        public List<EvaluationInstanceResponse> SubjectEvaluations { get; set; }
-        public List<FinalCallResponse> SubjectFinals { get; set; }
+        public List<CourseResponse> Courses { get; set; }
+        public List<EvaluationInstanceResponse> EvaluationInstances { get; set; }
+        public List<FinalCallResponse> Finals { get; set; }
         public InscriptionWindowResponse InscriptionWindow { get; set; }
     }
 }

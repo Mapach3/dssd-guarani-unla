@@ -7,7 +7,7 @@ namespace DDSDGuarani.DTOResponse
 {
     public class InscriptionWindowResponse
     {
-        public int IdInscriptionWindow { get; set; }
+        public int Id { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }

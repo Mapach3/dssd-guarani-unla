@@ -28,7 +28,7 @@ namespace DDSDGuarani.Controllers
         public IEnumerable<InscriptionFinalResponse> Get()
         {
             IEnumerable<InscriptionFinalResponse> response = new List<InscriptionFinalResponse>();
-            var resultDb = context.InscriptionFinal.ToList().OrderBy(x => x.IdFinal);
+            var resultDb = context.InscriptionFinal.Include(x => x.FinalCall).Include(x => x.User).ToList().OrderBy(x => x.UserId);
             response = _mapper.Map<IEnumerable<InscriptionFinal>, IEnumerable<InscriptionFinalResponse>>(resultDb);
             return response;
         }
@@ -41,7 +41,7 @@ namespace DDSDGuarani.Controllers
         public InscriptionFinalResponse Get(int id)
         {
             InscriptionFinalResponse response = new InscriptionFinalResponse();
-            var resultDb = context.InscriptionFinal.FirstOrDefault(u => u.IdFinal == id);
+            var resultDb = context.InscriptionFinal.Include(x => x.FinalCall).Include(x => x.User).FirstOrDefault(u => u.UserId == id);
             response = _mapper.Map<InscriptionFinal, InscriptionFinalResponse>(resultDb);
             return response;
         }
@@ -76,7 +76,7 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                if (inscriptionFinal.IdFinal == id)
+                if (inscriptionFinal.UserId == id)
                 {
                     context.Entry(inscriptionFinal).State = EntityState.Modified;
                     context.SaveChanges();
@@ -103,7 +103,7 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                var inscriptionFinal = context.InscriptionFinal.FirstOrDefault(u => u.IdFinal == id);
+                var inscriptionFinal = context.InscriptionFinal.FirstOrDefault(u => u.UserId == id);
                 if (inscriptionFinal != null)
                 {
                     context.InscriptionFinal.Remove(inscriptionFinal);
