@@ -28,7 +28,7 @@ namespace DDSDGuarani.Controllers
         public IEnumerable<AddressResponse> Get()
         {
             IEnumerable<AddressResponse> response = new List<AddressResponse>();
-            var resultDb = context.Address.ToList().OrderBy(x => x.IdAddress);
+            var resultDb = context.Address.ToList().OrderBy(x => x.Id);
             response = _mapper.Map<IEnumerable<Address>, IEnumerable<AddressResponse>>(resultDb);
             return response;
         }
@@ -41,7 +41,7 @@ namespace DDSDGuarani.Controllers
         public AddressResponse Get(int id)
         {
             AddressResponse response = new AddressResponse();
-            var resultDb = context.Address.FirstOrDefault(u => u.IdAddress == id);
+            var resultDb = context.Address.FirstOrDefault(u => u.Id == id);
             response = _mapper.Map<Address, AddressResponse>(resultDb);
             return response;
         }
@@ -76,7 +76,7 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                if (address.IdAddress == id)
+                if (address.Id == id)
                 {
                     context.Entry(address).State = EntityState.Modified;
                     context.SaveChanges();
@@ -103,7 +103,7 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                var address = context.Address.FirstOrDefault(u => u.IdAddress == id);
+                var address = context.Address.FirstOrDefault(u => u.Id == id);
                 if (address != null)
                 {
                     context.Address.Remove(address);

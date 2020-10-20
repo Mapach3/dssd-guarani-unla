@@ -8,13 +8,17 @@ namespace DDSDGuarani.Entities
 {
     public class Address
     {
-        [Key]
-        public int IdAddress{ get; set; }
+        public int Id { get; set; }
         
         public string StreetAndNumber { get; set; }
         public string Location { get; set; }
         public string PostalCode { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+    
+
+      //  public User User { get; set; }
     }
+
+
 }

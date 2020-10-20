@@ -21,7 +21,7 @@ namespace DDSDGuarani.Migrations
 
             modelBuilder.Entity("DDSDGuarani.Entities.Address", b =>
                 {
-                    b.Property<int>("IdAddress")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -41,7 +41,7 @@ namespace DDSDGuarani.Migrations
                     b.Property<string>("StreetAndNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdAddress");
+                    b.HasKey("Id");
 
                     b.ToTable("Address");
                 });
@@ -190,7 +190,7 @@ namespace DDSDGuarani.Migrations
 
             modelBuilder.Entity("DDSDGuarani.Entities.User", b =>
                 {
-                    b.Property<int>("IdUser")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -198,15 +198,14 @@ namespace DDSDGuarani.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Dni")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("IdAddress")
-                        .IsRequired()
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -223,9 +222,10 @@ namespace DDSDGuarani.Migrations
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdUser");
+                    b.HasKey("Id");
 
-                    b.HasIndex("IdAddress");
+                    b.HasIndex("AddressId")
+                        .IsUnique();
 
                     b.ToTable("User");
                 });
@@ -296,8 +296,8 @@ namespace DDSDGuarani.Migrations
             modelBuilder.Entity("DDSDGuarani.Entities.User", b =>
                 {
                     b.HasOne("DDSDGuarani.Entities.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("IdAddress")
+                        .WithOne("User")
+                        .HasForeignKey("DDSDGuarani.Entities.User", "AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

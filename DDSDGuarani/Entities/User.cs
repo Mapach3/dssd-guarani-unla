@@ -8,9 +8,8 @@ namespace DDSDGuarani.Entities
 {
     public class User
     {
-        [Key]
-        public int IdUser { get; set; }
 
+        public int Id { get; set; }
         public string Email { get; set; } 
         public string Password { get; set; }
         public string Name { get; set; } 
@@ -24,8 +23,7 @@ namespace DDSDGuarani.Entities
 
         public UserRole Role { get; set; }
         
-        [ForeignKey("IdAddress")]
-        [Required]
+        public int AddressId { get; set; }
         public Address Address { get; set; }
 
 

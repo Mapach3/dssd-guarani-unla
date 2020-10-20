@@ -28,7 +28,7 @@ namespace DDSDGuarani.Controllers
         public IEnumerable<UserResponse> Get()
         {
             IEnumerable<UserResponse> response = new List<UserResponse>();
-            var resultDb = context.User.ToList().OrderBy(x => x.IdUser);
+            var resultDb = context.User.ToList().OrderBy(x => x.Id);
             response = _mapper.Map<IEnumerable<User>, IEnumerable<UserResponse>>(resultDb);
             return response;
         }
@@ -41,7 +41,7 @@ namespace DDSDGuarani.Controllers
         public UserResponse Get(int id)
         {
             UserResponse response = new UserResponse();
-            var resultDb = context.User.FirstOrDefault(u => u.IdUser == id);
+            var resultDb = context.User.FirstOrDefault(u => u.Id == id);
             response = _mapper.Map<User, UserResponse>(resultDb);
             return response;
         }
@@ -76,7 +76,7 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                if (user.IdUser == id)
+                if (user.Id == id)
                 {
                     context.Entry(user).State = EntityState.Modified;
                     context.SaveChanges();
@@ -103,7 +103,7 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                var user = context.User.FirstOrDefault(u => u.IdUser == id);
+                var user = context.User.FirstOrDefault(u => u.Id == id);
                 if (user != null)
                 {
                     context.User.Remove(user);

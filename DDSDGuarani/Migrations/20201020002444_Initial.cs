@@ -11,7 +11,7 @@ namespace DDSDGuarani.Migrations
                 name: "Address",
                 columns: table => new
                 {
-                    IdAddress = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StreetAndNumber = table.Column<string>(nullable: true),
                     Location = table.Column<string>(nullable: true),
@@ -21,7 +21,7 @@ namespace DDSDGuarani.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Address", x => x.IdAddress);
+                    table.PrimaryKey("PK_Address", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,7 +42,7 @@ namespace DDSDGuarani.Migrations
                 name: "User",
                 columns: table => new
                 {
-                    IdUser = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
@@ -52,16 +52,16 @@ namespace DDSDGuarani.Migrations
                     Active = table.Column<bool>(nullable: false),
                     PasswordChanged = table.Column<bool>(nullable: false),
                     Role = table.Column<int>(nullable: false),
-                    IdAddress = table.Column<int>(nullable: false)
+                    AddressId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.IdUser);
+                    table.PrimaryKey("PK_User", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_User_Address_IdAddress",
-                        column: x => x.IdAddress,
+                        name: "FK_User_Address_AddressId",
+                        column: x => x.AddressId,
                         principalTable: "Address",
-                        principalColumn: "IdAddress",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -111,7 +111,7 @@ namespace DDSDGuarani.Migrations
                         name: "FK_Course_User_IdUser",
                         column: x => x.IdUser,
                         principalTable: "User",
-                        principalColumn: "IdUser",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -140,7 +140,7 @@ namespace DDSDGuarani.Migrations
                         name: "FK_EvaluationInstance_User_IdUser",
                         column: x => x.IdUser,
                         principalTable: "User",
-                        principalColumn: "IdUser",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -191,7 +191,7 @@ namespace DDSDGuarani.Migrations
                         name: "FK_InscriptionFinal_User_IdUser",
                         column: x => x.IdUser,
                         principalTable: "User",
-                        principalColumn: "IdUser",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -231,9 +231,10 @@ namespace DDSDGuarani.Migrations
                 column: "IdInscriptionWindow");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_IdAddress",
+                name: "IX_User_AddressId",
                 table: "User",
-                column: "IdAddress");
+                column: "AddressId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
