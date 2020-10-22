@@ -85,11 +85,7 @@ export class Login extends Component{
                     <Button variant="contained" color="primary" onClick={() => this.performLogin()}>
                         Ingresar
                     </Button>
-                    
-
                 </form>
-
-
             </Container>
         )
 
