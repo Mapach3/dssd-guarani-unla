@@ -27,7 +27,7 @@ class UserInsert extends Component{
         formPostCode : '',
         formCity : '',
         formCountry : '',
-        wrongCredentials : false,
+        errorMsg : '',
     }
 
     onNameChange = (ev) => {
@@ -41,6 +41,11 @@ class UserInsert extends Component{
     onDniChange = (ev) => {
         var value = ev.target.value.replace(/[^0-9]/g, '');
         this.setState({formDni : value}) 
+    }
+
+    onUserTypeChange = (ev) => {
+        console.log("new value: ",ev.target.value)
+        this.setState({formUserType : ev.target.value}) 
     }
     
     onEmailChange = (ev) => {
@@ -73,17 +78,40 @@ class UserInsert extends Component{
     }
 
     sendUserData(){
-        console.log("Click send user data placeholder")
+        const {formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formLocation,formPostCode,formCity,formCountry} = this.state
+
+        if (formName.length == 0 || formSurname.length == 0 || formEmail.length == 0 || formPassword.length == 0 || formDni.length == 0 ||
+            formStreetAndNumber.length == 0 || formLocation.length == 0 || formPostCode.length == 0 || formCity.length == 0 || formCountry.length == 0){
+                this.setState({errorMsg : "Por favor, complete todos los campos."})
+            }else{
+                console.log("Codigo de logeo")
+
+                // const options = {
+                //     method: "POST",
+                //     url: __API_LOGIN,
+                //     headers : {
+                //         'Content-Type' : 'application/json',
+                //         'Access-Control-Allow-Origin' : '*'
+                //     },
+                    
+                //     data: {
+                //         email : this.state.formEmail,
+                //         password : this.state.formPassword
+                //     }
+                // }
+            }
+        
     }
 
     render(){
     return (
             <Container maxWidth="xs">
                 <h2>Alta de usuario</h2>
+                <h3>Todos los campos son obligatorios</h3>
                 <form autoComplete="off">
                     <Grid container spacing={1}>
                         <Grid item sm={6} >
-                            <TextField inputProps={{maxLength: 25}} variant="outlined" value={this.state.formName} onChange={(ev) => this.onNameChange(ev)} label="Nombre" type="text"/>
+                            <TextField required inputProps={{maxLength: 25}} variant="outlined" value={this.state.formName} onChange={(ev) => this.onNameChange(ev)} label="Nombre" type="text"/>
                         </Grid> 
                         
                         <Grid item sm={6}>
@@ -102,10 +130,10 @@ class UserInsert extends Component{
                         <Grid item sm={6}>
                             <FormControl fullWidth variant="outlined">
                                 <InputLabel id="demo-simple-select-outlined-label">Usuario</InputLabel>
-                                <Select>
-                                <MenuItem value={0}>Administrador</MenuItem>
-                                <MenuItem value={1}>Alumno</MenuItem>
-                                <MenuItem value={2}>Profesor</MenuItem>
+                                <Select onChange={(ev) => this.onUserTypeChange(ev)} value={this.state.formUserType}>
+                                    <MenuItem value={0}>Administrador</MenuItem>
+                                    <MenuItem value={1}>Alumno</MenuItem>
+                                    <MenuItem value={2}>Profesor</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid> 
@@ -129,7 +157,7 @@ class UserInsert extends Component{
                         
                     
                     </Grid>
-                    <br />                
+                    <p>{this.state.errorMsg}</p>
                     <Button variant="contained" color="primary" onClick={() => this.sendUserData()}>
                             Enviar
                     </Button>                          

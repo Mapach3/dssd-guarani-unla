@@ -16,17 +16,15 @@ export class Login extends Component{
     state = {
         formEmail : '',
         formPassword : '',
-        wrongCredentials : false,
+        wrongCredentials : 'Credenciales inválidas',
     }
 
     handleMailChange = (ev) => {
         this.setState({formEmail : ev.target.value})
-        console.log("Nuevo value Email: ",this.state.formEmail)
     }
 
     handlePasswordChange = (ev) => {
         this.setState({formPassword : ev.target.value})
-        console.log("Nuevo value Password: ",this.state.formPassword)
     }
 
     performLogin(){
@@ -55,7 +53,7 @@ export class Login extends Component{
                 this.props.setToken(loginResponse.data)
             }
             else
-                this.setState({wrongCredentials : true})
+                this.setState({wrongCredentials : "Error: credenciales inválidas"})
 
 
 
@@ -78,10 +76,8 @@ export class Login extends Component{
                     <FormControl>
                         <InputLabel htmlFor="component-simple">Contraseña</InputLabel>
                         <Input id="component-simple" type="password" onChange={this.handlePasswordChange}/>
-                    </FormControl> <br /> < br />
-                    {this.state.wrongCredentials ? 
-                    <><p>CREDENCIALES INVÁLIDAS</p> <br /></>: 
-                    null}
+                    </FormControl>
+                    <p>{this.state.wrongCredentials}</p>
                     <Button variant="contained" color="primary" onClick={() => this.performLogin()}>
                         Ingresar
                     </Button>
