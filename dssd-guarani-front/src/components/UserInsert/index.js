@@ -24,6 +24,7 @@ class UserInsert extends Component{
         //address
         formStreetAndNumber : '',
         formLocation : '',
+        formPostCode : '',
         formCity : '',
         formCountry : '',
         wrongCredentials : false,
@@ -38,7 +39,8 @@ class UserInsert extends Component{
     }
 
     onDniChange = (ev) => {
-        this.setState({formDni : ev.target.value}) 
+        var value = ev.target.value.replace(/[^0-9]/g, '');
+        this.setState({formDni : value}) 
     }
     
     onEmailChange = (ev) => {
@@ -46,13 +48,33 @@ class UserInsert extends Component{
     }
     
     onPasswordChange = (ev) => {
-        this.setState({formName : ev.target.value}) 
+        this.setState({formPassword : ev.target.value}) 
+    }
+
+    onStreetAndNumberChange = (ev) => {
+        this.setState({formStreetAndNumber : ev.target.value}) 
+    }
+
+    onPostCodeChange = (ev) => {
+        var value = ev.target.value.replace(/[^0-9]/g, '');
+        this.setState({formPostCode : value})
+    }
+
+    onLocationChange = (ev) => {
+        this.setState({formLocation : ev.target.value}) 
+    }
+
+    onCityChange = (ev) => {
+        this.setState({formCity : ev.target.value}) 
+    }
+
+    onCountryChange = (ev) => {
+        this.setState({formCountry : ev.target.value}) 
     }
 
     sendUserData(){
         console.log("Click send user data placeholder")
     }
-
 
     render(){
     return (
@@ -61,21 +83,21 @@ class UserInsert extends Component{
                 <form autoComplete="off">
                     <Grid container spacing={1}>
                         <Grid item sm={6} >
-                            <TextField variant="outlined" value={this.state.formName} onChange={(ev) => this.onNameChange(ev)} label="Nombre" type="text"/>
+                            <TextField inputProps={{maxLength: 25}} variant="outlined" value={this.state.formName} onChange={(ev) => this.onNameChange(ev)} label="Nombre" type="text"/>
                         </Grid> 
                         
                         <Grid item sm={6}>
-                            <TextField variant="outlined" value={this.state.formSurname} onChange={(ev) => this.onSurnameChange(ev)} label="Apellido" type="text"/>
+                            <TextField inputProps={{maxLength: 25}} variant="outlined" value={this.state.formSurname} onChange={(ev) => this.onSurnameChange(ev)} label="Apellido" type="text"/>
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField fullWidth variant="outlined" value={this.state.formEmail} onChange={(ev) => this.onEmailChange(ev)} label="Email" type="text"/>
+                            <TextField inputProps={{maxLength: 30}} fullWidth variant="outlined" value={this.state.formEmail} onChange={(ev) => this.onEmailChange(ev)} label="Email" type="text"/>
                         </Grid>
 
                         <Grid item xs={12}>
-                            <TextField fullWidth variant="outlined" value={this.state.formName} onChange={(ev) => this.onPasswordChange(ev)} label="Contraseña" type="password"/>
+                            <TextField inputProps={{maxLength: 12}} fullWidth variant="outlined" value={this.state.formPassword} onChange={(ev) => this.onPasswordChange(ev)} label="Contraseña" type="password"/>
                         </Grid> 
                         <Grid item sm={6}>
-                            <TextField variant="outlined" value={this.state.formDni} onChange={(ev) => this.onDniChange(ev)} label="DNI" type="text"/>
+                            <TextField inputProps={{maxLength: 8}} variant="outlined" value={this.state.formDni} onChange={(ev) => this.onDniChange(ev)} label="DNI" type="text"/>
                         </Grid> 
                         <Grid item sm={6}>
                             <FormControl fullWidth variant="outlined">
@@ -90,19 +112,21 @@ class UserInsert extends Component{
                     </Grid>
                     <Grid container spacing={1}>
                         <Grid item sm={12} >
-                            <TextField fullWidth variant="outlined" label="Calle y número" type="text"/>
-                        </Grid> 
-                        
+                            <TextField inputProps={{maxLength: 40}} value={this.state.formStreetAndNumber} onChange={(ev) => this.onStreetAndNumberChange(ev)} fullWidth variant="outlined" label="Calle y número" type="text"/>
+                        </Grid>                   
                         <Grid item sm={12}>
-                            <TextField fullWidth variant="outlined" label="Localidad" type="text"/>
+                            <TextField inputProps={{maxLength: 15}} value={this.state.formLocation} onChange={(ev) => this.onLocationChange(ev)} fullWidth variant="outlined" label="Localidad" type="text"/>
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField fullWidth variant="outlined" label="Ciudad" type="text"/>
-                        </Grid>
-
+                            <TextField inputProps={{maxLength: 4}} value={this.state.formPostCode} onChange={(ev) => this.onPostCodeChange(ev)} fullWidth variant="outlined" label="Código Postal" type="text"/>
+                        </Grid>  
                         <Grid item xs={12}>
-                            <TextField fullWidth variant="outlined" label="País" type="password"/>
-                        </Grid> 
+                            <TextField inputProps={{maxLength: 20}} value={this.state.formCity} onChange={(ev) => this.onCityChange(ev)} fullWidth variant="outlined" label="Ciudad" type="text"/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField inputProps={{maxLength: 20}} value={this.state.formCountry} onChange={(ev) => this.onCountryChange(ev)} fullWidth variant="outlined" label="País" type="text"/>
+                        </Grid>
+                        
                     
                     </Grid>
                     <br />                
