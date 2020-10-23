@@ -34,7 +34,7 @@ namespace DDSDGuarani.Controllers
         }
 
         /// <summary>
-        /// Trae Listado de Usuarios por ID
+        /// Trae Usuario por ID
         /// </summary>
         /// <param name="id"></param>  
         [HttpGet("{id}")]
@@ -42,6 +42,34 @@ namespace DDSDGuarani.Controllers
         {
             UserResponse response = new UserResponse();
             var resultDb = context.User.Include(x => x.Address).Include(x => x.InscriptionFinals).Include(x => x.EvaluationInstances).Include(x => x.Courses).FirstOrDefault(u => u.Id == id);
+            response = _mapper.Map<User, UserResponse>(resultDb);
+            return response;
+        }
+
+        /// <summary>
+        /// Trae un Usuario por DNI
+        /// </summary>
+        /// <param name="dni"></param>  
+        [HttpGet]
+        [Route("[action]/{dni}")]
+        public UserResponse Dni(int dni)
+        {
+            UserResponse response = new UserResponse();
+            var resultDb = context.User.FirstOrDefault(u => u.Dni == dni.ToString());
+            response = _mapper.Map<User, UserResponse>(resultDb);
+            return response;
+        }
+
+        /// <summary>
+        /// Trae un Usuario por Email
+        /// </summary>
+        /// <param name="email"></param>  
+        [HttpGet]
+        [Route("[action]/{email}")]
+        public UserResponse Dni(string email)
+        {
+            UserResponse response = new UserResponse();
+            var resultDb = context.User.FirstOrDefault(u => u.Email == email);
             response = _mapper.Map<User, UserResponse>(resultDb);
             return response;
         }
