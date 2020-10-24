@@ -3,7 +3,7 @@ import {Login} from './components/Login/Login'
 import UserInsert from './components/UserInsert/index'
 import './App.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import {Storage} from './consts/Storage'
+import {Storage} from './components/Storage'
 import {
   BrowserRouter as Router,
   Redirect,

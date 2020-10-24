@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
+import { __API_FIND_USER_DNI,__API_FIND_USER_EMAIL } from '../../consts/consts';
+import axios from 'axios'
 
 
 
@@ -77,28 +79,50 @@ class UserInsert extends Component{
         this.setState({formCountry : ev.target.value}) 
     }
 
-    sendUserData(){
+    async sendUserData(){
+        debugger;
+        this.setState({errorMsg : ''})
         const {formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formLocation,formPostCode,formCity,formCountry} = this.state
 
-        if (formName.length == 0 || formSurname.length == 0 || formEmail.length == 0 || formPassword.length == 0 || formDni.length == 0 ||
-            formStreetAndNumber.length == 0 || formLocation.length == 0 || formPostCode.length == 0 || formCity.length == 0 || formCountry.length == 0){
-                this.setState({errorMsg : "Por favor, complete todos los campos."})
+        if (formName.length === 0 || formSurname.length === 0 || formEmail.length === 0 || formPassword.length === 0 || formDni.length === 0 ||
+            formStreetAndNumber.length === 0 || formLocation.length === 0 || formPostCode.length === 0 || formCity.length === 0 || formCountry.length === 0){
+                this.setState({errorMsg : "Por favor, complete todos los campos"})
             }else{
-                console.log("Codigo de logeo")
+                
+                const findDni = axios.get(__API_FIND_USER_DNI+formDni)
+                const findEmail = axios.get(__API_FIND_USER_EMAIL+formEmail)
+                var dni = null;
+                var email = null;
 
-                // const options = {
-                //     method: "POST",
-                //     url: __API_LOGIN,
-                //     headers : {
-                //         'Content-Type' : 'application/json',
-                //         'Access-Control-Allow-Origin' : '*'
-                //     },
-                    
-                //     data: {
-                //         email : this.state.formEmail,
-                //         password : this.state.formPassword
-                //     }
-                // }
+                await axios.all([findDni,findEmail]).then(axios.spread((...responses) => {
+                    console.log("Response DNI: ",responses[0])
+                    console.log("Response EMAIL: ",responses[1])
+                     dni = responses[0].data;
+                     email = responses[1].data;
+
+                })).catch( errors => {
+                    console.error("Error during findDni,findEmail UserInsert: ",errors)
+                })
+
+                if (dni === "" && email === ""){
+                    console.log("IMPLEMENTAR AGREGADO CORRECTO DEL USUARIO. Se agregó bien porque llegamos aca")
+
+                }else{
+                    var errorMsg = "Errores: ";
+                    if (dni !== ""){
+                        errorMsg+="\nYa existe un usuario con ese Dni"
+                    }
+                    if (email !== ""){
+                        errorMsg+="\nYa existe un usuario con ese Email"
+                    }
+
+                    this.setState({errorMsg : errorMsg})
+                }
+
+
+
+
+
             }
         
     }
@@ -107,11 +131,11 @@ class UserInsert extends Component{
     return (
             <Container maxWidth="xs">
                 <h2>Alta de usuario</h2>
-                <h3>Todos los campos son obligatorios</h3>
+                <h3><i>Todos los campos son obligatorios</i></h3>
                 <form autoComplete="off">
                     <Grid container spacing={1}>
                         <Grid item sm={6} >
-                            <TextField required inputProps={{maxLength: 25}} variant="outlined" value={this.state.formName} onChange={(ev) => this.onNameChange(ev)} label="Nombre" type="text"/>
+                            <TextField inputProps={{maxLength: 25}} variant="outlined" value={this.state.formName} onChange={(ev) => this.onNameChange(ev)} label="Nombre" type="text"/>
                         </Grid> 
                         
                         <Grid item sm={6}>
@@ -138,6 +162,7 @@ class UserInsert extends Component{
                             </FormControl>
                         </Grid> 
                     </Grid>
+                    <br />
                     <Grid container spacing={1}>
                         <Grid item sm={12} >
                             <TextField inputProps={{maxLength: 40}} value={this.state.formStreetAndNumber} onChange={(ev) => this.onStreetAndNumberChange(ev)} fullWidth variant="outlined" label="Calle y número" type="text"/>
@@ -157,7 +182,7 @@ class UserInsert extends Component{
                         
                     
                     </Grid>
-                    <p>{this.state.errorMsg}</p>
+                    {this.state.errorMsg.split("\n").map(str => <p>{str}</p>)}
                     <Button variant="contained" color="primary" onClick={() => this.sendUserData()}>
                             Enviar
                     </Button>                          

@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
 import {__API_LOGIN} from '../../consts/consts';
-import {Storage} from '../../consts/Storage'
+import {Storage} from '../Storage'
 
 
 export class Login extends Component{
