@@ -66,7 +66,7 @@ namespace DDSDGuarani.Controllers
         /// <param name="email"></param>  
         [HttpGet]
         [Route("[action]/{email}")]
-        public UserResponse Dni(string email)
+        public UserResponse Email(string email)
         {
             UserResponse response = new UserResponse();
             var resultDb = context.User.FirstOrDefault(u => u.Email == email);
