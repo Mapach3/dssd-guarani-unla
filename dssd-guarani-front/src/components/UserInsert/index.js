@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
-import { __API_FIND_USER_DNI,__API_FIND_USER_EMAIL } from '../../consts/consts';
+import { __API_FIND_USER_DNI,__API_FIND_USER_EMAIL,__API_POST_USER } from '../../consts/consts';
 import axios from 'axios'
 
 
@@ -82,7 +82,7 @@ class UserInsert extends Component{
     async sendUserData(){
         debugger;
         this.setState({errorMsg : ''})
-        const {formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formLocation,formPostCode,formCity,formCountry} = this.state
+        const {formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formUserType,formLocation,formPostCode,formCity,formCountry} = this.state
 
         if (formName.length === 0 || formSurname.length === 0 || formEmail.length === 0 || formPassword.length === 0 || formDni.length === 0 ||
             formStreetAndNumber.length === 0 || formLocation.length === 0 || formPostCode.length === 0 || formCity.length === 0 || formCountry.length === 0){
@@ -105,10 +105,50 @@ class UserInsert extends Component{
                 })
 
                 if (dni === "" && email === ""){
-                    console.log("IMPLEMENTAR AGREGADO CORRECTO DEL USUARIO. Se agregó bien porque llegamos aca")
+
+                    const options = {
+                        method: "POST",
+                        url: __API_POST_USER,
+                        headers : {
+                            'Content-Type' : 'application/json',
+                            'Access-Control-Allow-Origin' : '*'
+                        },
+                        
+                        data: {
+                            email: formEmail,
+                            password: formPassword,
+                            name: formName,
+                            surname: formSurname,
+                            dni: formDni,
+                            active: true,
+                            passwordChanged: true,
+                            role: formUserType,
+                            address: {
+                              streetAndNumber: formStreetAndNumber,
+                              location: formLocation,
+                              postalCode: formPostCode,
+                              city: formCity,
+                              country: formCountry
+                            }
+                          }
+                    }
+
+                    await axios(options).then( response => {
+                        debugger;
+                        console.log(response)
+                        if (response.statusText === "OK")
+                            this.setState({formEmail : '', formPassword : '', formName : '', formSurname : '', formDni : '',formUserType : '',formStreetAndNumber : '',
+                                       formLocation : '',formPostCode : '',formCity : '',formCountry : '', errorMsg : 'El usuario se dió de alta correctamente.'})
+
+                    }).catch(error => {
+                        this.setState({errorMsg: 'Ocurrió un error insertando al usuario.'})
+                        console.error("Error InsertUser POST: ",error)
+
+                    })
+
 
                 }else{
-                    var errorMsg = "Errores: ";
+                    var errorMsg = "Revise lo siguiente: ";
                     if (dni !== ""){
                         errorMsg+="\nYa existe un usuario con ese Dni"
                     }
@@ -130,7 +170,7 @@ class UserInsert extends Component{
     render(){
     return (
             <Container maxWidth="xs">
-                <h2>Alta de usuario</h2>
+                <h2>Ingrese los datos del usuario</h2>
                 <h3><i>Todos los campos son obligatorios</i></h3>
                 <form autoComplete="off">
                     <Grid container spacing={1}>
