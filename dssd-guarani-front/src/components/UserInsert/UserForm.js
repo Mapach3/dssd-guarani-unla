@@ -100,9 +100,9 @@ class UserForm extends Component{
 
     insertUser(){
         this.props.action(this.state)
-        if (this.props.errorMsg === "El usuario se dió de alta correctamente")
-        this.setState({formEmail : '', formPassword : '', formName : '', formSurname : '', formDni : '',formUserType : '',formStreetAndNumber : '',
-                       formLocation : '',formPostCode : '',formCity : '',formCountry : ''})
+        if (this.props.userInserted)
+            this.setState({formEmail : '', formPassword : '', formName : '', formSurname : '', formDni : '',formUserType : '',formStreetAndNumber : '',
+                        formLocation : '',formPostCode : '',formCity : '',formCountry : '', imgBase64 : ''})
     }
 
 

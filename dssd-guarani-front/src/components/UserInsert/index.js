@@ -12,7 +12,8 @@ class UserInsert extends Component{
         super()
         
         this.state = {
-            errorMsg : ''
+            errorMsg : '',
+            userInserted : false
         }
 
         this.sendUserData = this.sendUserData.bind(this)
@@ -20,7 +21,7 @@ class UserInsert extends Component{
      async sendUserData(userData) {
 
         debugger;
-        this.setState({errorMsg : ''})
+        this.setState({errorMsg : '', userInserted : false})
         const {imgBase64,formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formUserType,formLocation,formPostCode,formCity,formCountry} = userData
 
         if (formName.length === 0 || formSurname.length === 0 || formEmail.length === 0 || formPassword.length === 0 || formDni.length === 0 || imgBase64.length === 0 ||
@@ -78,7 +79,7 @@ class UserInsert extends Component{
                         debugger;
                         console.log(response)
                         if (response.statusText === "OK")
-                             this.setState({errorMsg : 'El usuario se dió de alta correctamente.'})
+                             this.setState({errorMsg : 'El usuario se dió de alta correctamente.', userInserted : true})
 
 
                     }).catch(error => {
@@ -102,7 +103,7 @@ class UserInsert extends Component{
     }
 
     render(){
-        return <UserForm action={this.sendUserData} errorMsg={this.state.errorMsg}/>
+        return <UserForm action={this.sendUserData} errorMsg={this.state.errorMsg} userInserted={this.state.userInserted}/>
     }
 
 }
