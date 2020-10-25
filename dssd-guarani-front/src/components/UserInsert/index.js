@@ -11,12 +11,13 @@ import Grid from '@material-ui/core/Grid'
 import { __API_FIND_USER_DNI,__API_FIND_USER_EMAIL,__API_POST_USER } from '../../consts/consts';
 import axios from 'axios'
 
-
+import ImageUploader from 'react-images-upload';
 
 class UserInsert extends Component{
 
     state = {
         //personalInfo
+        imgBase64 : '',
         formName : '',
         formSurname : '',
         formDni : '',
@@ -167,6 +168,23 @@ class UserInsert extends Component{
         
     }
 
+    setImg = (picArray) => {
+        var profilePic = picArray[0]
+        console.log("La picture es: ",profilePic)
+        let reader = new FileReader()
+        var preview = document.getElementById("profile-pic")
+        
+        reader.onloadend = () =>  {
+            preview.src = reader.result;
+            this.setState({imgBase64 : reader.result})
+          }
+          if (profilePic) {
+            reader.readAsDataURL(profilePic);
+          } else {
+            preview.src = "";
+          }
+    }
+
     render(){
     return (
             <Container maxWidth="xs">
@@ -174,6 +192,18 @@ class UserInsert extends Component{
                 <h3><i>Todos los campos son obligatorios</i></h3>
                 <form autoComplete="off">
                     <Grid container spacing={1}>
+                        <Grid item xs={12}>
+                        <ImageUploader
+                            withIcon={false}
+                            buttonText='Subir imagen...'
+                            onChange={this.setImg}
+                            singleImage={true}
+                            withLabel={false}
+                            withPreview={true}
+                            fileTypeError=" no es un archivo soportado."
+                        />
+                        <img style= {{display : "none"}} id="profile-pic" src="" alt=""></img>             
+                        </Grid>
                         <Grid item sm={6} >
                             <TextField inputProps={{maxLength: 25}} variant="outlined" value={this.state.formName} onChange={(ev) => this.onNameChange(ev)} label="Nombre" type="text"/>
                         </Grid> 
@@ -225,9 +255,12 @@ class UserInsert extends Component{
                     {this.state.errorMsg.split("\n").map(str => <p>{str}</p>)}
                     <Button variant="contained" color="primary" onClick={() => this.sendUserData()}>
                             Enviar
-                    </Button>                          
+                    </Button>
+                                             
                 </form>
+                <br /> 
             </Container>
+            
         )
 
     }
