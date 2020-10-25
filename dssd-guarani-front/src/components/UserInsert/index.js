@@ -10,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
 import { __API_FIND_USER_DNI,__API_FIND_USER_EMAIL,__API_POST_USER } from '../../consts/consts';
 import axios from 'axios'
+import Chip from '@material-ui/core/Chip';
 
 import ImageUploader from 'react-images-upload';
 
@@ -83,9 +84,9 @@ class UserInsert extends Component{
     async sendUserData(){
         debugger;
         this.setState({errorMsg : ''})
-        const {formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formUserType,formLocation,formPostCode,formCity,formCountry} = this.state
+        const {imgBase64,formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formUserType,formLocation,formPostCode,formCity,formCountry} = this.state
 
-        if (formName.length === 0 || formSurname.length === 0 || formEmail.length === 0 || formPassword.length === 0 || formDni.length === 0 ||
+        if (formName.length === 0 || formSurname.length === 0 || formEmail.length === 0 || formPassword.length === 0 || formDni.length === 0 || imgBase64.length === 0 ||
             formStreetAndNumber.length === 0 || formLocation.length === 0 || formPostCode.length === 0 || formCity.length === 0 || formCountry.length === 0){
                 this.setState({errorMsg : "Por favor, complete todos los campos"})
             }else{
@@ -124,6 +125,7 @@ class UserInsert extends Component{
                             active: true,
                             passwordChanged: true,
                             role: formUserType,
+                            imgBase64 : imgBase64,
                             address: {
                               streetAndNumber: formStreetAndNumber,
                               location: formLocation,
@@ -141,6 +143,7 @@ class UserInsert extends Component{
                             this.setState({formEmail : '', formPassword : '', formName : '', formSurname : '', formDni : '',formUserType : '',formStreetAndNumber : '',
                                        formLocation : '',formPostCode : '',formCity : '',formCountry : '', errorMsg : 'El usuario se dió de alta correctamente.'})
 
+
                     }).catch(error => {
                         this.setState({errorMsg: 'Ocurrió un error insertando al usuario.'})
                         console.error("Error InsertUser POST: ",error)
@@ -151,10 +154,10 @@ class UserInsert extends Component{
                 }else{
                     var errorMsg = "Revise lo siguiente: ";
                     if (dni !== ""){
-                        errorMsg+="\nYa existe un usuario con ese Dni"
+                        errorMsg+=" Ya existe un usuario con ese Dni."
                     }
                     if (email !== ""){
-                        errorMsg+="\nYa existe un usuario con ese Email"
+                        errorMsg+=" Ya existe un usuario con ese Email."
                     }
 
                     this.setState({errorMsg : errorMsg})
@@ -169,6 +172,7 @@ class UserInsert extends Component{
     }
 
     setImg = (picArray) => {
+        debugger;
         var profilePic = picArray[0]
         console.log("La picture es: ",profilePic)
         let reader = new FileReader()
@@ -248,11 +252,21 @@ class UserInsert extends Component{
                         </Grid>
                         <Grid item xs={12}>
                             <TextField inputProps={{maxLength: 20}} value={this.state.formCountry} onChange={(ev) => this.onCountryChange(ev)} fullWidth variant="outlined" label="País" type="text"/>
-                        </Grid>
-                        
-                    
+                        </Grid>  
                     </Grid>
-                    {this.state.errorMsg.split("\n").map(str => <p>{str}</p>)}
+                
+                    {this.state.errorMsg.length !== 0 ?
+                    <>
+                    < br/>
+                    <Chip
+                        variant="outlined"
+                        color="primary"
+                        size="small"
+                        label={this.state.errorMsg}
+                    />
+                    < br/>
+                    </> : null}
+                    < br/>
                     <Button variant="contained" color="primary" onClick={() => this.sendUserData()}>
                             Enviar
                     </Button>
