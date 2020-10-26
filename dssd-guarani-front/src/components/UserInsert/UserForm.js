@@ -47,7 +47,6 @@ class UserForm extends Component{
     }
 
     onUserTypeChange = (ev) => {
-        console.log("new value: ",ev.target.value)
         this.setState({formUserType : ev.target.value}) 
     }
 
@@ -81,9 +80,7 @@ class UserForm extends Component{
     }
 
     setImg = (picArray) => {
-        debugger;
         var profilePic = picArray[0]
-        console.log("La picture es: ",profilePic)
         let reader = new FileReader()
         var preview = document.getElementById("profile-pic")
         
