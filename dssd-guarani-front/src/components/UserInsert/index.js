@@ -24,19 +24,15 @@ class UserInsert extends Component{
 
     }
 
-    setUserInserted(value){
-        this.setState({userInserted : value})
+    setClearForm(value){
+        this.setState({clearForm: value, errorMsg : ''})
+
     }
 
     componentDidMount(){
         //traigo la lista de usuarios para validar por Mail y DNI
         this.getUserList()
     }
-
-    setClearForm(value){
-        this.setState({clearForm: value})
-    }
-
 
     validateUserEmailAndDni(formEmail,formDni) {
         var errorMsg="";

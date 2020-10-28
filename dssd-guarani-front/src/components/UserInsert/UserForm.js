@@ -100,7 +100,9 @@ class UserForm extends Component{
     clearValues() {
         console.log("Clearing values")
         this.setState({formEmail : '', formPassword : '', formName : '', formSurname : '', formDni : '',formUserType : '',formStreetAndNumber : '',
-        formLocation : '',formPostCode : '',formCity : '',formCountry : '', imgBase64 : ''})    
+        formLocation : '',formPostCode : '',formCity : '',formCountry : '', imgBase64 : ''})
+         
+        this.props.setClearForm(false)
     }   
 
     insertUser(){
