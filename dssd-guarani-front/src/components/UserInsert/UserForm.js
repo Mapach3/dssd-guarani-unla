@@ -8,8 +8,6 @@ import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
-import { __API_FIND_USER_DNI,__API_FIND_USER_EMAIL,__API_POST_USER } from '../../consts/consts';
-import axios from 'axios'
 import Chip from '@material-ui/core/Chip';
 
 import ImageUploader from 'react-images-upload';
@@ -95,19 +93,26 @@ class UserForm extends Component{
           }
     }
 
+    deletePicture(){
+        this.setState({imgBase64 : ''})
+
+    }
+
+        // this.setState({formEmail : '', formPassword : '', formName : '', formSurname : '', formDni : '',formUserType : '',formStreetAndNumber : '',
+        //             formLocation : '',formPostCode : '',formCity : '',formCountry : '', imgBase64 : ''})
+
+
     insertUser(){
-        this.props.action(this.state)
-        if (this.props.userInserted)
-            this.setState({formEmail : '', formPassword : '', formName : '', formSurname : '', formDni : '',formUserType : '',formStreetAndNumber : '',
-                        formLocation : '',formPostCode : '',formCity : '',formCountry : '', imgBase64 : ''})
+        debugger;
+        this.props.action(this.state)     
     }
 
 
     render(){
         return (
+               
                 <Container maxWidth="xs">
-                    <h2>Ingrese los datos del usuario</h2>
-                    <h3><i>Todos los campos son obligatorios</i></h3>
+                    <h3>Ingrese los datos del usuario</h3>
                     <form autoComplete="off">
                         <Grid container spacing={1}>
                             <Grid item xs={12}>
@@ -120,6 +125,8 @@ class UserForm extends Component{
                                 fileTypeError=" no es un archivo soportado."
                             />
                             <img style= {{borderRadius : "50%"}} id="profile-pic" src={this.state.imgBase64.length === 0 ? NoImage : this.state.imgBase64} width="100" height="100" alt=""></img>             
+                            <br />
+                            {this.state.imgBase64.length === 0 ? null : <Button variant="contained" color="primary" onClick={() => this.deletePicture()}>Eliminar</Button>  }
                             </Grid>
                             <Grid item sm={6} >
                                 <TextField inputProps={{maxLength: 25}} variant="outlined" value={this.state.formName} onChange={(ev) => this.onNameChange(ev)} label="Nombre" type="text"/>

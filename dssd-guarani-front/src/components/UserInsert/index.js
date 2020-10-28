@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import { __API_FIND_USER_DNI,__API_FIND_USER_EMAIL,__API_POST_USER } from '../../consts/consts';
+import {__API_USER } from '../../consts/consts';
 import axios from 'axios'
 
 import UserForm from './UserForm'
@@ -11,39 +11,40 @@ class UserInsert extends Component{
 
     state = {
         errorMsg : '',
-        email : '',
-        dni : '',
-        userInserted : false
+        userInserted : false,
+        userList : [],
     }
 
-    async validateEmailAndDni(email,dni){
 
-        const findDni = axios.get(__API_FIND_USER_DNI+dni)
-        const findEmail= axios.get(__API_FIND_USER_EMAIL+email)
+    componentDidMount(){
+        //traigo la lista de usuarios para validar por Mail y DNI
+        axios.get(__API_USER).then( resp => {
+            console.log(resp.data);
+            this.setState({userList : resp.data})
+        })}
 
-        await axios.all([findDni,findEmail]).then(axios.spread((respDni, respEmail) => {
 
-            if (respDni.status === 200 || respEmail.status === 200){
-                var errorMsg = "Revise lo siguiente:";
-                if (respDni.status === 200){
-                    errorMsg+=" Ya existe un usuario con ese Dni."
-                }
-                if (respEmail.status === 200){
-                    errorMsg+=" Ya existe un usuario con ese Email."
-                }
-                this.setState({errorMsg : errorMsg})
+    validateUserEmailAndDni(formEmail,formDni) {
+        var errorMsg="";
+        var userSameDni = this.state.userList.find( user => user.dni === formDni)
+        var userSameEmail = this.state.userList.find(user => user.email === formEmail)
 
-            }else {
-                console.log("Llamar al metodo de insertarlo bien")
-
+        if (userSameDni !== undefined || userSameEmail !== undefined){
+            errorMsg+="Revise lo siguiente: "
+            if (userSameDni !== undefined){
+                errorMsg+=" Ya hay un usuario con ese Dni. \r\n"
             }
-        }))
-
-
+            if (userSameEmail !== undefined){
+                errorMsg+=" Ya hay un usuario con ese Email. \r\n"
+            }
+            this.setState({errorMsg : errorMsg})
+            return errorMsg
+        }
+        return ""
     }
+
 
     handleUserData(userData)  {
-
         debugger;
         this.setState({errorMsg : '', userInserted : false})
         const {imgBase64,formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formUserType,formLocation,formPostCode,formCity,formCountry} = userData
@@ -55,53 +56,51 @@ class UserInsert extends Component{
                 this.setState({errorMsg : "Por favor, complete todos los campos"})
 
         }else{
+           
+            if (this.validateUserEmailAndDni(formEmail,formDni).length === 0){
 
-            this.validateEmailAndDni(formEmail,formDni)
-                
-            // if (this.state.dni === "" && this.state.dni === ""){
-            //     debugger;
-
-            //     const options = {
-            //         method: "POST",
-            //         url: __API_POST_USER,
-            //         headers : {
-            //             'Content-Type' : 'application/json',
-            //             'Access-Control-Allow-Origin' : '*'
-            //         },
+                const options = {
+                    method: "POST",
+                    url: __API_USER,
+                    headers : {
+                        'Content-Type' : 'application/json',
+                        'Access-Control-Allow-Origin' : '*'
+                    },
                     
-            //         data: {
-            //             email: formEmail,
-            //             password: formPassword,
-            //             name: formName,
-            //             surname: formSurname,
-            //             dni: formDni,
-            //             active: true,
-            //             passwordChanged: true,
-            //             role: formUserType,
-            //             imgBase64 : imgBase64,
-            //             address: {
-            //               streetAndNumber: formStreetAndNumber,
-            //               location: formLocation,
-            //               postalCode: formPostCode,
-            //               city: formCity,
-            //               country: formCountry
-            //             }
-            //           }
-            //     }
+                    data: {
+                        email: formEmail,
+                        password: formPassword,
+                        name: formName,
+                        surname: formSurname,
+                        dni: formDni,
+                        active: true, //change to active FALSE in the future
+                        passwordChanged: true,
+                        role: formUserType,
+                        imgBase64 : imgBase64,
+                        address: {
+                          streetAndNumber: formStreetAndNumber,
+                          location: formLocation,
+                          postalCode: formPostCode,
+                          city: formCity,
+                          country: formCountry
+                        }
+                      }
+                }
 
-            //     await axios(options).then( response => {
-            //         debugger;
-            //         console.log(response)
-            //         if (response.statusText === "OK")
-            //              this.setState({errorMsg : 'El usuario se dió de alta correctamente.', userInserted : true})
-            //     }).catch(error => {
-            //         this.setState({errorMsg: 'Ocurrió un error insertando al usuario.'})
-            //     })
+                axios(options).then( response => {
+                    console.log(response)
+                    this.setState({errorMsg : 'El usuario se dió de alta correctamente.'})
+                    this.setState({userInserted : false})
+
+                }).catch(error => {
+                    console.error("Error Insertando al usuario: ", error)
+                    this.setState({errorMsg: 'Ocurrió un error insertando al usuario.'})
+                })
 
 
-            // }
             }
         
+        }
     }
 
     render(){
