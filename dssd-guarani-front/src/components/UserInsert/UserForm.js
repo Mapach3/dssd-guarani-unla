@@ -95,22 +95,21 @@ class UserForm extends Component{
 
     deletePicture(){
         this.setState({imgBase64 : ''})
-
     }
 
-        // this.setState({formEmail : '', formPassword : '', formName : '', formSurname : '', formDni : '',formUserType : '',formStreetAndNumber : '',
-        //             formLocation : '',formPostCode : '',formCity : '',formCountry : '', imgBase64 : ''})
-
+    clearValues() {
+        console.log("Clearing values")
+        this.setState({formEmail : '', formPassword : '', formName : '', formSurname : '', formDni : '',formUserType : '',formStreetAndNumber : '',
+        formLocation : '',formPostCode : '',formCity : '',formCountry : '', imgBase64 : ''})    
+    }   
 
     insertUser(){
-        debugger;
-        this.props.action(this.state)     
+        this.props.action(this.state)
     }
 
 
     render(){
         return (
-               
                 <Container maxWidth="xs">
                     <h3>Ingrese los datos del usuario</h3>
                     <form autoComplete="off">
@@ -177,23 +176,34 @@ class UserForm extends Component{
                     
                         {this.props.errorMsg.length !== 0 ?
                         <>
-                        < br/>
+                        <br />
                         <Chip
                             variant="outlined"
                             color="primary"
                             size="small"
                             label={this.props.errorMsg}
                         />
-                        < br/>
+                        <br />
                         </> : null}
-                        < br/>
+
+                        {this.props.clearForm ? 
+                        <>
+                        <br />
+                        <Button variant="contained" color="primary" onClick={() => this.clearValues()}>Limpiar formulario</Button> 
+                        <br /> 
+                        </>
+                        : null }
+                       
+                        <br />
                         <Button variant="contained" color="primary" onClick={() => this.insertUser()}>
                             Enviar
                         </Button>
                                                  
                     </form>
-                    <br /> 
+                    <br />
+                    
                 </Container>
+                
                 
             )
     

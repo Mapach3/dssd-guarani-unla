@@ -11,17 +11,31 @@ class UserInsert extends Component{
 
     state = {
         errorMsg : '',
-        userInserted : false,
+        clearForm : false,
         userList : [],
     }
 
+    getUserList(){
+        axios.get(__API_USER).then( resp => {
+            console.log("Imprimiendo usuarios",resp)
+            console.log(resp.data);
+            this.setState({userList : resp.data})
+        })
+
+    }
+
+    setUserInserted(value){
+        this.setState({userInserted : value})
+    }
 
     componentDidMount(){
         //traigo la lista de usuarios para validar por Mail y DNI
-        axios.get(__API_USER).then( resp => {
-            console.log(resp.data);
-            this.setState({userList : resp.data})
-        })}
+        this.getUserList()
+    }
+
+    setClearForm(value){
+        this.setState({clearForm: value})
+    }
 
 
     validateUserEmailAndDni(formEmail,formDni) {
@@ -64,6 +78,7 @@ class UserInsert extends Component{
                     url: __API_USER,
                     headers : {
                         'Content-Type' : 'application/json',
+                        'Accept': "application/json",
                         'Access-Control-Allow-Origin' : '*'
                     },
                     
@@ -88,9 +103,10 @@ class UserInsert extends Component{
                 }
 
                 axios(options).then( response => {
-                    console.log(response)
+                    debugger;
                     this.setState({errorMsg : 'El usuario se dió de alta correctamente.'})
-                    this.setState({userInserted : false})
+                    this.setState({clearForm : true})
+                    this.getUserList()
 
                 }).catch(error => {
                     console.error("Error Insertando al usuario: ", error)
@@ -104,7 +120,7 @@ class UserInsert extends Component{
     }
 
     render(){
-        return <UserForm action={(userData) => this.handleUserData(userData)} errorMsg={this.state.errorMsg} userInserted={this.state.userInserted}/>
+        return <UserForm action={(userData) => this.handleUserData(userData)} errorMsg={this.state.errorMsg} clearForm={this.state.clearForm} setClearForm={(value) => this.setClearForm(value)}/>
     }
 
 }
