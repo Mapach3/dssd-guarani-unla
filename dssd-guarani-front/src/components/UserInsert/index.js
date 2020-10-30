@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-
 import {__API_USER } from '../../consts/consts';
 import axios from 'axios'
-
 import UserForm from './UserForm'
 
 
@@ -17,8 +15,6 @@ class UserInsert extends Component{
 
     getUserList(){
         axios.get(__API_USER).then( resp => {
-            console.log("Imprimiendo usuarios",resp)
-            console.log(resp.data);
             this.setState({userList : resp.data})
         })
 

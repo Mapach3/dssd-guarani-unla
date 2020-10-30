@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Login} from './components/Login/Login'
 import UserInsert from './components/UserInsert/index'
+import UserDrop from './components/UserDrop/index'
 import './App.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {Storage} from './components/Storage'
@@ -29,7 +30,8 @@ const App = () => {
           <>
           <Redirect exact to="/login"/>
           {/* <Login setToken={setUserToken}/> */}
-          <UserInsert /> 
+          {/* <UserInsert />  */}
+          <UserDrop />
           </>
           : 
           <>

@@ -128,6 +128,18 @@ class UserForm extends Component{
                             <img style= {{borderRadius : "50%"}} id="profile-pic" src={this.state.imgBase64.length === 0 ? NoImage : this.state.imgBase64} width="100" height="100" alt=""></img>             
                             <br />
                             {this.state.imgBase64.length === 0 ? null : <Button variant="contained" color="primary" onClick={() => this.deletePicture()}>Eliminar</Button>  }
+                            {this.props.errorMsg.length !== 0 ?
+                                <>
+                                <br />
+                                <Chip
+                                    variant="outlined"
+                                    color="primary"
+                                    size="small"
+                                    label={this.props.errorMsg}
+                                />
+                                <br />
+                                </> : 
+                            null}
                             </Grid>
                             <Grid item sm={6} >
                                 <TextField inputProps={{maxLength: 25}} variant="outlined" value={this.state.formName} onChange={(ev) => this.onNameChange(ev)} label="Nombre" type="text"/>
@@ -175,18 +187,6 @@ class UserForm extends Component{
                                 <TextField inputProps={{maxLength: 20}} value={this.state.formCountry} onChange={(ev) => this.onCountryChange(ev)} fullWidth variant="outlined" label="País" type="text"/>
                             </Grid>  
                         </Grid>
-                    
-                        {this.props.errorMsg.length !== 0 ?
-                        <>
-                        <br />
-                        <Chip
-                            variant="outlined"
-                            color="primary"
-                            size="small"
-                            label={this.props.errorMsg}
-                        />
-                        <br />
-                        </> : null}
 
                         {this.props.clearForm ? 
                         <>
