@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 
 namespace DDSDGuarani.Controllers
 {
@@ -89,6 +90,39 @@ namespace DDSDGuarani.Controllers
             }
             catch (Exception e)
             {
+                return BadRequest(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Modifica el campo Active del usuario
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="active"></param>
+        [HttpPatch("{id}/[action]/{active}")]
+        public ActionResult Active(int id, bool active)
+        {
+            try
+            {
+                User user = context.User.FirstOrDefault(user => user.Id == id);
+                if (user != null)
+                {
+                    if (user.Active == active)
+                        return Ok("No se hicieron cambios");
+                    
+                    context.Entry(user).State = EntityState.Modified;
+                    user.Active = active;
+                    context.SaveChanges();
+                    return Ok("Active de "+user.Name+" "+user.Surname+" cambiado a: "+active);
+                }
+                else {
+                    return BadRequest("No existe el usuario.");
+                }
+               
+            }
+            catch (Exception e)
+            {
+
                 return BadRequest(e.Message);
             }
         }
