@@ -50,7 +50,7 @@ namespace DDSDGuarani
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
+            services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionString"),sqlServer => sqlServer.MigrationsAssembly("DDSDGuarani")));
             //Autentication
             var key = System.Text.Encoding.ASCII.GetBytes(Configuration.GetValue<string>("SecretKey"));
 

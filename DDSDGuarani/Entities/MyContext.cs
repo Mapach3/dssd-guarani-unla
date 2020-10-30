@@ -33,6 +33,7 @@ namespace DDSDGuarani.Entities
         {
             modelBuilder.Entity<Course>()
                 .HasKey(co => new { co.SubjectId, co.UserId });
+            Console.WriteLine("Seeding data to database");
 
             modelBuilder.Entity<Course>()
                 .HasOne(co => co.User)
