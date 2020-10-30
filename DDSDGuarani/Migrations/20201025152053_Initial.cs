@@ -69,6 +69,7 @@ namespace DDSDGuarani.Migrations
                     Dni = table.Column<string>(nullable: true),
                     Active = table.Column<bool>(nullable: false),
                     PasswordChanged = table.Column<bool>(nullable: false),
+                    ImgBase64 = table.Column<string>(nullable: true),
                     Role = table.Column<int>(nullable: false),
                     AddressId = table.Column<int>(nullable: false)
                 },

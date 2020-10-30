@@ -16,6 +16,7 @@ namespace DDSDGuarani.Entities
         public string Dni { get; set; }
         public bool Active { get; set; }
         public bool PasswordChanged { get; set; }
+        public string ImgBase64 { get; set; }
         public UserRole Role { get; set; }
 
         //Relation - OneToMany - Course (Muchos a muchos con Subject, Course es la intermedia)

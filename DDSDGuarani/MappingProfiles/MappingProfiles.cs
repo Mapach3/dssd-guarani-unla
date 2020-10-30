@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DDSDGuarani.DTOResponse;
 using DDSDGuarani.Entities;
+using Microsoft.AspNetCore.Routing.Constraints;
 using System.Collections.Generic;
 
 namespace DDSDGuarani.MappingProfiles
@@ -20,6 +21,7 @@ namespace DDSDGuarani.MappingProfiles
             .ForMember(dest => dest.Surname, opts => opts.MapFrom(src => src.Surname))
             .ForMember(dest => dest.Active, opts => opts.MapFrom(src => src.Active))
             .ForMember(dest => dest.Role, opts => opts.MapFrom(src => src.Role))
+            .ForMember(dest => dest.ImgBase64, opts => opts.MapFrom(src => src.ImgBase64))
 
             .ForPath(dest => dest.Address, opts => opts.MapFrom(src => new AddressResponse
             {

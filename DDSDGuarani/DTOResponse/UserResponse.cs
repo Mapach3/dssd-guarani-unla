@@ -16,6 +16,7 @@ namespace DDSDGuarani.DTOResponse
         public string Dni { get; set; }
         public bool Active { get; set; }
         public bool PasswordChanged { get; set; }
+        public string ImgBase64 { get; set; }
         public UserRole Role { get; set; }
         public List<CourseResponse> Courses { get; set; }
         public List<InscriptionFinalResponse> InscriptionFinals { get; set; }
