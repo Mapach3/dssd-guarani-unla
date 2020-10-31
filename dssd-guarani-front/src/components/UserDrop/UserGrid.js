@@ -15,8 +15,10 @@ class UserGrid extends Component{
 
     sendUserId(ev){
         debugger;
-        console.log(ev.target.id)
-        //this.props.action(user.id)
+        var userId = ev.currentTarget.value
+        ev.currentTarget.disabled = true
+        this.props.action(userId)
+        ev.currentTarget.disabled = false
     }
 
 
@@ -42,11 +44,7 @@ class UserGrid extends Component{
                         <TableCell align="left">{user.email}</TableCell>
                         <TableCell align="left">{user.dni}</TableCell>
                         <TableCell align="left">
-                        <div id={user.id} onClick={(ev) => this.sendUserId(ev)}>
-                        {user.active ? <Button variant="contained" color="secondary">Baja</Button> : 
-                                       <Button variant="contained" color="primary">Alta</Button>
-                        }
-                        </div>            
+                        <Button variant="contained" value={user.id} disabled={false} color={user.active ? "secondary" : "primary"} onClick={(ev) => this.sendUserId(ev)}>{user.active ? "Baja" : "Alta"}</Button>      
                         </TableCell>
                     </TableRow>
                     ))}
