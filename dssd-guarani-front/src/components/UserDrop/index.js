@@ -1,79 +1,56 @@
 import React, {Component} from 'react';
 import axios from 'axios'
 import {__API_USER } from '../../consts/consts';
-import './style.css'
-
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button'
 
 
+import CircularProgress from '@material-ui/core/CircularProgress'
+import UserGrid from './UserGrid';
 
 
 class UserDrop extends Component{
 
     state = {
-        userList : []
-    }
+        userList : [],
+        loading : true,
+        errorMsg : ''
 
+    }
 
     componentDidMount(){
         this.updateUserList()
 
     }
 
-
     updateUserList(){
         axios.get(__API_USER).then( resp => {
             console.log(resp.data);
-            this.setState({userList : resp.data.filter(user => user.role !== 0)})
+            this.setState({userList : resp.data.filter(user => user.role !== 0),
+                           loading : false})
         })
     }
 
+    changeUserActive(userId){
+        debugger;
+        var id = parseInt(userId)
+        var user = this.state.userList.find( user => user.id === id)
+        var newActive = !user.active
+
+        axios.patch(__API_USER+userId+"/Active/"+newActive).then(response => {
+            console.log(response.data)
+            this.setState({errorMsg : "El cambio fue guardado"})
+            this.updateUserList()
+        });
+
+
+    }
 
     render(){
-        const{userList} = this.state
+        const{userList,loading} = this.state
         
         return <>
-        <h3>Lista de usuarios</h3>    
-        <TableContainer className="userDropTable" component={Paper}>
-            <Table aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                    <TableCell>ID</TableCell>
-                    <TableCell align="left">Nombre y Apellido</TableCell>
-                    <TableCell align="left">E-mail</TableCell>
-                    <TableCell align="left">DNI</TableCell>
-                    <TableCell align="left">Acción</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {userList.map((user) => (
-                    <TableRow key={user.id}>
-                        <TableCell component="th" scope="row">{user.id}</TableCell>
-                        <TableCell align="left">{user.name} {user.surname}</TableCell>
-                        <TableCell align="left">{user.email}</TableCell>
-                        <TableCell align="left">{user.dni}</TableCell>
-                        <TableCell align="left">
-                        {user.active ? <Button variant="contained" disabled={false} color="secondary" onClick={(ev) => console.log("Presionaste el boton: ",ev.target)}>Baja</Button> : 
-                             <Button variant="contained"  color="" onClick={() => console.log("Presionaste el boton")}>Alta</Button>
-                        }
-                        
-                            
-                        </TableCell>
-                    </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-      </TableContainer>     
-    </>
-
-
+        <h3>Lista de usuarios</h3>
+        {loading ? <CircularProgress color="secondary"/> : <UserGrid users={userList} action={(id) => this.changeUserActive(id)}/> }
+        </>   
     }
 
 }
