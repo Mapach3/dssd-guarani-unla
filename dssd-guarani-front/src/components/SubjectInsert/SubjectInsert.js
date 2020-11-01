@@ -8,8 +8,12 @@ import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import Chip from '@material-ui/core/Chip';
+
 import axios from 'axios'
-import {__API_SUBJECT} from '../../consts/consts'
+
+import {__API_SUBJECT, __API_USER} from '../../consts/consts'
 
 
 class SubjectInsert extends Component{
@@ -22,7 +26,16 @@ class SubjectInsert extends Component{
         formYear : '',
         formPeriod : '',
         formShift : '',
-        errorMsg : ''
+        errorMsg : '',
+        teacherList : [],
+        selectedTeachers : []
+    }
+
+    componentDidMount(){
+        axios.get(__API_USER).then(resp => {
+            this.setState({teacherList : resp.data.filter(user => user.role === 2)})
+        })
+
     }
 
     onNameChange = (ev) => {
@@ -49,14 +62,18 @@ class SubjectInsert extends Component{
         this.setState({formPeriod : ev.target.value})
     }
 
+    onSelectedTeachersChange = (ev,values) => {
+        debugger;
+        this.setState({selectedTeachers : values})
+    }
+
 
     insertSubject(){
         debugger;
-        const {formName,formStartTime,formEndTime,formYear,formShift,formPeriod} = this.state
+        const {formName,formStartTime,formEndTime,formYear,formShift,formPeriod,selectedTeachers} = this.state
         if (formName.length === 0 || formStartTime.length === 0 || formEndTime.length === 0 
             || formYear.length === 0 || formShift.length === 0 || formPeriod.length === 0){
                 this.setState({errorMsg : "Por favor, complete todos los campos"})
-                console.log("Los campos!!")
         } else {
             
             var startTime = new Date()
@@ -69,30 +86,35 @@ class SubjectInsert extends Component{
             endTime.setMinutes(formEndTime.split(":")[1])
             console.log(endTime)
 
+            //docentes asignados
+            var teachers = []
+            selectedTeachers.map( teacher => teachers.push({userid : teacher.id}))
+             
+
             if (startTime < endTime){
                 const options = {
                     method : "POST",
                     url : __API_SUBJECT,
                     data : {
                         name : formName,
-                        starttime : startTime.toISOString(),
-                        endtime : endTime.toISOString(),
+                        starttime : startTime,
+                        endtime : endTime,
                         year : formYear,
                         period : formPeriod,
-                        shift : formShift
+                        shift : formShift,
+                        courses : teachers
                     }
                 }
     
                 axios(options).then( resp => {
-                    console.log(resp);
+                    console.log(resp.data);
+                    this.setState({errorMsg : "Materia agregada correctamente"})
+                    this.setState({formName : '',formStartTime : '',formEndTime : '', formYear : '', formShift : '', formPeriod : '', selectedTeachers : []})
+
                 })
             } else {
                 this.setState({errorMsg : "La hora de inicio debe ser antes que la hora de fin"})
-                console.log("Las horas de antes debe ser antes que la de fin")
             }
-
-            
-
 
         }
 
@@ -104,18 +126,31 @@ class SubjectInsert extends Component{
         return (
                 <Container maxWidth="xs">
                     <h3>Ingrese datos de la materia</h3>
+                    {this.state.errorMsg.length !== 0 ?
+                                <>
+                                <Chip
+                                    fullWidth
+                                    variant="outlined"
+                                    color="primary"
+                                    size="small"
+                                    label={this.state.errorMsg}
+                                />
+                                <br /><br />
+                                </> : 
+                            null}
                     <form autoComplete="off">
                         <Grid container spacing={1}>
+                        
                             <Grid item sm={12} >
                                 <TextField fullWidth inputProps={{maxLength: 100}} variant="outlined" value={this.state.formName} onChange={(ev) => this.onNameChange(ev)} label="Nombre" type="text"/>
                             </Grid> 
                             
                             <Grid item sm={6}>
-                                <TextField fullWidth id="time" variant="outlined" value={this.state.formStartTime} onChange={(ev) => this.onStartTimeChange(ev)} label="Hora de inicio" defaultValue="09:00" type="time"/>
+                                <TextField fullWidth id="time" variant="outlined" value={this.state.formStartTime} onChange={(ev) => this.onStartTimeChange(ev)} label="Hora de Inicio"  type="time"/>
                             </Grid>
                             
                             <Grid item sm={6}>
-                                <TextField fullWidth id="time" variant="outlined" value={this.state.formEndTime} onChange={(ev) => this.onEndTimeChange(ev)} label="Hora de Fin" defaultValue="09:00" type="time"/>
+                                <TextField fullWidth id="time" variant="outlined" value={this.state.formEndTime} onChange={(ev) => this.onEndTimeChange(ev)} label="Hora de Fin" type="time"/>
                             </Grid>
                             
                             <Grid item sm={6}>
@@ -144,11 +179,24 @@ class SubjectInsert extends Component{
                                 <FormControl fullWidth variant="outlined">
                                     <InputLabel>Cuatrimestre</InputLabel>
                                     <Select onChange={(ev) => this.onPeriodChange(ev)} value={this.state.formPeriod}>
-                                        <MenuItem value={1}>Primero</MenuItem>
-                                        <MenuItem value={2}>Segundo</MenuItem>
+                                        <MenuItem value={1}>Primer Cuatrimestre</MenuItem>
+                                        <MenuItem value={2}>Segundo Cuatrimestre</MenuItem>
                                     </Select>
                                 </FormControl>
-                            </Grid>  
+                            </Grid>
+                            <Grid item sm={12}>
+                                <FormControl fullWidth variant="outlined">
+                                    <Autocomplete options={this.state.teacherList}
+                                                  onChange={(ev,values) => this.onSelectedTeachersChange(ev,values)}
+                                                  filterSelectedOptions
+                                                  value={this.state.selectedTeachers}
+                                                  getOptionLabel={(option) => option.name+" "+option.surname}
+                                                  renderInput={(params) => <TextField {...params} variant="outlined" label="Docentes" />} 
+                                                  multiple id="tags-standard" noOptionsText="No hay coincidencias" 
+                                    />
+                                </FormControl>
+                            </Grid>
+
                         </Grid>
                         <br />
                         <Button variant="contained" onClick= {() => this.insertSubject()}color="primary">
