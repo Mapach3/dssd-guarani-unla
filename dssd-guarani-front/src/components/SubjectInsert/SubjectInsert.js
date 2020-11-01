@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
+import axios from 'axios'
+import {__API_SUBJECT} from '../../consts/consts'
 
 
 class SubjectInsert extends Component{
@@ -20,6 +22,7 @@ class SubjectInsert extends Component{
         formYear : '',
         formPeriod : '',
         formShift : '',
+        errorMsg : ''
     }
 
     onNameChange = (ev) => {
@@ -44,6 +47,57 @@ class SubjectInsert extends Component{
 
     onPeriodChange = (ev) => {
         this.setState({formPeriod : ev.target.value})
+    }
+
+
+    insertSubject(){
+        debugger;
+        const {formName,formStartTime,formEndTime,formYear,formShift,formPeriod} = this.state
+        if (formName.length === 0 || formStartTime.length === 0 || formEndTime.length === 0 
+            || formYear.length === 0 || formShift.length === 0 || formPeriod.length === 0){
+                this.setState({errorMsg : "Por favor, complete todos los campos"})
+                console.log("Los campos!!")
+        } else {
+            
+            var startTime = new Date()
+            startTime.setHours(formStartTime.split(":")[0])
+            startTime.setMinutes(formStartTime.split(":")[1])
+            console.log(startTime)
+            
+            var endTime = new Date()
+            endTime.setHours(formEndTime.split(":")[0])
+            endTime.setMinutes(formEndTime.split(":")[1])
+            console.log(endTime)
+
+            if (startTime < endTime){
+                const options = {
+                    method : "POST",
+                    url : __API_SUBJECT,
+                    data : {
+                        name : formName,
+                        starttime : startTime.toISOString(),
+                        endtime : endTime.toISOString(),
+                        year : formYear,
+                        period : formPeriod,
+                        shift : formShift
+                    }
+                }
+    
+                axios(options).then( resp => {
+                    console.log(resp);
+                })
+            } else {
+                this.setState({errorMsg : "La hora de inicio debe ser antes que la hora de fin"})
+                console.log("Las horas de antes debe ser antes que la de fin")
+            }
+
+            
+
+
+        }
+
+
+
     }
 
     render(){
@@ -97,12 +151,13 @@ class SubjectInsert extends Component{
                             </Grid>  
                         </Grid>
                         <br />
-                        <Button variant="contained" color="primary">
-                            Enviar
+                        <Button variant="contained" onClick= {() => this.insertSubject()}color="primary">
+                            Agregar Materia
                         </Button>                        
                     </form>
                     <br />          
                 </Container>
+                
                 
                 
             )
