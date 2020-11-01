@@ -55,6 +55,10 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
+                //Guido 01/11: Parseo a LocalTimes porque sino cuando el axios lo manda viene con UTC (agrega 3 horas)
+                subject.StartTime = subject.StartTime.ToLocalTime();
+                subject.EndTime =  subject.EndTime.ToLocalTime();
+                
                 context.Subject.Add(subject);
                 context.SaveChanges();
                 return Ok();
