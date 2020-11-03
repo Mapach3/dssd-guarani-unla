@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DDSDGuarani.DTOResponse;
+using DDSDGuarani.EmailService;
 using DDSDGuarani.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
+using DDSDGuarani.EmailService;
 
 namespace DDSDGuarani.Controllers
 {
@@ -86,6 +88,9 @@ namespace DDSDGuarani.Controllers
             {
                 context.User.Add(user);
                 context.SaveChanges();
+                EmailSender.SendEmail(EmailTemplates.GetRegistrationEmailBody(user.Name, user.Surname, user.Email, user.Password));
+
+
                 return Ok();
             }
             catch (Exception e)
