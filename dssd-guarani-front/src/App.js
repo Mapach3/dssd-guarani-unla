@@ -13,6 +13,7 @@ import {
   Switch
 } from "react-router-dom";
 import Home from './pages/Home';
+import InsertInscriptionWindow from './components/InscriptionWindow/InsertInscriptionWindow';
 
 
 const App = () => {
@@ -34,7 +35,8 @@ const App = () => {
           {/* <Login setToken={setUserToken}/> */}
           {/* <UserInsert />  */}
           {/* <UserDrop /> */}
-          <SubjectInsert />
+          {/* <SubjectInsert /> */}
+          <InsertInscriptionWindow />
           </>
           : 
           <>
