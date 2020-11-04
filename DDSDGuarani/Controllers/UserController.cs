@@ -88,10 +88,8 @@ namespace DDSDGuarani.Controllers
             {
                 context.User.Add(user);
                 context.SaveChanges();
-                EmailSender.SendEmail(EmailTemplates.GetRegistrationEmailBody(user.Name, user.Surname, user.Email, user.Password));
-
-
-                return Ok();
+                if (user.Role.ToString() != "ADMIN") EmailSender.SendEmail(EmailTemplates.GetRegistrationEmailBody(user.Name, user.Surname, user.Email, user.Password), user.Email);
+                return Ok("Registración Exitosa");
             }
             catch (Exception e)
             {
@@ -114,16 +112,17 @@ namespace DDSDGuarani.Controllers
                 {
                     if (user.Active == active)
                         return Ok("No se hicieron cambios");
-                    
+
                     context.Entry(user).State = EntityState.Modified;
                     user.Active = active;
                     context.SaveChanges();
-                    return Ok("Active de "+user.Name+" "+user.Surname+" cambiado a: "+active);
+                    return Ok("Active de " + user.Name + " " + user.Surname + " cambiado a: " + active);
                 }
-                else {
+                else
+                {
                     return BadRequest("No existe el usuario.");
                 }
-               
+
             }
             catch (Exception e)
             {
