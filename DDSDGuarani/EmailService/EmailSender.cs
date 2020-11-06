@@ -5,30 +5,44 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Mail;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Protocols;
+using Microsoft.Extensions.Hosting;
+using System.IO;
 
 namespace DDSDGuarani.EmailService
 {
-    public static class EmailSender
+    public class EmailSender
     {
 
-        public static void SendEmail(string emailTemplate, string mailTo)
+        private readonly IConfiguration _configuration;
+
+        public EmailSender(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+
+        public static void SendEmail(string body, string subject, string mailTo, string smtpClient, string mailFrom, string mailPassword, int port, byte[] attachment = null)
         {
             try
             {
-
-                MailMessage message = new MailMessage();
-                SmtpClient smtp = new SmtpClient("smtp.gmail.com");             //TODO: Esconder en appsettings.json
-                message.From = new MailAddress("guaraniunlamailing@gmail.com"); //TODO Reemplazar por appsetings.json EmailUserName
+                
+                using var message = new MailMessage(mailFrom, mailTo, subject, body);
+                SmtpClient smtp = new SmtpClient(smtpClient);
+                message.From = new MailAddress(mailFrom);
                 message.To.Add(new MailAddress(mailTo));
-                message.Subject = "Registración Exitosa";
-                message.IsBodyHtml = true; //to make message body as html  
-                message.Body = emailTemplate;
-                smtp.Port = 587;
+                message.IsBodyHtml = true;
+                
+                if (attachment != null)
+                    message.Attachments.Add(new Attachment(new MemoryStream(attachment),"testpdf.pdf"));
+                
+                smtp.Port = port;
                 smtp.EnableSsl = true;
-                smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new NetworkCredential("guaraniunlamailing@gmail.com", "guaraniunla1234"); //TODO: No usar estos valores hardcodeados pero si los que estan appsettings.json
+                smtp.Credentials = new NetworkCredential(mailFrom, mailPassword);
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+
                 smtp.Send(message);
+
             }
             catch (Exception e)
             {

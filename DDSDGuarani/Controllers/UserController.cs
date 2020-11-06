@@ -9,6 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using DDSDGuarani.EmailService;
+using Microsoft.Extensions.Configuration;
+using ceTe.DynamicPDF;
+using ceTe.DynamicPDF.PageElements;
 
 namespace DDSDGuarani.Controllers
 {
@@ -17,11 +20,13 @@ namespace DDSDGuarani.Controllers
     {
         private readonly MyContext context;
         private readonly IMapper _mapper;
+        private readonly IConfiguration configuration;
 
-        public UserController(MyContext context, IMapper mapper)
+        public UserController(MyContext context, IMapper mapper, IConfiguration iConfig)
         {
             this.context = context;
             this._mapper = mapper;
+            this.configuration = iConfig;
         }
 
         /// <summary>
@@ -88,7 +93,30 @@ namespace DDSDGuarani.Controllers
             {
                 context.User.Add(user);
                 context.SaveChanges();
-                if (user.Role.ToString() != "ADMIN") EmailSender.SendEmail(EmailTemplates.GetRegistrationEmailBody(user.Name, user.Surname, user.Email, user.Password), user.Email);
+
+                if (user.Role.ToString() != "ADMIN") { 
+                    var userEmailName = configuration.GetSection("EmailSenderData").GetValue<string>("EmailUserName");
+                    var userEmailPassword = configuration.GetSection("EmailSenderData").GetValue<string>("EmailPassword");
+                    var smtpClient = configuration.GetSection("EmailSenderData").GetValue<string>("SMTPClient");
+                    var port = configuration.GetSection("EmailSenderData").GetValue<int>("Port");
+
+                    //Code to implement PDF Attachment in Email
+                    //Document document = new Document();
+                    //document.PdfFormat = PdfFormat.Linearized;
+                    //Page page = new Page(PageSize.Letter, PageOrientation.Portrait, 54.0f);
+                    //document.Pages.Add(page);
+
+                    //string labelText = "Hello World...\nFrom DynamicPDF Generator for .NET\nDynamicPDF.com HOLA!!!";
+                    //Label label = new Label(labelText, 0, 0, 504, 100, Font.Helvetica, 18, TextAlign.Center);
+                    //page.Elements.Add(label);
+                    //document.Title = "TEST FILE";
+                    //byte[] doc = document.Draw();
+
+                    EmailSender.SendEmail(EmailTemplates.GetRegistrationEmailBody(user.Name,user.Surname, user.Email,user.Password),
+                                          "Registración Exitosa", user.Email, smtpClient, userEmailName, userEmailPassword, port);
+
+                }
+
                 return Ok("Registración Exitosa");
             }
             catch (Exception e)

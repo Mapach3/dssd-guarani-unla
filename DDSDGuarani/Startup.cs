@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Reflection;
 using System.IO;
 using AutoMapper;
@@ -9,13 +6,10 @@ using DDSDGuarani.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using DDSDGuarani.MappingProfiles;
 using Microsoft.OpenApi.Models;
@@ -37,6 +31,7 @@ namespace DDSDGuarani
             services.AddControllers();
             services.AddCors();
 
+
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
@@ -53,6 +48,7 @@ namespace DDSDGuarani
             services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
             //Autentication
             var key = System.Text.Encoding.ASCII.GetBytes(Configuration.GetValue<string>("SecretKey"));
+
 
             services.AddAuthentication(x =>
             {
