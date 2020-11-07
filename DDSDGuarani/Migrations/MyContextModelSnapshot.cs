@@ -56,9 +56,6 @@ namespace DDSDGuarani.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Career");

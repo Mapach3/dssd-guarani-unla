@@ -11,7 +11,6 @@ namespace DDSDGuarani.Entities
         public string Name { get; set; }
 
         //Relation - OneToMany - Subject
-        public int SubjectId { get; set; }
         public List<Subject> Subjects { get; set; } = new List<Subject>();
     }
 }
