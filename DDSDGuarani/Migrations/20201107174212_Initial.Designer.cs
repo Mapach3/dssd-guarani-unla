@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DDSDGuarani.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20201025152053_Initial")]
+    [Migration("20201107174212_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,6 +110,9 @@ namespace DDSDGuarani.Migrations
                     b.Property<int>("InscriptionWindowId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("ScoreUploadLimit")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
@@ -165,11 +168,17 @@ namespace DDSDGuarani.Migrations
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("InscriptionWindowId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Period")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("ScoreUploadLimit")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Shift")
                         .HasColumnType("int");
@@ -181,6 +190,8 @@ namespace DDSDGuarani.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InscriptionWindowId");
 
                     b.ToTable("Subject");
                 });
@@ -286,6 +297,15 @@ namespace DDSDGuarani.Migrations
                     b.HasOne("DDSDGuarani.Entities.User", "User")
                         .WithMany("InscriptionFinals")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DDSDGuarani.Entities.Subject", b =>
+                {
+                    b.HasOne("DDSDGuarani.Entities.InscriptionWindow", "InscriptionWindow")
+                        .WithMany("Subjects")
+                        .HasForeignKey("InscriptionWindowId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
