@@ -67,7 +67,7 @@ const CustomAppBar = ({ classes, open, setOpen, rolUser, imageUser, nameUser }) 
                         <br />
                         Usuario: {nameUser}
                         <br />
-                        Permiso: {rolUser}                        
+                        Rol: {rolUser}                        
                     </Typography>
                      
 

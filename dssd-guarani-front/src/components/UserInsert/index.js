@@ -112,7 +112,7 @@ class UserInsert extends Component{
     }
 
     render(){
-        return <UserForm action={(userData) => this.handleUserData(userData)} errorMsg={this.state.errorMsg} clearForm={this.state.clearForm} setClearForm={(value) => this.setClearForm(value)}/>
+        return <UserForm open={this.open} classes={this.classes} {...this.props} action={(userData) => this.handleUserData(userData)} errorMsg={this.state.errorMsg} clearForm={this.state.clearForm} setClearForm={(value) => this.setClearForm(value)}/>
     }
 
 }

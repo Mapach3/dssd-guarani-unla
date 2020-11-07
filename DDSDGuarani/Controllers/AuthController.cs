@@ -71,7 +71,7 @@ namespace DDSDGuarani.Controllers
                     responseLogin.Mensaje = "OK";
                     responseLogin.Rol = userResp.Role.ToString();
                     responseLogin.ImageUser = userResp.ImgBase64;
-                    responseLogin.NameUser = userResp.Name + userResp.Surname;
+                    responseLogin.NameUser = userResp.Name + " " + userResp.Surname;
                 }
                 else
                 {
