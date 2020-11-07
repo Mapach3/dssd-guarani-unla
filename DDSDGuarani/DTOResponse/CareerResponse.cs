@@ -9,6 +9,5 @@ namespace DDSDGuarani.DTOResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<SubjectResponse> Subjects { get; set; } = new List<SubjectResponse>();
     }
 }

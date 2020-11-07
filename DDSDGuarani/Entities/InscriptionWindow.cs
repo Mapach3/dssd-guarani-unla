@@ -14,7 +14,7 @@ namespace DDSDGuarani.Entities
         //Relation - OneToMany - FinalCall
         public List<FinalCall> Finals { get; set; } = new List<FinalCall>();
 
-        //Relation - OneToMany - FinalCall
+        //Relation - OneToMany - Subjects
         public List<Subject> Subjects { get; set; } = new List<Subject>();
     }
 }
