@@ -25,6 +25,20 @@ namespace DDSDGuarani.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Career",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    SubjectId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Career", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "InscriptionWindow",
                 columns: table => new
                 {
@@ -79,11 +93,18 @@ namespace DDSDGuarani.Migrations
                     Year = table.Column<int>(nullable: false),
                     Period = table.Column<int>(nullable: false),
                     Shift = table.Column<int>(nullable: false),
-                    InscriptionWindowId = table.Column<int>(nullable: false)
+                    InscriptionWindowId = table.Column<int>(nullable: false),
+                    CareerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Subject", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Subject_Career_CareerId",
+                        column: x => x.CareerId,
+                        principalTable: "Career",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Subject_InscriptionWindow_InscriptionWindowId",
                         column: x => x.InscriptionWindowId,
@@ -229,6 +250,11 @@ namespace DDSDGuarani.Migrations
                 column: "FinalId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Subject_CareerId",
+                table: "Subject",
+                column: "CareerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Subject_InscriptionWindowId",
                 table: "Subject",
                 column: "InscriptionWindowId");
@@ -262,6 +288,9 @@ namespace DDSDGuarani.Migrations
 
             migrationBuilder.DropTable(
                 name: "Address");
+
+            migrationBuilder.DropTable(
+                name: "Career");
 
             migrationBuilder.DropTable(
                 name: "InscriptionWindow");

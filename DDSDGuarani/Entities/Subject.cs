@@ -26,8 +26,13 @@ namespace DDSDGuarani.Entities
         //Relation - OneToMany - FinalCall
         public List<FinalCall> Finals { get; set; } = new List<FinalCall>();
 
-        //Relation - OneToMany - InscriptionWindow
+        //Relation - ManyToOne - InscriptionWindow
         public int InscriptionWindowId { get; set; }
         public InscriptionWindow InscriptionWindow { get; set; }
+
+        //Relation - ManyToOne- Career
+        public int CareerId { get; set; }
+        public Career Career { get; set; }
+
     }
 }

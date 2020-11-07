@@ -46,6 +46,24 @@ namespace DDSDGuarani.Migrations
                     b.ToTable("Address");
                 });
 
+            modelBuilder.Entity("DDSDGuarani.Entities.Career", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Career");
+                });
+
             modelBuilder.Entity("DDSDGuarani.Entities.Course", b =>
                 {
                     b.Property<int>("SubjectId")
@@ -163,6 +181,9 @@ namespace DDSDGuarani.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CareerId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
@@ -188,6 +209,8 @@ namespace DDSDGuarani.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CareerId");
 
                     b.HasIndex("InscriptionWindowId");
 
@@ -301,6 +324,12 @@ namespace DDSDGuarani.Migrations
 
             modelBuilder.Entity("DDSDGuarani.Entities.Subject", b =>
                 {
+                    b.HasOne("DDSDGuarani.Entities.Career", "Career")
+                        .WithMany("Subjects")
+                        .HasForeignKey("CareerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DDSDGuarani.Entities.InscriptionWindow", "InscriptionWindow")
                         .WithMany("Subjects")
                         .HasForeignKey("InscriptionWindowId")

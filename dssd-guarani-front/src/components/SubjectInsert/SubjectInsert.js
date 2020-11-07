@@ -11,15 +11,16 @@ import Grid from '@material-ui/core/Grid'
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Chip from '@material-ui/core/Chip';
 
+import moment from 'moment'
 import axios from 'axios'
 
-import {__API_SUBJECT, __API_USER} from '../../consts/consts'
+import {__API_INSCWINDOW, __API_SUBJECT, __API_USER} from '../../consts/consts'
 
 
 class SubjectInsert extends Component{
 
     state = {
-        
+        isLoading : false,
         formName : '',
         formStartTime : '',
         formEndTime : '',
@@ -28,13 +29,18 @@ class SubjectInsert extends Component{
         formShift : '',
         errorMsg : '',
         teacherList : [],
-        selectedTeachers : []
+        inscWindowList : [],
+        selectedTeachers : [],
+        subjectInscriptionWindow : ''
     }
 
     componentDidMount(){
-        axios.get(__API_USER).then(resp => {
-            this.setState({teacherList : resp.data.filter(user => user.role === 2)})
-        })
+        const getUsers = axios.get(__API_USER)
+        const getInscWindows =  axios.get(__API_INSCWINDOW)
+        axios.all([getUsers,getInscWindows]).then(axios.spread((users,inscWindows) => {
+            console.log("Users: ",users,"/// InscriptionWindows: ",inscWindows)
+            this.setState({teacherList : users.data.filter(user => user.role === 2), inscWindowList : inscWindows.data })
+        }));
 
     }
 
@@ -65,6 +71,18 @@ class SubjectInsert extends Component{
     onSelectedTeachersChange = (ev,values) => {
         debugger;
         this.setState({selectedTeachers : values})
+    }
+
+    onWindowChange = (ev) => {
+        this.setState({subjectInscriptionWindow : ev.target.value})
+    }
+
+    generateWindowText(window){
+        debugger;
+        var startDate = moment(window.startDate).format("DD/MM/yyyy hh:mm")
+        var endDate = moment(window.endDate).format("DD/MM/yyyy hh:mm")
+        return "Desde " + startDate+" hasta "+endDate+"."
+
     }
 
 
@@ -146,11 +164,11 @@ class SubjectInsert extends Component{
                             </Grid> 
                             
                             <Grid item sm={6}>
-                                <TextField fullWidth id="time" variant="outlined" value={this.state.formStartTime} onChange={(ev) => this.onStartTimeChange(ev)} label="Hora de Inicio"  type="time"/>
+                                <TextField fullWidth id="time" variant="outlined" InputLabelProps={{shrink : true}} value={this.state.formStartTime} onChange={(ev) => this.onStartTimeChange(ev)} label="Hora de Inicio"  type="time"/>
                             </Grid>
                             
                             <Grid item sm={6}>
-                                <TextField fullWidth id="time" variant="outlined" value={this.state.formEndTime} onChange={(ev) => this.onEndTimeChange(ev)} label="Hora de Fin" type="time"/>
+                                <TextField fullWidth id="time" variant="outlined" InputLabelProps={{shrink : true}} value={this.state.formEndTime} onChange={(ev) => this.onEndTimeChange(ev)} label="Hora de Fin" type="time"/>
                             </Grid>
                             
                             <Grid item sm={6}>
@@ -196,10 +214,19 @@ class SubjectInsert extends Component{
                                     />
                                 </FormControl>
                             </Grid>
-
+                            <Grid item sm={12}>
+                                <FormControl fullWidth variant="outlined">
+                                    <InputLabel>Ventana de Inscripción</InputLabel>
+                                    <Select onChange={(ev) => this.onWindowChange(ev)} value={this.state.subjectInscriptionWindow}>
+                                        {this.state.inscWindowList.map( window => 
+                                            <MenuItem value={window.id}>{this.generateWindowText(window)}</MenuItem>
+                                        )}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
                         </Grid>
                         <br />
-                        <Button variant="contained" onClick= {() => this.insertSubject()}color="primary">
+                        <Button variant="contained" disabled={this.state.isLoading} onClick= {this.insertSubject}color="primary">
                             Agregar Materia
                         </Button>                        
                     </form>

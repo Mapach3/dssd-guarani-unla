@@ -35,8 +35,8 @@ const App = () => {
           {/* <Login setToken={setUserToken}/> */}
           {/* <UserInsert />  */}
           {/* <UserDrop /> */}
-          {/* <SubjectInsert /> */}
-          <InsertInscriptionWindow />
+          <SubjectInsert />
+          {/* <InsertInscriptionWindow /> */}
           </>
           : 
           <>
