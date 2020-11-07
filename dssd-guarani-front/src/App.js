@@ -12,13 +12,19 @@ import {
   Route,
   Switch
 } from "react-router-dom";
-import Home from './pages/Home';
+import HomeAdmin from './pages/HomeAdmin';
+import HomeStudent from './pages/HomeStudent';
+import HomeTeacher from './pages/HomeTeacher';
 import InsertInscriptionWindow from './components/InscriptionWindow/InsertInscriptionWindow';
 
 
 const App = () => {
 
   const [userToken,setUserToken] = useState(Storage.getJwtToken());
+  const [imageUser,setImageUser] = useState(Storage.getImageUser());
+  const [rolUser,setRolUser] = useState(Storage.getRolUser());
+  const [nameUser,setNameUser] = useState(Storage.getNameUser());
+
   
 
   return (
@@ -27,33 +33,34 @@ const App = () => {
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
       <React.Fragment>
         <CssBaseline />
+
         <Switch>
         <Route path="/">
           {userToken == null ? 
           <>
           <Redirect exact to="/login"/>
-          {/* <Login setToken={setUserToken}/> */}
+          <Login setToken={setUserToken} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>         
           {/* <UserInsert />  */}
           {/* <UserDrop /> */}
-          <SubjectInsert />
+          {/* <SubjectInsert /> */}
           {/* <InsertInscriptionWindow /> */}
           </>
           : 
           <>
-          <Redirect exact to="/dashboard"/>
-          <h1>Ya estas logeado. tu Token es: </h1>
-          <p>{Storage.getJwtToken()}</p>
+          <Redirect exact to="/home"/>
+          {(rolUser === 'ADMIN' 
+                ? <HomeAdmin rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/> 
+                : (rolUser === 'STUDENT' 
+                        ? <HomeStudent rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/> 
+                        : <HomeTeacher rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/>))}
           </>}
         </Route>
         </Switch>
         
 
       </React.Fragment>
-
     </div>
-    </Router>
-    
-    // <Home></Home>
+    </Router>   
   );
 }
 

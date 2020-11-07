@@ -69,6 +69,9 @@ namespace DDSDGuarani.Controllers
                     responseLogin.Cod = 200;
                     responseLogin.Data = tokenHandler.WriteToken(createdToken);
                     responseLogin.Mensaje = "OK";
+                    responseLogin.Rol = userResp.Role.ToString();
+                    responseLogin.ImageUser = userResp.ImgBase64;
+                    responseLogin.NameUser = userResp.Name + userResp.Surname;
                 }
                 else
                 {
