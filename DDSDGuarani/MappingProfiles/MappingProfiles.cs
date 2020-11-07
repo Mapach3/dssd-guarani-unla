@@ -84,9 +84,24 @@ namespace DDSDGuarani.MappingProfiles
             .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
             .ForMember(dest => dest.StartTime, opts => opts.MapFrom(src => src.StartTime))
             .ForMember(dest => dest.EndTime, opts => opts.MapFrom(src => src.EndTime))
+            .ForMember(dest => dest.ScoreUploadLimit, opts => opts.MapFrom(src => src.ScoreUploadLimit))
             .ForMember(dest => dest.Year, opts => opts.MapFrom(src => src.Year))
             .ForMember(dest => dest.Period, opts => opts.MapFrom(src => src.Period))
             .ForMember(dest => dest.Shift, opts => opts.MapFrom(src => src.Shift))
+
+            //.ForPath(dest => dest.InscriptionWindow, opts => opts.MapFrom(src => new InscriptionWindowResponse
+            //{
+            //    City = src.Address.City,
+            //    Country = src.Address.Country,
+            //    Id = src.Address.Id,
+            //    Location = src.Address.Location,
+            //    PostalCode = src.Address.PostalCode,
+            //    StreetAndNumber = src.Address.StreetAndNumber,
+            //    User = src.Address.User.Id
+            //}))
+
+
+
 
             .AfterMap((src, dest) =>
             {
@@ -211,6 +226,36 @@ namespace DDSDGuarani.MappingProfiles
             .ForMember(dest => dest.SubjectId, opts => opts.MapFrom(src => src.SubjectId))
             .ForMember(dest => dest.CourseAverage, opts => opts.MapFrom(src => src.CourseAverage));
             #endregion
-        }
+
+            #region Map Career
+            CreateMap<Career, CareerResponse>()
+                .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
+            .AfterMap((src, dest) =>
+            {
+                List<SubjectResponse> subjectsAux = new List<SubjectResponse>();
+
+
+                src.Subjects.ForEach(x =>
+                {
+                    subjectsAux.Add(new SubjectResponse
+
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        StartTime = x.StartTime,
+                        EndTime = x.EndTime,
+                        ScoreUploadLimit = x.ScoreUploadLimit,
+                        Year = x.Year,
+                        Period = x.Period,
+                        Shift = x.Shift,
+
+                    });
+                });
+            });
+
+             #endregion
+
+            }
     }
 }

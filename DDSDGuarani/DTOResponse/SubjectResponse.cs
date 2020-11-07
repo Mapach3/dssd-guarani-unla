@@ -11,7 +11,8 @@ namespace DDSDGuarani.DTOResponse
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }   
+        public DateTime EndTime { get; set; }
+        public DateTime ScoreUploadLimit { get; set; }
         public int Year { get; set; }
         public int Period { get; set; }
         public SubjectShift Shift { get; set; }
