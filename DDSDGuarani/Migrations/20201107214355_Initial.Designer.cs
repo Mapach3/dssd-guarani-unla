@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DDSDGuarani.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20201107195748_Initial")]
+    [Migration("20201107214355_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
