@@ -42,6 +42,14 @@ namespace DDSDGuarani.Controllers
                 var resultDb = context.User.FirstOrDefault(u => u.Email == user.Email);
                 userResp = _mapper.Map<User, UserResponse>(resultDb);
 
+                if (!userResp.Active)
+                {
+                    responseLogin.Cod = 401;
+                    responseLogin.Data = null;
+                    responseLogin.Mensaje = "Usuario Dado de Baja";
+                    return responseLogin;
+                }
+                       
                 if (userResp != null && userResp.Password.Equals(user.Password))
                 {
                     // Leemos el secret_key desde nuestro appseting
