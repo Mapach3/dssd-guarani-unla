@@ -29,7 +29,6 @@ export class Login extends Component{
 
     performLogin(){
         this.setState({wrongCredentials : false})
-        debugger;
         const options = {
             method: "POST",
             url: __API_LOGIN,
@@ -45,12 +44,17 @@ export class Login extends Component{
         }
 
         axios(options).then( resp => {
-            debugger;
             console.log("Login Response: ", resp)
             var loginResponse = resp.data
             if (loginResponse.cod === 200){
                 Storage.setJwtToken(loginResponse.data)
+                Storage.setImageUser(loginResponse.imageUser)
+                Storage.setRolUser(loginResponse.rol)
+                Storage.setNameUser(loginResponse.nameUser)
                 this.props.setToken(loginResponse.data)
+                this.props.setImageUser(loginResponse.imageUser)
+                this.props.setRolUser(loginResponse.rol)
+                this.props.setNameUser(loginResponse.nameUser)
             }
             else
                 this.setState({wrongCredentials : "Error: credenciales inválidas"})

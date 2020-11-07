@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import CustomAppBar from '../navigation/CustomAppBar';
-import CustomDrawer from '../navigation/CustomDrawer';
+import CustomDrawerAdmin from '../navigation/CustomDrawerAdmin';
 import { Router, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import InscriptionExam from './subPages/InscriptionExam';
@@ -27,9 +27,6 @@ const useStyles = makeStyles((theme) => ({
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen,
         }),
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
     },
     hide: {
         display: 'none',
@@ -65,9 +62,29 @@ const useStyles = makeStyles((theme) => ({
         }),
         marginLeft: 0,
     },
+
+    grow: {
+        flexGrow: 1,
+      },
+      menuButton: {
+        marginRight: theme.spacing(2),
+      },
+      title: {
+        display: 'none',
+        [theme.breakpoints.up('sm')]: {
+          display: 'block',
+        },
+      },
+     
+      sectionDesktop: {
+        display: 'none',
+        [theme.breakpoints.up('md')]: {
+          display: 'flex',
+        },
+      },
 }));
 
-const Home = () => {
+const HomeAdmin = (props) => {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = useState(true);
@@ -76,8 +93,8 @@ const Home = () => {
         <Router history={history}>
             <div className={classes.root}>
                 <CssBaseline />
-                <CustomAppBar open={open} setOpen={setOpen} classes={classes} />
-                <CustomDrawer open={open} setOpen={setOpen} classes={classes} theme={theme} />
+                <CustomAppBar open={open} setOpen={setOpen} classes={classes} nameUser={props.nameUser} imageUser={props.imageUser} rolUser={props.rolUser}/>
+                <CustomDrawerAdmin open={open} setOpen={setOpen} classes={classes} theme={theme} rolUser={props.rolUser}/>
                 <div className='mainContainer'>
                     <Route path="/inscriptionExam" render={(props) => <InscriptionExam open={open} classes={classes} {...props} /> } />
                 </div>
@@ -85,4 +102,4 @@ const Home = () => {
         </Router>
     )
 }
-export default Home;
+export default HomeAdmin;

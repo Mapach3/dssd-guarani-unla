@@ -46,11 +46,8 @@ namespace DDSDGuarani.EmailService
             }
             catch (Exception e)
             {
-
+                throw new Exception(e.ToString());
             }
         }
-
-
-
     }
 }
