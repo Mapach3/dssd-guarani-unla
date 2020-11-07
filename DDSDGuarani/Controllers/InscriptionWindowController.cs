@@ -55,6 +55,8 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
+                inscriptionWindow.StartDate = inscriptionWindow.StartDate.ToLocalTime();
+                inscriptionWindow.EndDate = inscriptionWindow.EndDate.ToLocalTime();
                 context.InscriptionWindow.Add(inscriptionWindow);
                 context.SaveChanges();
                 return Ok();
