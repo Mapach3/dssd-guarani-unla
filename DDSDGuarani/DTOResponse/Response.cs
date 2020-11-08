@@ -13,5 +13,7 @@ namespace DDSDGuarani.DTOResponse
         public string Rol { get; set; }
         public string ImageUser { get; set; }
         public string NameUser { get; set; }
+        public string MailUser { get; set; }
+        public bool PasswordChange { get; set; }
     }
 }

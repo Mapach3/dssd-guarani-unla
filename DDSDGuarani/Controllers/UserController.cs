@@ -164,7 +164,7 @@ namespace DDSDGuarani.Controllers
         /// </summary>
         /// <param name="mail"></param>
         /// <param name="newPassword"></param>
-        [HttpPatch("{id}/[action]/{active}")]
+        [HttpPatch("{mail}/[action]/{newPassword}")]
         public ActionResult PassChange(string mail,string newPassword)
         {
             try

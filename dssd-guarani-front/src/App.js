@@ -12,6 +12,7 @@ import {
 import HomeAdmin from './pages/HomeAdmin';
 import HomeStudent from './pages/HomeStudent';
 import HomeTeacher from './pages/HomeTeacher';
+import {FirstAccess} from './components/Login/FirstAccess';
 
 const App = () => {
 
@@ -19,6 +20,8 @@ const App = () => {
   const [imageUser,setImageUser] = useState(Storage.getImageUser());
   const [rolUser,setRolUser] = useState(Storage.getRolUser());
   const [nameUser,setNameUser] = useState(Storage.getNameUser());
+  const [passChange,setPassChange] = useState(Storage.getPassChange());
+  const [mailUser,setMailUser] = useState(Storage.getMailUser());
 
   
 
@@ -34,17 +37,20 @@ const App = () => {
           {userToken == null ? 
           <>
           <Redirect exact to="/login"/>
-          <Login setToken={setUserToken} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>         
+          <Login setToken={setUserToken} setMailUser={setMailUser} setPassChange={setPassChange} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>         
           </>
-          : 
+          :
           <>
           <Redirect exact to="/home"/>
-          {(rolUser === 'ADMIN' 
+          {(passChange === 'false'
+              ? <FirstAccess/> 
+              : (rolUser === 'ADMIN' 
                 ? <HomeAdmin rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/> 
                 : (rolUser === 'STUDENT' 
                         ? <HomeStudent rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/> 
-                        : <HomeTeacher rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/>))}
-          </>}
+                        : <HomeTeacher rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/>)))}
+          </>
+          }
         </Route>
         </Switch>
         

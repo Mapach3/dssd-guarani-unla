@@ -31,4 +31,20 @@ export class Storage {
     static getNameUser(){
         return window.localStorage.getItem('nameUser')
     }
+
+    static setPassChange(passChange){
+        window.localStorage.setItem('passChange',passChange)
+    }
+
+    static getPassChange(){
+        return window.localStorage.getItem('passChange')
+    }
+
+    static setMailUser(mailUser){
+        window.localStorage.setItem('mailUser',mailUser)
+    }
+
+    static getMailUser(){
+        return window.localStorage.getItem('mailUser')
+    }
 }

@@ -80,6 +80,8 @@ namespace DDSDGuarani.Controllers
                     responseLogin.Rol = userResp.Role.ToString();
                     responseLogin.ImageUser = userResp.ImgBase64;
                     responseLogin.NameUser = userResp.Name + " " + userResp.Surname;
+                    responseLogin.PasswordChange = userResp.PasswordChanged;
+                    responseLogin.MailUser = userResp.Email;
                 }
                 else
                 {
