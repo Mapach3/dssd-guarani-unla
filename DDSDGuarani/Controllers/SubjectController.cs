@@ -28,7 +28,7 @@ namespace DDSDGuarani.Controllers
         public IEnumerable<SubjectResponse> Get()
         {
             IEnumerable<SubjectResponse> response = new List<SubjectResponse>();
-            var resultDb = context.Subject.Include(x => x.Finals).Include(x => x.EvaluationInstances).Include(x => x.Courses).ToList().OrderBy(x => x.Id);
+            var resultDb = context.Subject.Include(x => x.Finals).Include(x => x.EvaluationInstances).Include(x => x.Courses).Include(x => x.InscriptionWindow).Include(x=>x.Career).ToList().OrderBy(x => x.Id);
             response = _mapper.Map<IEnumerable<Subject>, IEnumerable<SubjectResponse>>(resultDb);
             return response;
         }
@@ -41,7 +41,7 @@ namespace DDSDGuarani.Controllers
         public SubjectResponse Get(int id)
         {
             SubjectResponse response = new SubjectResponse();
-            var resultDb = context.Subject.Include(x => x.Finals).Include(x => x.EvaluationInstances).Include(x => x.Courses).FirstOrDefault(u => u.Id == id);
+            var resultDb = context.Subject.Include(x => x.Finals).Include(x => x.EvaluationInstances).Include(x => x.Courses).Include(x => x.InscriptionWindow).Include(x => x.Career).FirstOrDefault(u => u.Id == id);
             response = _mapper.Map<Subject, SubjectResponse>(resultDb);
             return response;
         }
@@ -55,6 +55,10 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
+                //Guido 01/11: Parseo a LocalTimes porque sino cuando el axios lo manda viene con UTC (agrega 3 horas)
+                subject.StartTime = subject.StartTime.ToLocalTime();
+                subject.EndTime =  subject.EndTime.ToLocalTime();
+                
                 context.Subject.Add(subject);
                 context.SaveChanges();
                 return Ok();

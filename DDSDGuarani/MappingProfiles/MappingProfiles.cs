@@ -84,9 +84,23 @@ namespace DDSDGuarani.MappingProfiles
             .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
             .ForMember(dest => dest.StartTime, opts => opts.MapFrom(src => src.StartTime))
             .ForMember(dest => dest.EndTime, opts => opts.MapFrom(src => src.EndTime))
+            .ForMember(dest => dest.ScoreUploadLimit, opts => opts.MapFrom(src => src.ScoreUploadLimit))
             .ForMember(dest => dest.Year, opts => opts.MapFrom(src => src.Year))
             .ForMember(dest => dest.Period, opts => opts.MapFrom(src => src.Period))
             .ForMember(dest => dest.Shift, opts => opts.MapFrom(src => src.Shift))
+
+            .ForPath(dest => dest.InscriptionWindow, opts => opts.MapFrom(src => new InscriptionWindowResponse
+            {
+                Id = src.InscriptionWindow.Id,
+                EndDate = src.InscriptionWindow.EndDate,
+                StartDate = src.InscriptionWindow.StartDate
+            }))
+
+             .ForPath(dest => dest.Career, opts => opts.MapFrom(src => new CareerResponse
+             {
+                 Id = src.Career.Id,
+                 Name = src.Career.Name
+             }))
 
             .AfterMap((src, dest) =>
             {
@@ -163,6 +177,7 @@ namespace DDSDGuarani.MappingProfiles
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.Date, opts => opts.MapFrom(src => src.Date))
             .ForMember(dest => dest.Subject, opts => opts.MapFrom(src => src.SubjectId))
+            .ForMember(dest => dest.ScoreUploadLimit, opts => opts.MapFrom(src => src.ScoreUploadLimit))
 
             .ForPath(dest => dest.InscriptionWindow, opts => opts.MapFrom(src => new InscriptionWindowResponse
             {
@@ -210,6 +225,12 @@ namespace DDSDGuarani.MappingProfiles
             .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.UserId))
             .ForMember(dest => dest.SubjectId, opts => opts.MapFrom(src => src.SubjectId))
             .ForMember(dest => dest.CourseAverage, opts => opts.MapFrom(src => src.CourseAverage));
+            #endregion
+
+            #region Map Career
+            CreateMap<Career, CareerResponse>()
+             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+             .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
             #endregion
         }
     }
