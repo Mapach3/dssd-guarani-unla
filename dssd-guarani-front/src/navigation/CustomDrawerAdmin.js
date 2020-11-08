@@ -44,7 +44,10 @@ const CustomDrawerAdmin = ({ classes, open, setOpen, theme, ...props }) => {
                     <ListItemIcon><Add /></ListItemIcon>
                     <ListItemText primary="Agregar Usuario" />
                 </ListItem>
-
+                <ListItem button onClick={() => props.history.push("/modifyUser")}>
+                    <ListItemIcon><Add /></ListItemIcon>
+                    <ListItemText primary="Modificar Usuario" />
+                </ListItem>
                 <ListItem button onClick={() => props.history.push("/deleteUser")}>
                     <ListItemIcon><Delete /></ListItemIcon>
                     <ListItemText primary="Borrar Usuario" />
