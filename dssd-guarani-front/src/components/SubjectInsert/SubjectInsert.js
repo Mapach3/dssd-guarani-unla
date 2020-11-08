@@ -14,7 +14,7 @@ import Chip from '@material-ui/core/Chip';
 import moment from 'moment'
 import axios from 'axios'
 
-import {__API_INSCWINDOW, __API_SUBJECT, __API_USER} from '../../consts/consts'
+import {__API_CAREER, __API_INSCWINDOW, __API_SUBJECT, __API_USER} from '../../consts/consts'
 
 
 class SubjectInsert extends Component{
@@ -28,18 +28,23 @@ class SubjectInsert extends Component{
         formPeriod : '',
         formShift : '',
         errorMsg : '',
+        subjectInscriptionWindow : '',
+        subjectCareer : '',
+        scoreUploadLimit : '',
         teacherList : [],
         inscWindowList : [],
         selectedTeachers : [],
-        subjectInscriptionWindow : ''
+        careerList : []
+        
     }
 
     componentDidMount(){
         const getUsers = axios.get(__API_USER)
         const getInscWindows =  axios.get(__API_INSCWINDOW)
-        axios.all([getUsers,getInscWindows]).then(axios.spread((users,inscWindows) => {
-            console.log("Users: ",users,"/// InscriptionWindows: ",inscWindows)
-            this.setState({teacherList : users.data.filter(user => user.role === 2), inscWindowList : inscWindows.data })
+        const getCareers = axios.get(__API_CAREER)
+        axios.all([getUsers,getInscWindows,getCareers]).then(axios.spread((users,inscWindows,careers) => {
+            console.log("Users: ",users,"/// InscriptionWindows: ",inscWindows, "/// Careers: ",careers)
+            this.setState({teacherList : users.data.filter(user => user.role === 2), inscWindowList : inscWindows.data, careerList : careers.data })
         }));
 
     }
@@ -77,20 +82,29 @@ class SubjectInsert extends Component{
         this.setState({subjectInscriptionWindow : ev.target.value})
     }
 
+    onCareerChange = (ev) => {
+        this.setState({subjectCareer : ev.target.value})
+    }
+
+    onScoreUploadLimitChange = (ev) => {
+        console.log("Seteado: ",ev.target.value)
+        this.setState({scoreUploadLimit : ev.target.value})
+    }
+
     generateWindowText(window){
         debugger;
         var startDate = moment(window.startDate).format("DD/MM/yyyy hh:mm")
         var endDate = moment(window.endDate).format("DD/MM/yyyy hh:mm")
-        return "Desde " + startDate+" hasta "+endDate+"."
+        return startDate+" a "+endDate
 
     }
 
-
-    insertSubject(){
+    insertSubject = () => {
         debugger;
-        const {formName,formStartTime,formEndTime,formYear,formShift,formPeriod,selectedTeachers} = this.state
+        const {formName,formStartTime,formEndTime,formYear,formShift,formPeriod,selectedTeachers, subjectInscriptionWindow, subjectCareer,scoreUploadLimit} = this.state
         if (formName.length === 0 || formStartTime.length === 0 || formEndTime.length === 0 
-            || formYear.length === 0 || formShift.length === 0 || formPeriod.length === 0){
+            || formYear.length === 0 || formShift.length === 0 || formPeriod.length === 0 
+            || subjectInscriptionWindow.length === 0 || subjectCareer.length === 0 || scoreUploadLimit.length === 0){
                 this.setState({errorMsg : "Por favor, complete todos los campos"})
         } else {
             
@@ -109,7 +123,7 @@ class SubjectInsert extends Component{
             selectedTeachers.map( teacher => teachers.push({userid : teacher.id}))
              
 
-            if (startTime < endTime){
+            if (startTime < endTime && moment(scoreUploadLimit).isValid()){
                 const options = {
                     method : "POST",
                     url : __API_SUBJECT,
@@ -120,24 +134,28 @@ class SubjectInsert extends Component{
                         year : formYear,
                         period : formPeriod,
                         shift : formShift,
-                        courses : teachers
+                        courses : teachers,
+                        careerid : subjectCareer,
+                        inscriptionwindowid : subjectInscriptionWindow,
+                        scoreuploadlimit : scoreUploadLimit 
                     }
                 }
     
                 axios(options).then( resp => {
                     console.log(resp.data);
                     this.setState({errorMsg : "Materia agregada correctamente"})
-                    this.setState({formName : '',formStartTime : '',formEndTime : '', formYear : '', formShift : '', formPeriod : '', selectedTeachers : []})
+                    this.setState({formName : '',formStartTime : '',formEndTime : '', formYear : '', formShift : '', 
+                                   formPeriod : '', selectedTeachers : [], subjectInscriptionWindow : '', subjectCareer : '',scoreUploadLimit : ''})
+                    
 
                 })
             } else {
-                this.setState({errorMsg : "La hora de inicio debe ser antes que la hora de fin"})
+                
+                this.setState({errorMsg : moment(scoreUploadLimit).isValid() ? "La hora de inicio debe ser antes que la hora de fin" : 
+                                    "El formato de la hora límite no es correcto"})
             }
 
         }
-
-
-
     }
 
     render(){
@@ -223,6 +241,21 @@ class SubjectInsert extends Component{
                                         )}
                                     </Select>
                                 </FormControl>
+                            </Grid>
+                            <Grid item sm={12}>
+                                <FormControl fullWidth variant="outlined">
+                                    <InputLabel>Carrera</InputLabel>
+                                    <Select onChange={(ev) => this.onCareerChange(ev)} value={this.state.subjectCareer}>
+                                        {this.state.careerList.map( career => 
+                                            <MenuItem value={career.id}>{career.name}</MenuItem>
+                                        )}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item sm={12}>
+                            <TextField fullWidth variant="outlined"  value={this.state.scoreUploadLimit} onChange={this.onScoreUploadLimitChange} 
+                                       id="scoreUploadLimit" label="Fecha límite de carga de notas" type="date"  
+                                       InputProps={{inputProps: { min: "2010-05-01", max: "2050-12-31"} }} InputLabelProps={{ shrink: true }} />
                             </Grid>
                         </Grid>
                         <br />

@@ -39,11 +39,11 @@ const App = () => {
           {userToken == null ? 
           <>
           <Redirect exact to="/login"/>
-          <Login setToken={setUserToken} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>         
+          {/* <Login setToken={setUserToken} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>          */}
           {/* <UserInsert />  */}
           {/* <UserDrop /> */}
-          {/* <SubjectInsert /> */}
-          {/* <InsertInscriptionWindow /> */}
+          <SubjectInsert />
+          <InsertInscriptionWindow />
           </>
           : 
           <>
