@@ -15,6 +15,7 @@ import HomeTeacher from './pages/HomeTeacher';
 import {FirstAccess} from './components/Login/FirstAccess';
 import UserModify from './components/UserModify/index'
 import { Loading } from './components/Login/Loading';
+import SubjectInscriptionModification from './components/InscriptionsModification/SubjectInscriptionModification'
 
 const App = () => {
 
@@ -39,7 +40,8 @@ const App = () => {
           {userToken == null ? 
           <>
           <Redirect exact to="/login"/>
-          <Login setToken={setUserToken} setMailUser={setMailUser} setPassChange={setPassChange} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>         
+          {/* <Login setToken={setUserToken} setMailUser={setMailUser} setPassChange={setPassChange} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>          */}
+          <SubjectInscriptionModification />
           </>
           :
           <>

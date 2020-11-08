@@ -14,6 +14,7 @@ import {Storage} from '../Storage'
 export class Login extends Component{
         
     state = {
+        isLoading : false,
         formEmail : '',
         formPassword : '',
         wrongCredentials : '',
@@ -29,13 +30,13 @@ export class Login extends Component{
     }
 
     performLogin(){
-        this.setState({wrongCredentials : false})
+        this.setState({wrongCredentials : false, isLoading : true})
         const {formEmail, formPassword} = this.state
 
         if (formEmail.length === 0 || formPassword.length === 0){
-            this.setState({wrongCredentials : "Complete los campos"})
+            this.setState({wrongCredentials : "Complete los campos", isLoading : false})
         } else if (!formEmail.includes("@")){
-            this.setState({wrongCredentials : "Ingrese un Email válido"})
+            this.setState({wrongCredentials : "Ingrese un Email válido",isLoading : false})
         }
         else{
             const options = {
@@ -73,9 +74,9 @@ export class Login extends Component{
                 else
                 {
                     if(loginResponse.mensaje === "Usuario Dado de Baja"){
-                        this.setState({wrongCredentials : "Error: Usuario Dado de Baja."})
+                        this.setState({wrongCredentials : "Error: Usuario Dado de Baja.",  isLoading : false})
                     }else{
-                        this.setState({wrongCredentials : "Error: Credenciales inválidas"})
+                        this.setState({wrongCredentials : "Error: Credenciales inválidas",  isLoading : false})
                     }
                 }
                     
@@ -103,7 +104,7 @@ export class Login extends Component{
                         <Input inputProps={{ maxLength: 100 }} id="component-simple" type="password" onChange={this.handlePasswordChange}/>
                     </FormControl>
                     <p>{this.state.wrongCredentials}</p>
-                    <Button variant="contained" color="primary" onClick={() => this.performLogin()}>
+                    <Button variant="contained" disabled={this.state.isLoading} color="primary" onClick={() => this.performLogin()}>
                         Ingresar
                     </Button>
                 </form>
