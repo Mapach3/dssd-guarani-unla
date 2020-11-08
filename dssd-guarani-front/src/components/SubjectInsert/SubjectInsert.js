@@ -96,7 +96,6 @@ class SubjectInsert extends Component {
         var startDate = moment(window.startDate).format("DD/MM/yyyy hh:mm")
         var endDate = moment(window.endDate).format("DD/MM/yyyy hh:mm")
         return startDate+" a "+endDate
-
     }
 
     insertSubject = () => {
