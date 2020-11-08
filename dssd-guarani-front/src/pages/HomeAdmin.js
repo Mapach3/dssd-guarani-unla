@@ -7,6 +7,7 @@ import { Router, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import UserInsert from '../components/UserInsert/index'
 import UserDrop from '../components/UserDrop/index'
+import UserModify from '../components/UserModify/index'
 import SubjectInsert from '../components/SubjectInsert/SubjectInsert';
 import InsertInscriptionWindow from '../components/InscriptionWindow/InsertInscriptionWindow';
 
@@ -100,6 +101,7 @@ const HomeAdmin = (props) => {
                 <CustomDrawerAdmin open={open} setOpen={setOpen} classes={classes} theme={theme} rolUser={props.rolUser}/>
                 <div className='mainContainer'>
                     <Route path="/insertUser" render={(props) => <UserInsert open={open} classes={classes} {...props}/>} />
+                    <Route path="/modifyUser" render={(props) => <UserModify open={open} classes={classes} {...props}/>} />
                     <Route path="/deleteUser" render={(props) => <UserDrop open={open} classes={classes} {...props}/> } />
                     <Route path="/inscriptionWindow" render={(props) => <InsertInscriptionWindow open={open} classes={classes} {...props}/>  } />
                     <Route path="/insertSubject" render={(props) => <SubjectInsert open={open} classes={classes} {...props}/> } />
