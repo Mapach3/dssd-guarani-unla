@@ -14,6 +14,7 @@ namespace DDSDGuarani.MappingProfiles
             CreateMap<User, UserResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
+            .ForMember(dest => dest.UserName, opts => opts.MapFrom(src => src.UserName))
             .ForMember(dest => dest.Password, opts => opts.MapFrom(src => src.Password))
             .ForMember(dest => dest.PasswordChanged, opts => opts.MapFrom(src => src.PasswordChanged))
             .ForMember(dest => dest.Dni, opts => opts.MapFrom(src => src.Dni))
