@@ -16,16 +16,17 @@ export class FirstAccess extends Component {
             newPassword: '',
             mail: Storage.getMailUser()
         };
+
+        this.setPasswordDefinitive = this.setPasswordDefinitive.bind(this)
     }
 
     setPasswordDefinitive() {
-        const mail = this.state.mail
-        const pass = this.state.newPassword
-        axios.patch(__API_PATCH_USER_PASSWORD + mail + "/PassChange/" + pass).then(response => {
+        axios.patch(__API_PATCH_USER_PASSWORD + this.state.mail + "/PassChange/" + this.state.newPassword).then(response => {
             Storage.setPassChange(true)
             this.props.setPassChange(true)
+            // window.location.reload()
         }).catch(error => {
-            console.log(error);
+            console.log("Error change password temporal:" + error);
         })
     }
 

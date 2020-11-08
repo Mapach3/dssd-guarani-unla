@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Container from '@material-ui/core/Container';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -12,12 +12,16 @@ import {Storage} from '../Storage'
 
 
 export class Login extends Component{
-
-    state = {
+    constructor(props) {
+    super(props)
+    this.state = {
         formEmail : '',
         formPassword : '',
         wrongCredentials : '',
     }
+
+    }
+
 
     handleMailChange = (ev) => {
         this.setState({formEmail : ev.target.value})
@@ -59,6 +63,7 @@ export class Login extends Component{
                 this.props.setImageUser(loginResponse.imageUser)
                 this.props.setRolUser(loginResponse.rol)
                 this.props.setNameUser(loginResponse.nameUser)
+                
             }
             else
             {
@@ -73,8 +78,6 @@ export class Login extends Component{
         }).catch( error => {
             console.error("Error during Login: ",error)
         })
-
-
     }
 
     render(){

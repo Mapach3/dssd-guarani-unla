@@ -14,6 +14,7 @@ import HomeStudent from './pages/HomeStudent';
 import HomeTeacher from './pages/HomeTeacher';
 import {FirstAccess} from './components/Login/FirstAccess';
 import UserModify from './components/UserModify/index'
+import { Loading } from './components/Login/Loading';
 
 const App = () => {
 
@@ -45,12 +46,14 @@ const App = () => {
           <>
           <Redirect exact to="/home"/>
           {(passChange === 'false'
-              ? <FirstAccess/> 
-              : (rolUser === 'ADMIN' 
+              ? <FirstAccess setPassChange={setPassChange}/> 
+              : (rolUser === 'ADMIN' && passChange === 'true'
                 ? <HomeAdmin rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/> 
-                : (rolUser === 'STUDENT' 
+                : (rolUser === 'STUDENT' && passChange === 'true'
                         ? <HomeStudent rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/> 
-                        : <HomeTeacher rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/>)))}
+                        : (rolUser === 'TEACHER' && passChange === 'true' 
+                            ? <HomeTeacher rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/>
+                            : <Loading/>))))}
           </>
           }
         </Route>
