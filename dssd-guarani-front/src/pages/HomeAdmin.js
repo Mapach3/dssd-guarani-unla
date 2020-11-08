@@ -5,7 +5,10 @@ import CustomAppBar from '../navigation/CustomAppBar';
 import CustomDrawerAdmin from '../navigation/CustomDrawerAdmin';
 import { Router, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import InscriptionExam from './subPages/InscriptionExam';
+import UserInsert from '../components/UserInsert/index'
+import UserDrop from '../components/UserDrop/index'
+import SubjectInsert from '../components/SubjectInsert/SubjectInsert';
+import InsertInscriptionWindow from '../components/InscriptionWindow/InsertInscriptionWindow';
 
 const drawerWidth = 240;
 const history = createBrowserHistory();
@@ -96,7 +99,10 @@ const HomeAdmin = (props) => {
                 <CustomAppBar open={open} setOpen={setOpen} classes={classes} nameUser={props.nameUser} imageUser={props.imageUser} rolUser={props.rolUser}/>
                 <CustomDrawerAdmin open={open} setOpen={setOpen} classes={classes} theme={theme} rolUser={props.rolUser}/>
                 <div className='mainContainer'>
-                    <Route path="/inscriptionExam" render={(props) => <InscriptionExam open={open} classes={classes} {...props} /> } />
+                    <Route path="/insertUser" render={(props) => <UserInsert open={open} classes={classes} {...props}/>} />
+                    <Route path="/deleteUser" render={(props) => <UserDrop open={open} classes={classes} {...props}/> } />
+                    <Route path="/inscriptionWindow" render={(props) => <InsertInscriptionWindow open={open} classes={classes} {...props}/>  } />
+                    <Route path="/insertSubject" render={(props) => <SubjectInsert open={open} classes={classes} {...props}/> } />
                 </div>
             </div>
         </Router>

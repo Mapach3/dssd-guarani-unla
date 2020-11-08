@@ -4,13 +4,14 @@ import axios from 'axios'
 import UserForm from './UserForm'
 
 
-class UserInsert extends Component{
+class ModifyForm extends Component{
 
 
     state = {
         errorMsg : '',
         clearForm : false,
         userList : [],
+        user: this.props.user
     }
 
     getUserList(){
@@ -28,12 +29,13 @@ class UserInsert extends Component{
     componentDidMount(){
         //traigo la lista de usuarios para validar por Mail y DNI
         this.getUserList()
+
     }
 
-    validateUserEmailAndDni(formEmail,formDni) {
+    validateUserEmailAndDni(formEmail,formDni, userToModify) {
         var errorMsg="";
-        var userSameDni = this.state.userList.find( user => user.dni === formDni)
-        var userSameEmail = this.state.userList.find(user => user.email === formEmail)
+        var userSameDni = this.state.userList.find( user => user.dni === formDni && user.id !== userToModify )
+        var userSameEmail = this.state.userList.find(user => user.email === formEmail && user.id !== userToModify)
 
         if (userSameDni !== undefined || userSameEmail !== undefined){
             errorMsg+="Revise lo siguiente: "
@@ -53,7 +55,7 @@ class UserInsert extends Component{
     handleUserData(userData)  {
         debugger;
         this.setState({errorMsg : '', userInserted : false})
-        const {imgBase64,formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formUserType,formLocation,formPostCode,formCity,formCountry} = userData
+        const {imgBase64,formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formUserType,formLocation,formPostCode,formCity,formCountry,addressToModify,userToModify,userActive,userPasswordChanged} = userData
 
         if (formName.length === 0 || formSurname.length === 0 || formEmail.length === 0 || formPassword.length === 0 || formDni.length === 0 || formUserType.length === 0 ||
             formStreetAndNumber.length === 0 || formLocation.length === 0 || formPostCode.length === 0 || formCity.length === 0 || formCountry.length === 0 || 
@@ -63,11 +65,11 @@ class UserInsert extends Component{
 
         }else{
            
-            if (this.validateUserEmailAndDni(formEmail,formDni).length === 0){
+            if (this.validateUserEmailAndDni(formEmail,formDni,userToModify).length === 0){
 
                 const options = {
-                    method: "POST",
-                    url: __API_USER,
+                    method: "PUT",
+                    url: __API_USER + userToModify,
                     headers : {
                         'Content-Type' : 'application/json',
                         'Accept': "application/json",
@@ -75,16 +77,19 @@ class UserInsert extends Component{
                     },
                     
                     data: {
+                        id: userToModify,
                         email: formEmail,
                         password: formPassword,
                         name: formName,
                         surname: formSurname,
                         dni: formDni,
-                        active: formUserType === 0 ? true : false, //Admins dont need to activate their accounts
-                        passwordChanged: formUserType === 0 ? true : false, //Admins dont need to activate their accounts
+                        active: userActive,
+                        passwordChanged: userPasswordChanged,
                         role: formUserType,
                         imgBase64 : imgBase64,
+                        addressId: addressToModify,
                         address: {
+                          id: addressToModify,  
                           streetAndNumber: formStreetAndNumber,
                           location: formLocation,
                           postalCode: formPostCode,
@@ -96,13 +101,14 @@ class UserInsert extends Component{
 
                 axios(options).then( response => {
                     debugger;
-                    this.setState({errorMsg : 'El usuario se dió de alta correctamente.'})
+                    this.setState({errorMsg : 'El usuario se modificó correctamente.'})
                     this.setState({clearForm : true})
                     this.getUserList()
 
                 }).catch(error => {
-                    console.error("Error Insertando al usuario: ", error)
-                    this.setState({errorMsg: 'Ocurrió un error insertando al usuario.'})
+                    console.error("Error modificando el usuario: ", error)
+                    console.log(error)
+                    this.setState({errorMsg: 'Ocurrió un error modificando al usuario.'})
                 })
 
 
@@ -112,9 +118,10 @@ class UserInsert extends Component{
     }
 
     render(){
-        return <UserForm open={this.open} classes={this.classes} {...this.props} action={(userData) => this.handleUserData(userData)} errorMsg={this.state.errorMsg} clearForm={this.state.clearForm} setClearForm={(value) => this.setClearForm(value)}/>
+        return <UserForm action={(userData) => this.handleUserData(userData)} errorMsg={this.state.errorMsg} clearForm={this.state.clearForm} setClearForm={(value) => this.setClearForm(value)}
+         user={this.state.user}/>
     }
 
 }
 
-export default UserInsert
+export default ModifyForm

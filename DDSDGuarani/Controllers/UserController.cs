@@ -159,6 +159,35 @@ namespace DDSDGuarani.Controllers
             }
         }
 
+        /// <summary>
+        /// Modifica el campo PasswordChange del usuario
+        /// </summary>
+        /// <param name="mail"></param>
+        /// <param name="newPassword"></param>
+        [HttpPatch("{id}/[action]/{active}")]
+        public ActionResult PassChange(string mail,string newPassword)
+        {
+            try
+            {
+                User user = context.User.FirstOrDefault(user => user.Email == mail);
+                if (user != null)
+                {    
+                    context.Entry(user).State = EntityState.Modified;
+                    user.Password = newPassword;
+                    user.PasswordChanged = true;
+                    context.SaveChanges();
+                    return Ok("Password de " + user.Name + " " + user.Surname + " cambiado a: " + newPassword);
+                }
+                else
+                {
+                    return BadRequest("No existe el usuario.");
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
         /// <summary>
         /// Modifica un Usuario

@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-
+import React, { Component } from 'react';
+import clsx from 'clsx';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -17,7 +17,7 @@ import axios from 'axios'
 import {__API_CAREER, __API_INSCWINDOW, __API_SUBJECT, __API_USER} from '../../consts/consts'
 
 
-class SubjectInsert extends Component{
+class SubjectInsert extends Component {
 
     state = {
         isLoading : false,
@@ -38,7 +38,7 @@ class SubjectInsert extends Component{
         
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const getUsers = axios.get(__API_USER)
         const getInscWindows =  axios.get(__API_INSCWINDOW)
         const getCareers = axios.get(__API_CAREER)
@@ -50,36 +50,36 @@ class SubjectInsert extends Component{
     }
 
     onNameChange = (ev) => {
-        this.setState({formName : ev.target.value}) 
+        this.setState({ formName: ev.target.value })
     }
 
     onStartTimeChange = (ev) => {
-        this.setState({formStartTime : ev.target.value})
+        this.setState({ formStartTime: ev.target.value })
     }
 
     onEndTimeChange = (ev) => {
-        this.setState({formEndTime : ev.target.value})
+        this.setState({ formEndTime: ev.target.value })
     }
 
     onYearChange = (ev) => {
-        this.setState({formYear : ev.target.value})
+        this.setState({ formYear: ev.target.value })
     }
 
     onShiftChange = (ev) => {
-        this.setState({formShift : ev.target.value})
+        this.setState({ formShift: ev.target.value })
     }
 
     onPeriodChange = (ev) => {
-        this.setState({formPeriod : ev.target.value})
+        this.setState({ formPeriod: ev.target.value })
     }
 
-    onSelectedTeachersChange = (ev,values) => {
+    onSelectedTeachersChange = (ev, values) => {
         debugger;
-        this.setState({selectedTeachers : values})
+        this.setState({ selectedTeachers: values })
     }
 
     onWindowChange = (ev) => {
-        this.setState({subjectInscriptionWindow : ev.target.value})
+        this.setState({ subjectInscriptionWindow: ev.target.value })
     }
 
     onCareerChange = (ev) => {
@@ -107,12 +107,12 @@ class SubjectInsert extends Component{
             || subjectInscriptionWindow.length === 0 || subjectCareer.length === 0 || scoreUploadLimit.length === 0){
                 this.setState({errorMsg : "Por favor, complete todos los campos"})
         } else {
-            
+
             var startTime = new Date()
             startTime.setHours(formStartTime.split(":")[0])
             startTime.setMinutes(formStartTime.split(":")[1])
             console.log(startTime)
-            
+
             var endTime = new Date()
             endTime.setHours(formEndTime.split(":")[0])
             endTime.setMinutes(formEndTime.split(":")[1])
@@ -120,8 +120,8 @@ class SubjectInsert extends Component{
 
             //docentes asignados
             var teachers = []
-            selectedTeachers.map( teacher => teachers.push({userid : teacher.id}))
-             
+            selectedTeachers.map(teacher => teachers.push({ userid: teacher.id }))
+
 
             if (startTime < endTime && moment(scoreUploadLimit).isValid()){
                 const options = {
@@ -140,8 +140,8 @@ class SubjectInsert extends Component{
                         scoreuploadlimit : scoreUploadLimit 
                     }
                 }
-    
-                axios(options).then( resp => {
+
+                axios(options).then(resp => {
                     console.log(resp.data);
                     this.setState({errorMsg : "Materia agregada correctamente"})
                     this.setState({formName : '',formStartTime : '',formEndTime : '', formYear : '', formShift : '', 
@@ -158,49 +158,55 @@ class SubjectInsert extends Component{
         }
     }
 
-    render(){
+    render() {
         return (
+            <main
+                className={clsx(this.props.classes.content, {
+                    [this.props.classes.contentShift]: this.props.open,
+                })}
+            >
+                <div className={this.props.classes.drawerHeader} />
                 <Container maxWidth="xs">
                     <h3>Ingrese datos de la materia</h3>
                     {this.state.errorMsg.length !== 0 ?
-                                <>
-                                <Chip
-                                    fullWidth
-                                    variant="outlined"
-                                    color="primary"
-                                    size="small"
-                                    label={this.state.errorMsg}
-                                />
-                                <br /><br />
-                                </> : 
-                            null}
+                        <>
+                            <Chip
+                                fullWidth
+                                variant="outlined"
+                                color="primary"
+                                size="small"
+                                label={this.state.errorMsg}
+                            />
+                            <br /><br />
+                        </> :
+                        null}
                     <form autoComplete="off">
                         <Grid container spacing={1}>
-                        
+
                             <Grid item sm={12} >
-                                <TextField fullWidth inputProps={{maxLength: 100}} variant="outlined" value={this.state.formName} onChange={(ev) => this.onNameChange(ev)} label="Nombre" type="text"/>
-                            </Grid> 
-                            
-                            <Grid item sm={6}>
-                                <TextField fullWidth id="time" variant="outlined" InputLabelProps={{shrink : true}} value={this.state.formStartTime} onChange={(ev) => this.onStartTimeChange(ev)} label="Hora de Inicio"  type="time"/>
+                                <TextField fullWidth inputProps={{ maxLength: 100 }} variant="outlined" value={this.state.formName} onChange={(ev) => this.onNameChange(ev)} label="Nombre" type="text" />
                             </Grid>
-                            
+
                             <Grid item sm={6}>
-                                <TextField fullWidth id="time" variant="outlined" InputLabelProps={{shrink : true}} value={this.state.formEndTime} onChange={(ev) => this.onEndTimeChange(ev)} label="Hora de Fin" type="time"/>
+                                <TextField fullWidth id="time" variant="outlined" InputLabelProps={{ shrink: true }} value={this.state.formStartTime} onChange={(ev) => this.onStartTimeChange(ev)} label="Hora de Inicio" type="time" />
                             </Grid>
-                            
+
+                            <Grid item sm={6}>
+                                <TextField fullWidth id="time" variant="outlined" InputLabelProps={{ shrink: true }} value={this.state.formEndTime} onChange={(ev) => this.onEndTimeChange(ev)} label="Hora de Fin" type="time" />
+                            </Grid>
+
                             <Grid item sm={6}>
                                 <FormControl fullWidth variant="outlined">
-                                        <InputLabel>Año</InputLabel>
-                                        <Select onChange={(ev) => this.onYearChange(ev)} value={this.state.formYear}>
-                                            <MenuItem value={1}>Primero</MenuItem>
-                                            <MenuItem value={2}>Segundo</MenuItem>
-                                            <MenuItem value={3}>Tercero</MenuItem>
-                                            <MenuItem value={4}>Cuarto</MenuItem>
-                                            <MenuItem value={5}>Quinto</MenuItem>
-                                        </Select>
+                                    <InputLabel>Año</InputLabel>
+                                    <Select onChange={(ev) => this.onYearChange(ev)} value={this.state.formYear}>
+                                        <MenuItem value={1}>Primero</MenuItem>
+                                        <MenuItem value={2}>Segundo</MenuItem>
+                                        <MenuItem value={3}>Tercero</MenuItem>
+                                        <MenuItem value={4}>Cuarto</MenuItem>
+                                        <MenuItem value={5}>Quinto</MenuItem>
+                                    </Select>
                                 </FormControl>
-                            </Grid> 
+                            </Grid>
                             <Grid item sm={6}>
                                 <FormControl fullWidth variant="outlined">
                                     <InputLabel>Turno</InputLabel>
@@ -223,12 +229,12 @@ class SubjectInsert extends Component{
                             <Grid item sm={12}>
                                 <FormControl fullWidth variant="outlined">
                                     <Autocomplete options={this.state.teacherList}
-                                                  onChange={(ev,values) => this.onSelectedTeachersChange(ev,values)}
-                                                  filterSelectedOptions
-                                                  value={this.state.selectedTeachers}
-                                                  getOptionLabel={(option) => option.name+" "+option.surname}
-                                                  renderInput={(params) => <TextField {...params} variant="outlined" label="Docentes" />} 
-                                                  multiple id="tags-standard" noOptionsText="No hay coincidencias" 
+                                        onChange={(ev, values) => this.onSelectedTeachersChange(ev, values)}
+                                        filterSelectedOptions
+                                        value={this.state.selectedTeachers}
+                                        getOptionLabel={(option) => option.name + " " + option.surname}
+                                        renderInput={(params) => <TextField {...params} variant="outlined" label="Docentes" />}
+                                        multiple id="tags-standard" noOptionsText="No hay coincidencias"
                                     />
                                 </FormControl>
                             </Grid>
@@ -236,7 +242,7 @@ class SubjectInsert extends Component{
                                 <FormControl fullWidth variant="outlined">
                                     <InputLabel>Ventana de Inscripción</InputLabel>
                                     <Select onChange={(ev) => this.onWindowChange(ev)} value={this.state.subjectInscriptionWindow}>
-                                        {this.state.inscWindowList.map( window => 
+                                        {this.state.inscWindowList.map(window =>
                                             <MenuItem value={window.id}>{this.generateWindowText(window)}</MenuItem>
                                         )}
                                     </Select>
@@ -259,13 +265,13 @@ class SubjectInsert extends Component{
                             </Grid>
                         </Grid>
                         <br />
-                        <Button variant="contained" disabled={this.state.isLoading} onClick= {this.insertSubject}color="primary">
+                        <Button variant="contained" disabled={this.state.isLoading} onClick={this.insertSubject} color="primary">
                             Agregar Materia
-                        </Button>                        
+                        </Button>
                     </form>
-                    <br />          
+                    <br />
                 </Container>
-                
+                </main>
                 
                 
             )

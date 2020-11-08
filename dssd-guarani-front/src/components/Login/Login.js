@@ -57,9 +57,14 @@ export class Login extends Component{
                 this.props.setNameUser(loginResponse.nameUser)
             }
             else
-                this.setState({wrongCredentials : "Error: credenciales inválidas"})
-
-
+            {
+                if(loginResponse.mensaje === "Usuario Dado de Baja"){
+                    this.setState({wrongCredentials : "Error: Usuario Dado de Baja."})
+                }else{
+                    this.setState({wrongCredentials : "Error: credenciales inválidas"})
+                }
+            }
+                
 
         }).catch( error => {
             console.error("Error during Login: ",error)
