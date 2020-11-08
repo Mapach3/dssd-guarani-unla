@@ -37,6 +37,7 @@ export class FirstAccess extends Component {
     render() {
         return (
             <Container maxWidth="xs">
+                <br />
                 <Typography>
                     Primer acceso en el sistema, por favor cambie su contraseña temporal por una nueva.
                     </Typography>
@@ -44,6 +45,7 @@ export class FirstAccess extends Component {
                     <TextField fullWidth inputProps={{ maxLength: 100 }} variant="outlined"
                         value={this.state.newPassword} onChange={(ev) => this.onChangePass(ev)} label="Ingrese Contraseña" type="text" />
                 </Grid>
+                < br/>
                 <Button variant="contained" onClick={this.setPasswordDefinitive} color="primary">
                     Cambiar Contraseña
                 </Button>

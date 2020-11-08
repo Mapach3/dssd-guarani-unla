@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DDSDGuarani.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20201107215519_Initial")]
+    [Migration("20201108223638_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -251,6 +251,9 @@ namespace DDSDGuarani.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

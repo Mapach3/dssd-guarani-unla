@@ -21,8 +21,9 @@ export class Loading extends Component {
     render() {
         return (
             <Container maxWidth="md">
+                <br />
                 <Typography>
-                    Ingresando..
+                    Ingresando al sistema...
                 </Typography>
                 {this.callTiming()}
                 {<CircularProgress size={16} color="secondary"/>}

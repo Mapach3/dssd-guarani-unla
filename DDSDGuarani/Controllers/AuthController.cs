@@ -42,7 +42,7 @@ namespace DDSDGuarani.Controllers
                 var resultDb = context.User.FirstOrDefault(u => u.Email == user.Email);
                 userResp = _mapper.Map<User, UserResponse>(resultDb);
 
-                if (!userResp.Active)
+                if ( userResp != null && !userResp.Active)
                 {
                     responseLogin.Cod = 401;
                     responseLogin.Data = null;
