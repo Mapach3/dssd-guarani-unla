@@ -22,7 +22,8 @@ export class FirstAccess extends Component {
         const mail = this.state.mail
         const pass = this.state.newPassword
         axios.patch(__API_PATCH_USER_PASSWORD + mail + "/PassChange/" + pass).then(response => {
-            console.log("OK")
+            Storage.setPassChange(true)
+            this.props.setPassChange(true)
         }).catch(error => {
             console.log(error);
         })
