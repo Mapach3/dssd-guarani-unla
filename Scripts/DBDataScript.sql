@@ -9,6 +9,12 @@ DELETE FROM [GuaraniUnla].[dbo].[InscriptionWindow]
 DELETE FROM [GuaraniUnla].[dbo].[Course]
 DELETE FROM [GuaraniUnla].[dbo].[Address]
 DELETE FROM [GuaraniUnla].[dbo].[User]
+DELETE FROM [GuaraniUnla].[dbo].[Career]
+
+SET IDENTITY_INSERT [dbo].[Career] ON 
+INSERT [dbo].[Career] ([Id], [Name]) VALUES (1, N'Licenciatura en Sistemas')
+SET IDENTITY_INSERT [dbo].[Career] OFF
+GO
 
 SET IDENTITY_INSERT [dbo].[Address] ON 
 INSERT [dbo].[Address] ([Id], [StreetAndNumber], [Location], [PostalCode], [City], [Country]) VALUES (1, N'Calle 1 123', N'Lanus', N'1234', N'Lanus', N'Argentina')
@@ -39,17 +45,17 @@ GO
 SET IDENTITY_INSERT [dbo].[InscriptionWindow] ON 
 INSERT [dbo].[InscriptionWindow] ([Id], [StartDate], [EndDate]) VALUES (1, CAST(N'2020-07-15T10:00:00.000' AS DateTime), CAST(N'2020-07-19T11:00:00.000' AS DateTime))
 INSERT [dbo].[InscriptionWindow] ([Id], [StartDate], [EndDate]) VALUES (2, CAST(N'2020-02-15T10:00:00.000' AS DateTime), CAST(N'2020-02-19T11:00:00.000' AS DateTime))
-INSERT [dbo].[InscriptionWindow] ([Id], [StartDate], [EndDate]) VALUES (3, CAST(N'2021-02-15T10:00:00.000' AS DateTime), CAST(N'2020-02-19T11:00:00.000' AS DateTime))
+INSERT [dbo].[InscriptionWindow] ([Id], [StartDate], [EndDate]) VALUES (3, CAST(N'2021-02-15T10:00:00.000' AS DateTime), CAST(N'2021-02-19T11:00:00.000' AS DateTime))
 INSERT [dbo].[InscriptionWindow] ([Id], [StartDate], [EndDate]) VALUES (4, CAST(N'2020-07-04T10:00:00.000' AS DateTime), CAST(N'2020-07-08T11:00:00.000' AS DateTime))
 SET IDENTITY_INSERT [dbo].[InscriptionWindow] OFF
 GO
 
 SET IDENTITY_INSERT [dbo].[Subject] ON 
-INSERT [dbo].[Subject] ([Id], [StartTime], [EndTime], [Year], [Period], [Shift]) VALUES (1, CAST(N'2020-08-01T00:00:00.000' AS DateTime), CAST(N'2020-12-01T00:00:00.000' AS DateTime), 2020, 2020, 3)
-INSERT [dbo].[Subject] ([Id], [StartTime], [EndTime], [Year], [Period], [Shift]) VALUES (2, CAST(N'2020-08-01T00:00:00.000' AS DateTime), CAST(N'2020-12-01T00:00:00.000' AS DateTime), 2020, 2020, 1)
-INSERT [dbo].[Subject] ([Id], [StartTime], [EndTime], [Year], [Period], [Shift]) VALUES (3, CAST(N'2020-03-01T00:00:00.000' AS DateTime), CAST(N'2020-07-01T00:00:00.000' AS DateTime), 2020, 2020, 1)
-INSERT [dbo].[Subject] ([Id], [StartTime], [EndTime], [Year], [Period], [Shift]) VALUES (4, CAST(N'2021-03-01T00:00:00.000' AS DateTime), CAST(N'2021-07-01T00:00:00.000' AS DateTime), 2021, 2021, 3)
-INSERT [dbo].[Subject] ([Id], [StartTime], [EndTime], [Year], [Period], [Shift]) VALUES (5, CAST(N'2021-03-01T00:00:00.000' AS DateTime), CAST(N'2021-07-01T00:00:00.000' AS DateTime), 2021, 2021, 2)
+INSERT [dbo].[Subject] ([Id], [Name], [StartTime], [EndTime], [ScoreUploadLimit], [Year], [Period], [Shift], [InscriptionWindowId], [CareerId]) VALUES (1, N'Objetos 2', CAST(N'2020-08-01T00:00:00.000' AS DateTime), CAST(N'2020-12-01T00:00:00.000' AS DateTime), CAST(N'2020-12-04T00:00:00.000' AS DateTime), 2020, 2020, 3, 1, 1)
+INSERT [dbo].[Subject] ([Id], [Name], [StartTime], [EndTime], [ScoreUploadLimit], [Year], [Period], [Shift], [InscriptionWindowId], [CareerId]) VALUES (2, N'DSSD', CAST(N'2020-08-01T00:00:00.000' AS DateTime), CAST(N'2020-12-01T00:00:00.000' AS DateTime), CAST(N'2020-12-04T00:00:00.000' AS DateTime), 2020, 2020, 1, 1, 1)
+INSERT [dbo].[Subject] ([Id], [Name], [StartTime], [EndTime], [ScoreUploadLimit], [Year], [Period], [Shift], [InscriptionWindowId], [CareerId]) VALUES (3, N'Programacion Concurrente', CAST(N'2020-03-01T00:00:00.000' AS DateTime), CAST(N'2020-07-01T00:00:00.000' AS DateTime), CAST(N'2020-07-04T00:00:00.000' AS DateTime), 2020, 2020, 1, 2, 1)
+INSERT [dbo].[Subject] ([Id], [Name], [StartTime], [EndTime], [ScoreUploadLimit], [Year], [Period], [Shift], [InscriptionWindowId], [CareerId]) VALUES (4, N'AYED', CAST(N'2021-03-01T00:00:00.000' AS DateTime), CAST(N'2021-07-01T00:00:00.000' AS DateTime), CAST(N'2021-07-04T00:00:00.000' AS DateTime), 2021, 2021, 3, 3, 1)
+INSERT [dbo].[Subject] ([Id], [Name], [StartTime], [EndTime], [ScoreUploadLimit], [Year], [Period], [Shift], [InscriptionWindowId], [CareerId]) VALUES (5, N'Matematica Discreta', CAST(N'2021-03-01T00:00:00.000' AS DateTime), CAST(N'2021-07-01T00:00:00.000' AS DateTime), CAST(N'2021-07-04T00:00:00.000' AS DateTime), 2021, 2021, 2, 3, 1)
 SET IDENTITY_INSERT [dbo].[Subject] OFF
 GO
 
@@ -80,7 +86,7 @@ SET IDENTITY_INSERT [dbo].[EvaluationInstance] OFF
 GO
 
 SET IDENTITY_INSERT [dbo].[FinalCall] ON 
-INSERT [dbo].[FinalCall] ([Id], [Date], [SubjectId], [InscriptionWindowId]) VALUES (1, CAST(N'2020-07-15T00:00:00.000' AS DateTime), 3, 4)
+INSERT [dbo].[FinalCall] ([Id], [Date], [ScoreUploadLimit], [SubjectId], [InscriptionWindowId]) VALUES (1, CAST(N'2020-07-15T00:00:00.000' AS DateTime), CAST(N'2020-07-22T00:00:00.000' AS DateTime), 3, 4)
 SET IDENTITY_INSERT [dbo].[FinalCall] OFF
 GO
 
