@@ -80,7 +80,7 @@ class UserInsert extends Component{
                         name: formName,
                         surname: formSurname,
                         dni: formDni,
-                        active: formUserType === 0 ? true : false, //Admins dont need to activate their accounts
+                        active: true,
                         passwordChanged: formUserType === 0 ? true : false, //Admins dont need to activate their accounts
                         role: formUserType,
                         imgBase64 : imgBase64,

@@ -16,7 +16,7 @@ export class Login extends Component{
     state = {
         formEmail : '',
         formPassword : '',
-        wrongCredentials : 'Credenciales inválidas',
+        wrongCredentials : '',
     }
 
     handleMailChange = (ev) => {
