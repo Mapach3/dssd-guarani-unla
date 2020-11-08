@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Login} from './components/Login/Login'
 import UserInsert from './components/UserInsert/index'
 import UserDrop from './components/UserDrop/index'
+import UserModify from './components/UserModify/index'
 import SubjectInsert from './components/SubjectInsert/SubjectInsert';
 import './App.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -44,6 +45,7 @@ const App = () => {
           {/* <UserDrop /> */}
           {/* <SubjectInsert /> */}
           {/* <InsertInscriptionWindow /> */}
+          {/* <UserModify /> */}
           </>
           : 
           <>
