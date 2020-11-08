@@ -40,16 +40,25 @@ const CustomDrawerAdmin = ({ classes, open, setOpen, theme, ...props }) => {
             </div>
             <Divider />
             <List>
-                <ListItem button onClick={() => props.history.push("/inscriptionExam")}>
-                    <ListItemIcon><Add /></ListItemIcon>
-                    <ListItemText primary="Inscripcion a Examenes" />
-                </ListItem>
-
                 <ListItem button onClick={() => props.history.push("/insertUser")}>
                     <ListItemIcon><Add /></ListItemIcon>
-                    <ListItemText primary="Agregar usuarios" />
+                    <ListItemText primary="Agregar Usuario" />
                 </ListItem>
 
+                <ListItem button onClick={() => props.history.push("/deleteUser")}>
+                    <ListItemIcon><Delete /></ListItemIcon>
+                    <ListItemText primary="Borrar Usuario" />
+                </ListItem>
+
+                <ListItem button onClick={() => props.history.push("/inscriptionWindow")}>
+                    <ListItemIcon><Add /></ListItemIcon>
+                    <ListItemText primary="Ventana de Inscripcion" />
+                </ListItem>
+
+                <ListItem button onClick={() => props.history.push("/insertSubject")}>
+                    <ListItemIcon><Add /></ListItemIcon>
+                    <ListItemText primary="Agregar Materias" />
+                </ListItem>
             </List>
             <Divider />
         </Drawer>

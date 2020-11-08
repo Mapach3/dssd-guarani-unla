@@ -1,9 +1,5 @@
 import React, {useState} from 'react';
 import {Login} from './components/Login/Login'
-import UserInsert from './components/UserInsert/index'
-import UserDrop from './components/UserDrop/index'
-import UserModify from './components/UserModify/index'
-import SubjectInsert from './components/SubjectInsert/SubjectInsert';
 import './App.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {Storage} from './components/Storage'
@@ -16,8 +12,6 @@ import {
 import HomeAdmin from './pages/HomeAdmin';
 import HomeStudent from './pages/HomeStudent';
 import HomeTeacher from './pages/HomeTeacher';
-import InsertInscriptionWindow from './components/InscriptionWindow/InsertInscriptionWindow';
-
 
 const App = () => {
 
@@ -41,11 +35,6 @@ const App = () => {
           <>
           <Redirect exact to="/login"/>
           <Login setToken={setUserToken} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>         
-          {/* <UserInsert />  */}
-          {/* <UserDrop /> */}
-          {/* <SubjectInsert /> */}
-          {/* <InsertInscriptionWindow /> */}
-          {/* <UserModify /> */}
           </>
           : 
           <>
