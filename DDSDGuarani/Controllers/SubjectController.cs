@@ -61,11 +61,11 @@ namespace DDSDGuarani.Controllers
                 
                 context.Subject.Add(subject);
                 context.SaveChanges();
-                return Ok();
+                return Ok("Materia Agregada Correctamente");
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest("Error agregando la materia"/*e.Message*/);
             }
         }
 
