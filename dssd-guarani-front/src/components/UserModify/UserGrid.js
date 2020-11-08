@@ -21,6 +21,10 @@ class UserGrid extends Component{
         ev.currentTarget.disabled = false
     }
 
+    setUserRole(user){
+        return user.role === 1 ? "Alumno" : "Profesor"
+    }
+
 
     render(){
         const {users} = this.props
@@ -33,6 +37,7 @@ class UserGrid extends Component{
                     <TableCell align="left">Nombre y Apellido</TableCell>
                     <TableCell align="left">E-mail</TableCell>
                     <TableCell align="left">DNI</TableCell>
+                    <TableCell align="left">Rol</TableCell>
                     <TableCell align="left">Acción</TableCell>
                     </TableRow>
                 </TableHead>
@@ -43,6 +48,7 @@ class UserGrid extends Component{
                         <TableCell align="left">{user.name} {user.surname}</TableCell>
                         <TableCell align="left">{user.email}</TableCell>
                         <TableCell align="left">{user.dni}</TableCell>
+                        <TableCell align="left">{this.setUserRole(user)}</TableCell>
                         <TableCell align="left">
                         <Button variant="contained" value={user.id} disabled={false} color="primary" onClick={(ev) => this.sendUserId(ev)}>{"Modificar"}</Button>      
                         </TableCell>

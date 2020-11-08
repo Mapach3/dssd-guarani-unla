@@ -41,12 +41,9 @@ class UserModify extends Component{
     openModifyScreen(userId){
         debugger;
         this.setState({errorMsg : ''})
-        var id = parseInt(userId)
-        var user = this.state.userList.find( user => user.id === id)
         axios.get(__API_USER+userId).then(response => {
             console.log(response.data)
-            this.state.userToModify = response.data;
-            this.state.activeModification = true;
+            this.setState({userToModify : response.data, activeModification : true})
             this.updateUserList()
         }).catch(error => {
             this.setState({errorMsg : "Ha habido un error",dialogOpen : true})
@@ -57,14 +54,18 @@ class UserModify extends Component{
         this.setState({dialogOpen : !this.state.dialogOpen})
     }
 
+    cancelModification = () => {
+      this.setState({userToModify : null, activeModification : false})
+    }
+
 
 
     render(){
         const{userList,loading,errorMsg} = this.state
         
         return <>
-        <h3>Modificacion de usuario</h3>
-        {loading ? <CircularProgress color="secondary"/> : <UserGrid users={userList} action={(id) => this.openModifyScreen(id)}/>}
+        <h3>Modificación de usuario</h3>
+        {loading ? <CircularProgress color="secondary"/> : null}
         <Dialog
         open={this.state.dialogOpen}
         keepMounted
@@ -81,7 +82,14 @@ class UserModify extends Component{
           </Button>
         </DialogActions>
       </Dialog>
-      { this.state.activeModification ? <ModifyForm user={this.state.userToModify}/> : null }
+      { this.state.activeModification ?
+      <> 
+      <Button color="secondary" variant="outlined" onClick={this.cancelModification}>Volver a la lista</Button> 
+      <ModifyForm user={this.state.userToModify}/> 
+      </>
+      :
+      <UserGrid users={userList} action={(id) => this.openModifyScreen(id)}/>
+      }
         </>   
     }
 

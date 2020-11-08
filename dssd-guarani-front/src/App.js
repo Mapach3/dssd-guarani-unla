@@ -12,6 +12,7 @@ import {
 import HomeAdmin from './pages/HomeAdmin';
 import HomeStudent from './pages/HomeStudent';
 import HomeTeacher from './pages/HomeTeacher';
+import UserModify from './components/UserModify/index'
 
 const App = () => {
 
@@ -34,7 +35,8 @@ const App = () => {
           {userToken == null ? 
           <>
           <Redirect exact to="/login"/>
-          <Login setToken={setUserToken} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>         
+          {/* <Login setToken={setUserToken} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>          */}
+          <UserModify />
           </>
           : 
           <>
