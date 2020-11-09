@@ -21,6 +21,7 @@ export class FirstAccess extends Component {
 
 
     setPasswordDefinitive = () =>  {
+        debugger;
         const {mail,newPassword, newUserName,userList} = this.state
 
         if (userList.find(user => user.userName === newUserName) !== undefined){
@@ -32,7 +33,7 @@ export class FirstAccess extends Component {
                 data : {
                     username : newUserName,
                     email : mail,
-                     password : newPassword
+                    password : newPassword
                 }    
             }
 
@@ -65,7 +66,7 @@ export class FirstAccess extends Component {
             <Container maxWidth="xs">
                 <br />
                 <Typography>
-                    Primer acceso en el sistema, por favor cambie su contraseña temporal por una nueva.
+                    Primer acceso en el sistema, por favor cambie sus datos de ingreso.
                     </Typography>
                 <Grid item sm={12} >
                     <TextField fullWidth inputProps={{ maxLength: 100 }} variant="outlined"

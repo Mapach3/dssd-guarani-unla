@@ -13,8 +13,12 @@ import Chip from '@material-ui/core/Chip';
 import ImageUploader from 'react-images-upload';
 import NoImage from '../../assets/img/NoImage.jpg'
 
+import axios from 'axios'
+import {__API_CAREER} from '../../consts/consts'
+
 class UserForm extends Component {
     state = {
+        careerList : [],
         //personalInfo
         imgBase64: '',
         formName: '',
@@ -24,12 +28,19 @@ class UserForm extends Component {
         formEmail: '',
         formPassword: '',
         formUserType: '',
+        formCareerId: '',
         //address
         formStreetAndNumber: '',
         formLocation: '',
         formPostCode: '',
         formCity: '',
         formCountry: '',
+    }
+
+    componentDidMount(){
+        axios.get(__API_CAREER).then(resp => {
+            this.setState({careerList : resp.data})
+        })
     }
 
     onNameChange = (ev) => {
@@ -51,6 +62,10 @@ class UserForm extends Component {
 
     onUserTypeChange = (ev) => {
         this.setState({ formUserType: ev.target.value })
+    }
+
+    onCareerIdChange = (ev) => {
+        this.setState({ formCareerId: ev.target.value })
     }
 
     onEmailChange = (ev) => {
@@ -103,7 +118,6 @@ class UserForm extends Component {
     }
 
     clearValues() {
-        console.log("Clearing values")
         this.setState({
             formEmail: '',formUserName : '', formPassword: '', formName: '', formSurname: '', formDni: '', formUserType: '', formStreetAndNumber: '',
             formLocation: '', formPostCode: '', formCity: '', formCountry: '', imgBase64: ''
@@ -182,6 +196,16 @@ class UserForm extends Component {
                                         <MenuItem value={0}>Administrador</MenuItem>
                                         <MenuItem value={1}>Alumno</MenuItem>
                                         <MenuItem value={2}>Profesor</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item sm={12}>
+                                <FormControl fullWidth variant="outlined">
+                                    <InputLabel id="demo-simple-select-outlined-label">Carrera</InputLabel>
+                                    <Select onChange={(ev) => this.onCareerIdChange(ev)} value={this.state.formCareerId}>
+                                        {this.state.careerList.map( career => 
+                                            <MenuItem key={career.id} value={career.id}>{career.name}</MenuItem>
+                                        )}
                                     </Select>
                                 </FormControl>
                             </Grid>

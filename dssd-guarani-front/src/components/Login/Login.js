@@ -53,6 +53,7 @@ export class Login extends Component{
             }
     
             axios(options).then( resp => {
+                debugger;
                 console.log("Login Response: ", resp)
                 var loginResponse = resp.data
                 if (loginResponse.cod === 200){
@@ -61,8 +62,8 @@ export class Login extends Component{
                     Storage.setRolUser(loginResponse.rol)
                     Storage.setNameUser(loginResponse.nameUser)
                     Storage.setPassChange(loginResponse.passwordChange)
-                    Storage.setMailUser(loginResponse.email)
-                    this.props.setMailUser(loginResponse.email)
+                    Storage.setMailUser(loginResponse.mailUser)
+                    this.props.setMailUser(loginResponse.mailUser)
                     this.props.setPassChange(loginResponse.passwordChange)
                     this.props.setToken(loginResponse.data)
                     this.props.setImageUser(loginResponse.imageUser)

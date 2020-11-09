@@ -53,7 +53,7 @@ class UserInsert extends Component{
     handleUserData(userData)  {
         debugger;
         this.setState({errorMsg : '', userInserted : false})
-        const {imgBase64,formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formUserType,formLocation,formPostCode,formUserName,formCity,formCountry} = userData
+        const {imgBase64,formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formUserType,formLocation,formPostCode,formUserName,formCity,formCountry,formCareerId} = userData
 
         if (formName.length === 0 || formSurname.length === 0 || formEmail.length === 0 || formPassword.length === 0 || formDni.length === 0 || formUserType.length === 0 ||
             formStreetAndNumber.length === 0 || formLocation.length === 0 || formPostCode.length === 0 || formCity.length === 0 || formCountry.length === 0 || 
@@ -83,6 +83,7 @@ class UserInsert extends Component{
                         dni: formDni,
                         active: true,
                         passwordChanged: formUserType === 0 ? true : false, //Admins dont need to activate their accounts
+                        careerid : formCareerId,
                         role: formUserType,
                         imgBase64 : imgBase64,
                         address: {

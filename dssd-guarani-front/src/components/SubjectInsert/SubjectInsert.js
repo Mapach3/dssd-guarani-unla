@@ -29,7 +29,6 @@ class SubjectInsert extends Component {
         formShift : '',
         errorMsg : '',
         subjectCareer : '',
-        scoreUploadLimit : '',
         teacherList : [],
         selectedTeachers : [],
         careerList : []
@@ -79,18 +78,14 @@ class SubjectInsert extends Component {
         this.setState({subjectCareer : ev.target.value})
     }
 
-    onScoreUploadLimitChange = (ev) => {
-        console.log("Seteado: ",ev.target.value)
-        this.setState({scoreUploadLimit : ev.target.value})
-    }
 
 
     insertSubject = () => {
         debugger;
-        const {formName,formStartTime,formEndTime,formYear,formShift,formPeriod,selectedTeachers, subjectCareer,scoreUploadLimit} = this.state
+        const {formName,formStartTime,formEndTime,formYear,formShift,formPeriod,selectedTeachers, subjectCareer} = this.state
         if (formName.length === 0 || formStartTime.length === 0 || formEndTime.length === 0 
             || formYear.length === 0 || formShift.length === 0 || formPeriod.length === 0 
-            || subjectCareer.length === 0 || scoreUploadLimit.length === 0){
+            || subjectCareer.length === 0){
                 this.setState({errorMsg : "Por favor, complete todos los campos"})
         } else {
 
@@ -109,7 +104,7 @@ class SubjectInsert extends Component {
             selectedTeachers.map(teacher => teachers.push({ userid: teacher.id }))
 
 
-            if (startTime < endTime && moment(scoreUploadLimit).isValid()){
+            if (startTime < endTime){
                 const options = {
                     method : "POST",
                     url : __API_SUBJECT,
@@ -123,7 +118,6 @@ class SubjectInsert extends Component {
                         courses : teachers,
                         careerid : subjectCareer,
                         inscriptionwindowid : 1,
-                        scoreuploadlimit : scoreUploadLimit 
                     }
                 }
 
@@ -131,14 +125,13 @@ class SubjectInsert extends Component {
                     console.log(resp.data);
                     this.setState({errorMsg : "Materia agregada correctamente"})
                     this.setState({formName : '',formStartTime : '',formEndTime : '', formYear : '', formShift : '', 
-                                   formPeriod : '', selectedTeachers : [], subjectCareer : '',scoreUploadLimit : ''})
+                                   formPeriod : '', selectedTeachers : [], subjectCareer : ''})
                     
 
                 })
             } else {
                 
-                this.setState({errorMsg : moment(scoreUploadLimit).isValid() ? "La hora de inicio debe ser antes que la hora de fin" : 
-                                    "El formato de la hora límite no es correcto"})
+                this.setState({errorMsg : "La hora de inicio debe ser antes que la hora de fin" })
             }
 
         }
@@ -233,11 +226,6 @@ class SubjectInsert extends Component {
                                         )}
                                     </Select>
                                 </FormControl>
-                            </Grid>
-                            <Grid item sm={12}>
-                            <TextField fullWidth variant="outlined"  value={this.state.scoreUploadLimit} onChange={this.onScoreUploadLimitChange} 
-                                       id="scoreUploadLimit" label="Fecha límite de carga de notas" type="date"  
-                                       InputProps={{inputProps: { min: "2010-05-01", max: "2050-12-31"} }} InputLabelProps={{ shrink: true }} />
                             </Grid>
                         </Grid>
                         <br />
