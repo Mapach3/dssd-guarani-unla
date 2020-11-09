@@ -17,7 +17,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import moment from 'moment'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+
 import axios from 'axios'
 import { __API_CAREER, __API_SUBJECT, __API_USER,__API_COURSE } from '../../consts/consts';
 
@@ -32,7 +36,9 @@ class SubjectInscriptionModification extends Component{
         subjectList : [],
         chosenSubject : '',
         studentsList : [],
-        chosenCareerSubjects : []
+        chosenCareerSubjects : [],
+        errorMsg : '',
+        dialogOpen: false
     }
 
     componentDidMount(){
@@ -44,6 +50,12 @@ class SubjectInscriptionModification extends Component{
             console.log(careers.data,subjects.data,students.data.filter(student => student.role === 1))
             this.setState({careerList : careers.data, subjectList : subjects.data, studentsList : students.data.filter(student => student.role === 1)})
         }))
+    }
+
+    updateStudentsList(){
+        axios.get(__API_USER).then(resp => {
+            this.setState({studentsList : resp.data.filter(student => student.role === 1)})
+        })
     }
 
     onChosenSubjectChange = (ev) => {
@@ -59,6 +71,7 @@ class SubjectInscriptionModification extends Component{
     }
 
     createInscription = (ev) => {
+        this.setState({errorMsg : ''})
         debugger;
         var userId = parseInt(ev.currentTarget.value)
         var subjectId = parseInt(this.state.chosenSubject)
@@ -74,9 +87,15 @@ class SubjectInscriptionModification extends Component{
         } 
         axios(options).then(resp => {
             console.log(resp.data)
+            this.setState({errorMsg : resp.data, dialogOpen : true})
+            this.updateStudentsList()
         })
 
     }
+
+    handleDialog = () => {
+        this.setState({ dialogOpen: !this.state.dialogOpen })
+      }
 
     deleteInscription = (ev) => {
         debugger;
@@ -95,13 +114,31 @@ class SubjectInscriptionModification extends Component{
         
         axios(options).then(resp => {
             console.log(resp.data)
-        })
+            this.setState({errorMsg : resp.data,dialogOpen : true})
+            this.updateStudentsList()
+        });
 
     }
 
     render(){
         return (
                 <Container maxWidth="md">
+                    <Dialog
+                        open={this.state.dialogOpen}
+                        keepMounted
+                        onClose={this.handleDialog}
+                        >
+                        <DialogContent>
+                        <DialogContentText id="alert-dialog-slide-description">
+                            {this.state.errorMsg}
+                        </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                        <Button onClick={this.handleDialog} color="primary">
+                            Aceptar
+                        </Button>
+                        </DialogActions>
+                    </Dialog>
                     <h3>Modificación de inscripciones a materias</h3>
                         <>
                         <Grid container xs={12} spacing={1}>
