@@ -19,7 +19,7 @@ import Paper from '@material-ui/core/Paper';
 
 import moment from 'moment'
 import axios from 'axios'
-import { __API_CAREER, __API_SUBJECT, __API_USER } from '../../consts/consts';
+import { __API_CAREER, __API_SUBJECT, __API_USER,__API_COURSE } from '../../consts/consts';
 
 
 
@@ -41,6 +41,7 @@ class SubjectInscriptionModification extends Component{
         const getStudents = axios.get(__API_USER)
 
         axios.all([getCareers,getSubjects,getStudents]).then(axios.spread((careers,subjects,students) => {
+            console.log(careers.data,subjects.data,students.data.filter(student => student.role === 1))
             this.setState({careerList : careers.data, subjectList : subjects.data, studentsList : students.data.filter(student => student.role === 1)})
         }))
     }
@@ -50,19 +51,60 @@ class SubjectInscriptionModification extends Component{
 
     }
 
-
     onCareerChange = (ev) => {
         debugger;
         this.setState({chosenCareer : ev.target.value})
         let subjectsOfCareer = this.state.subjectList.filter( subject => subject.career.id === ev.target.value)
         this.setState({chosenCareerSubjects : subjectsOfCareer})        
     }
+
+    createInscription = (ev) => {
+        debugger;
+        var userId = parseInt(ev.currentTarget.value)
+        var subjectId = parseInt(this.state.chosenSubject)
+
+        const options = {
+            method : "POST",
+            url : __API_COURSE,
+            
+            data : {
+                userid : userId,
+                subjectid : subjectId
+            }
+        } 
+        axios(options).then(resp => {
+            console.log(resp.data)
+        })
+
+    }
+
+    deleteInscription = (ev) => {
+        debugger;
+        var userId = parseInt(ev.currentTarget.value)
+        var subjectId = parseInt(this.state.chosenSubject)
+
+        const options = {
+            method : "DELETE",
+            url : __API_COURSE,
+            
+            data : {
+                userid : userId,
+                subjectid : subjectId
+            }
+        }
+        
+        axios(options).then(resp => {
+            console.log(resp.data)
+        })
+
+    }
+
     render(){
         return (
-                <Container maxWidth="xs">
+                <Container maxWidth="md">
                     <h3>Modificación de inscripciones a materias</h3>
                         <>
-                        <Grid container spacing={1}>
+                        <Grid container xs={12} spacing={1}>
                             <Grid item sm={12}>
                                 <FormControl fullWidth variant="outlined">
                                     <InputLabel>Carrera</InputLabel>
@@ -108,9 +150,12 @@ class SubjectInscriptionModification extends Component{
                                             <TableCell align="left">{user.name} {user.surname}</TableCell>
                                             <TableCell align="left">{user.email}</TableCell>
                                             <TableCell align="left">{user.dni}</TableCell>
-                                            <TableCell align="left">{this.setUserRole(user)}</TableCell>
+                                            <TableCell align="left">Alumno</TableCell>
                                             <TableCell align="left">
-                                            <Button variant="contained" value={user.id} disabled={false} color={user.active ? "secondary" : "primary"} onClick={(ev) => this.sendUserId(ev)}>{user.active ? "Baja" : "Alta"}</Button>      
+                                            {user.courses.find( course => course.subjectId === this.state.chosenSubject && course.userId === user.id) !== undefined ?  
+                                                <Button variant="contained" onClick={this.deleteInscription} color="secondary" value={user.id}>Baja</Button> : 
+                                                <Button variant="contained" onClick={this.createInscription} color="primary" value={user.id}>Alta</Button> 
+                                            }
                                             </TableCell>
                                         </TableRow>
                                         ))}
