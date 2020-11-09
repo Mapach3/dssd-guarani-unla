@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using DDSDGuarani.DTOResponse;
-using DDSDGuarani.Entities;
+using StudentModule.DTOResponse;
+using StudentModule.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -74,35 +74,6 @@ namespace DDSDGuarani.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
-            }
-        }
-
-
-        /// <summary>
-        /// Modifica una Instancia de Evaluacion
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="evaluationInstance"></param>
-        [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] EvaluationInstance evaluationInstance)
-        {
-            try
-            {
-                if (evaluationInstance.Id == id)
-                {
-                    context.Entry(evaluationInstance).State = EntityState.Modified;
-                    context.SaveChanges();
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-            catch (Exception e)
-            {
-
                 return BadRequest(e.Message);
             }
         }

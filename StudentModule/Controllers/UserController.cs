@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using Microsoft.Extensions.Configuration;
-
+using StudentModule.Requests;
 
 namespace StudentModule.Controllers
 {
@@ -90,31 +90,7 @@ namespace StudentModule.Controllers
             {
                 context.User.Add(user);
                 context.SaveChanges();
-
-                //if (user.Role.ToString() != "ADMIN") { 
-                //    var userEmailName = configuration.GetSection("EmailSenderData").GetValue<string>("EmailUserName");
-                //    var userEmailPassword = configuration.GetSection("EmailSenderData").GetValue<string>("EmailPassword");
-                //    var smtpClient = configuration.GetSection("EmailSenderData").GetValue<string>("SMTPClient");
-                //    var port = configuration.GetSection("EmailSenderData").GetValue<int>("Port");
-
-                //    //Code to implement PDF Attachment in Email
-                //    //Document document = new Document();
-                //    //document.PdfFormat = PdfFormat.Linearized;
-                //    //Page page = new Page(PageSize.Letter, PageOrientation.Portrait, 54.0f);
-                //    //document.Pages.Add(page);
-
-                //    //string labelText = "Hello World...\nFrom DynamicPDF Generator for .NET\nDynamicPDF.com HOLA!!!";
-                //    //Label label = new Label(labelText, 0, 0, 504, 100, Font.Helvetica, 18, TextAlign.Center);
-                //    //page.Elements.Add(label);
-                //    //document.Title = "TEST FILE";
-                //    //byte[] doc = document.Draw();
-
-                //    EmailSender.SendEmail(EmailTemplates.GetRegistrationEmailBody(user.Name,user.Surname, user.Email,user.Password),
-                //                          "Registración Exitosa", user.Email, smtpClient, userEmailName, userEmailPassword, port);
-
-                //}
-
-                return Ok("Registración Exitosa");
+                return Ok();
             }
             catch (Exception e)
             {
@@ -123,57 +99,31 @@ namespace StudentModule.Controllers
         }
 
         /// <summary>
-        /// Modifica el campo Active del usuario
+        /// Modifica los datos de la cuenta del usuario.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="active"></param>
-        [HttpPatch("{id}/[action]/{active}")]
-        public ActionResult Active(int id, bool active)
+        /// <param name="accountData"></param>
+        [HttpPatch]
+        public ActionResult ChangeAccountData([FromBody] AccountData accountData)
         {
             try
             {
-                User user = context.User.FirstOrDefault(user => user.Id == id);
-                if (user != null)
-                {
-                    if (user.Active == active)
-                        return Ok("No se hicieron cambios");
-
-                    context.Entry(user).State = EntityState.Modified;
-                    user.Active = active;
-                    context.SaveChanges();
-                    return Ok("Active de " + user.Name + " " + user.Surname + " cambiado a: " + active);
-                }
-                else
-                {
-                    return BadRequest("No existe el usuario.");
-                }
-
-            }
-            catch (Exception e)
-            {
-
-                return BadRequest(e.Message);
-            }
-        }
-
-        /// <summary>
-        /// Modifica el campo PasswordChange del usuario
-        /// </summary>
-        /// <param name="mail"></param>
-        /// <param name="newPassword"></param>
-        [HttpPatch("{mail}/[action]/{newPassword}")]
-        public ActionResult PassChange(string mail,string newPassword)
-        {
-            try
-            {
-                User user = context.User.FirstOrDefault(user => user.Email == mail);
+                User user = context.User.FirstOrDefault(user => user.Id == accountData.Id);
                 if (user != null)
                 {    
                     context.Entry(user).State = EntityState.Modified;
-                    user.Password = newPassword;
-                    user.PasswordChanged = true;
+                    user.Email = string.IsNullOrEmpty(accountData.Email) ? user.Email : accountData.Email;
+                    user.Password = string.IsNullOrEmpty(accountData.Password) ? user.Password : accountData.Password;
+                    user.ImgBase64 = string.IsNullOrEmpty(accountData.ImgBase64) ? user.ImgBase64 : accountData.ImgBase64;
+
+                    if (user.Role == Enums.UserRole.ADMIN)
+                    {
+                        user.Name = string.IsNullOrEmpty(accountData.Name) ? user.Name : accountData.Name;
+                        user.Surname = string.IsNullOrEmpty(accountData.Surname) ? user.Surname : accountData.Surname;
+                        user.Dni = string.IsNullOrEmpty(accountData.Dni) ? user.Dni : accountData.Dni;
+                    }
+
                     context.SaveChanges();
-                    return Ok("Password de " + user.Name + " " + user.Surname + " cambiado a: " + newPassword);
+                    return Ok("El usuario se modifico correctamente");
                 }
                 else
                 {
@@ -182,62 +132,6 @@ namespace StudentModule.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
-            }
-        }
-
-        /// <summary>
-        /// Modifica un Usuario
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="user"></param>
-        [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] User user)
-        {
-            try
-            {
-                if (user.Id == id)
-                {
-                    context.Entry(user).State = EntityState.Modified;
-                    context.SaveChanges();
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-            catch (Exception e)
-            {
-
-                return BadRequest(e.Message);
-            }
-        }
-
-        /// <summary>
-        /// Elimina un Usuario
-        /// </summary>
-        /// <param name="id"></param>  
-        [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
-        {
-            try
-            {
-                var user = context.User.FirstOrDefault(u => u.Id == id);
-                if (user != null)
-                {
-                    context.User.Remove(user);
-                    context.SaveChanges();
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-            catch (Exception e)
-            {
-
                 return BadRequest(e.Message);
             }
         }
