@@ -67,7 +67,8 @@ namespace DDSDGuarani.Migrations
                     PasswordChanged = table.Column<bool>(nullable: false),
                     ImgBase64 = table.Column<string>(nullable: true),
                     Role = table.Column<int>(nullable: false),
-                    AddressId = table.Column<int>(nullable: false)
+                    AddressId = table.Column<int>(nullable: false),
+                    CareerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,6 +77,12 @@ namespace DDSDGuarani.Migrations
                         name: "FK_User_Address_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Address",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_User_Career_CareerId",
+                        column: x => x.CareerId,
+                        principalTable: "Career",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -135,7 +142,7 @@ namespace DDSDGuarani.Migrations
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -164,7 +171,7 @@ namespace DDSDGuarani.Migrations
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -264,6 +271,11 @@ namespace DDSDGuarani.Migrations
                 table: "User",
                 column: "AddressId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_CareerId",
+                table: "User",
+                column: "CareerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

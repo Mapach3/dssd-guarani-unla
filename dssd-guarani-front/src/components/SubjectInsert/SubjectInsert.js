@@ -28,11 +28,9 @@ class SubjectInsert extends Component {
         formPeriod : '',
         formShift : '',
         errorMsg : '',
-        subjectInscriptionWindow : '',
         subjectCareer : '',
         scoreUploadLimit : '',
         teacherList : [],
-        inscWindowList : [],
         selectedTeachers : [],
         careerList : []
         
@@ -40,11 +38,9 @@ class SubjectInsert extends Component {
 
     componentDidMount() {
         const getUsers = axios.get(__API_USER)
-        const getInscWindows =  axios.get(__API_INSCWINDOW)
         const getCareers = axios.get(__API_CAREER)
-        axios.all([getUsers,getInscWindows,getCareers]).then(axios.spread((users,inscWindows,careers) => {
-            console.log("Users: ",users,"/// InscriptionWindows: ",inscWindows, "/// Careers: ",careers)
-            this.setState({teacherList : users.data.filter(user => user.role === 2), inscWindowList : inscWindows.data, careerList : careers.data })
+        axios.all([getUsers,getCareers]).then(axios.spread((users,careers) => {
+            this.setState({teacherList : users.data.filter(user => user.role === 2), careerList : careers.data })
         }));
 
     }
@@ -78,9 +74,6 @@ class SubjectInsert extends Component {
         this.setState({ selectedTeachers: values })
     }
 
-    onWindowChange = (ev) => {
-        this.setState({ subjectInscriptionWindow: ev.target.value })
-    }
 
     onCareerChange = (ev) => {
         this.setState({subjectCareer : ev.target.value})
@@ -91,19 +84,13 @@ class SubjectInsert extends Component {
         this.setState({scoreUploadLimit : ev.target.value})
     }
 
-    generateWindowText(window){
-        debugger;
-        var startDate = moment(window.startDate).format("DD/MM/yyyy hh:mm")
-        var endDate = moment(window.endDate).format("DD/MM/yyyy hh:mm")
-        return startDate+" a "+endDate
-    }
 
     insertSubject = () => {
         debugger;
-        const {formName,formStartTime,formEndTime,formYear,formShift,formPeriod,selectedTeachers, subjectInscriptionWindow, subjectCareer,scoreUploadLimit} = this.state
+        const {formName,formStartTime,formEndTime,formYear,formShift,formPeriod,selectedTeachers, subjectCareer,scoreUploadLimit} = this.state
         if (formName.length === 0 || formStartTime.length === 0 || formEndTime.length === 0 
             || formYear.length === 0 || formShift.length === 0 || formPeriod.length === 0 
-            || subjectInscriptionWindow.length === 0 || subjectCareer.length === 0 || scoreUploadLimit.length === 0){
+            || subjectCareer.length === 0 || scoreUploadLimit.length === 0){
                 this.setState({errorMsg : "Por favor, complete todos los campos"})
         } else {
 
@@ -135,7 +122,7 @@ class SubjectInsert extends Component {
                         shift : formShift,
                         courses : teachers,
                         careerid : subjectCareer,
-                        inscriptionwindowid : subjectInscriptionWindow,
+                        inscriptionwindowid : 1,
                         scoreuploadlimit : scoreUploadLimit 
                     }
                 }
@@ -144,7 +131,7 @@ class SubjectInsert extends Component {
                     console.log(resp.data);
                     this.setState({errorMsg : "Materia agregada correctamente"})
                     this.setState({formName : '',formStartTime : '',formEndTime : '', formYear : '', formShift : '', 
-                                   formPeriod : '', selectedTeachers : [], subjectInscriptionWindow : '', subjectCareer : '',scoreUploadLimit : ''})
+                                   formPeriod : '', selectedTeachers : [], subjectCareer : '',scoreUploadLimit : ''})
                     
 
                 })
@@ -235,16 +222,6 @@ class SubjectInsert extends Component {
                                         renderInput={(params) => <TextField {...params} variant="outlined" label="Docentes" />}
                                         multiple id="tags-standard" noOptionsText="No hay coincidencias"
                                     />
-                                </FormControl>
-                            </Grid>
-                            <Grid item sm={12}>
-                                <FormControl fullWidth variant="outlined">
-                                    <InputLabel>Ventana de Inscripción</InputLabel>
-                                    <Select onChange={(ev) => this.onWindowChange(ev)} value={this.state.subjectInscriptionWindow}>
-                                        {this.state.inscWindowList.map(window =>
-                                            <MenuItem value={window.id}>{this.generateWindowText(window)}</MenuItem>
-                                        )}
-                                    </Select>
                                 </FormControl>
                             </Grid>
                             <Grid item sm={12}>

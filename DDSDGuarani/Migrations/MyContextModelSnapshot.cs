@@ -227,6 +227,9 @@ namespace DDSDGuarani.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CareerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Dni")
                         .HasColumnType("nvarchar(max)");
 
@@ -258,6 +261,8 @@ namespace DDSDGuarani.Migrations
 
                     b.HasIndex("AddressId")
                         .IsUnique();
+
+                    b.HasIndex("CareerId");
 
                     b.ToTable("User");
                 });
@@ -342,6 +347,12 @@ namespace DDSDGuarani.Migrations
                     b.HasOne("DDSDGuarani.Entities.Address", "Address")
                         .WithOne("User")
                         .HasForeignKey("DDSDGuarani.Entities.User", "AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DDSDGuarani.Entities.Career", "Career")
+                        .WithMany()
+                        .HasForeignKey("CareerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -35,6 +35,12 @@ namespace DDSDGuarani.MappingProfiles
                 User = src.Address.User.Id
             }))
 
+            .ForPath(dest => dest.Career, opts => opts.MapFrom(src => new CareerResponse
+            {
+                Id = src.Career.Id,
+                Name = src.Career.Name
+            }))
+
             .AfterMap((src, dest) =>
             {
                 List<CourseResponse> coursesAux = new List<CourseResponse>();

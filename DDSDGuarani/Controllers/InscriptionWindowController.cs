@@ -78,15 +78,21 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
-                if (inscriptionWindow.Id == id)
+                var dbInscWindow = context.InscriptionWindow.SingleOrDefault(insc => insc.Id == inscriptionWindow.Id);
+
+                if (dbInscWindow != null)
                 {
-                    context.Entry(inscriptionWindow).State = EntityState.Modified;
+
+                    dbInscWindow.StartDate = inscriptionWindow.StartDate.ToLocalTime();
+                    dbInscWindow.EndDate = inscriptionWindow.EndDate.ToLocalTime();
+                    
+                    context.Entry(dbInscWindow).State = EntityState.Modified;
                     context.SaveChanges();
-                    return Ok();
+                    return Ok($"Se actualizó la ventana de inscripción desde: {inscriptionWindow.StartDate.ToShortDateString()} hasta {inscriptionWindow.EndDate.ToShortDateString()}.");
                 }
                 else
                 {
-                    return BadRequest();
+                    return BadRequest($"No hay precargada una Ventana para el tipo: {id}");
                 }
             }
             catch (Exception e)

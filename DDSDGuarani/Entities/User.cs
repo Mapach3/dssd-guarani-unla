@@ -33,8 +33,8 @@ namespace DDSDGuarani.Entities
         public int AddressId { get; set; }
         public Address Address { get; set; }
 
-        ////Relation - OneToMany - Career
-        //public int CareerId { get; set; }
-        //public Career Career { get; set; }
+        //Relation - OneToMany - Career
+        public int CareerId { get; set; }
+        public Career Career { get; set; }
     }
 }
