@@ -9,7 +9,7 @@ namespace DDSDGuarani.EmailService
     {
 
 
-        public static string GetRegistrationEmailBody(string name, string surname, string email, string password)
+        public static string GetRegistrationEmailBody(string username, string name, string surname, string email, string password)
         {
             try
             {
@@ -27,12 +27,12 @@ namespace DDSDGuarani.EmailService
                 
                 messageBody += htmlTableStart;
                 messageBody += htmlHeaderRowStart;
-                messageBody += htmlTdStart + "Email" + htmlTdEnd;
+                messageBody += htmlTdStart + "Username" + htmlTdEnd;
                 messageBody += htmlTdStart + "Contraseña" + htmlTdEnd;
                 messageBody += htmlHeaderRowEnd;
                 
                 messageBody +=  htmlTrStart;
-                messageBody +=  htmlTdStart + email + htmlTdEnd; 
+                messageBody +=  htmlTdStart + username + htmlTdEnd; 
                 messageBody +=  htmlTdStart + password + htmlTdEnd; 
                 messageBody +=  htmlTrEnd;
             

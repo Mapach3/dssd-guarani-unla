@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { __API_PATCH_USER_PASSWORD } from '../../consts/consts';
+import { __API_PATCH_USER_PASSWORD, __API_USER } from '../../consts/consts';
 import { Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -9,29 +9,55 @@ import Container from '@material-ui/core/Container';
 import {Storage} from '../Storage'
 
 export class FirstAccess extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+
+        state = {
             isLoading: false,
+            userList : [],
             newPassword: '',
-            mail: Storage.getMailUser()
+            mail: Storage.getMailUser(),
+            newUserName : '',
+            errorMsg : ''
         };
 
-        this.setPasswordDefinitive = this.setPasswordDefinitive.bind(this)
-    }
 
-    setPasswordDefinitive() {
-        axios.patch(__API_PATCH_USER_PASSWORD + this.state.mail + "/PassChange/" + this.state.newPassword).then(response => {
-            Storage.setPassChange(true)
-            this.props.setPassChange(true)
-            // window.location.reload()
-        }).catch(error => {
-            console.log("Error change password temporal:" + error);
-        })
+    setPasswordDefinitive = () =>  {
+        const {mail,newPassword, newUserName,userList} = this.state
+
+        if (userList.find(user => user.userName === newUserName) !== undefined){
+            this.setState({errorMsg : "Error: ya existe un usuario con ese Nombre de Usuario"})
+        }else{
+            const options = {
+                method : "PATCH",
+                url : __API_PATCH_USER_PASSWORD + mail + "/PassChange/",
+                data : {
+                    username : newUserName,
+                    email : mail,
+                     password : newPassword
+                }    
+            }
+
+            axios(options).then(response => {
+                Storage.setPassChange(true)
+                this.props.setPassChange(true)
+            }).catch(error => {
+                console.log("Error change password temporal:" + error);
+            })
+        }
+
+
     }
 
     onChangePass = (ev) => {
         this.setState({ newPassword: ev.target.value })
+    }
+
+    componentDidMount(){
+        axios.get(__API_USER).then( resp => {
+            this.setState({userList : resp.data})
+        })
+    }
+    onChangeUserName = (ev) => {
+        this.setState({ newUserName: ev.target.value })
     }
 
     render() {
@@ -43,12 +69,18 @@ export class FirstAccess extends Component {
                     </Typography>
                 <Grid item sm={12} >
                     <TextField fullWidth inputProps={{ maxLength: 100 }} variant="outlined"
+                        value={this.state.newUserName} onChange={(ev) => this.onChangeUserName(ev)} label="Ingrese Nombre de Usuario" type="text" />
+                </Grid>
+                <Grid item sm={12} >
+                    <TextField fullWidth inputProps={{ maxLength: 100 }} variant="outlined"
                         value={this.state.newPassword} onChange={(ev) => this.onChangePass(ev)} label="Ingrese Contraseña" type="text" />
                 </Grid>
                 < br/>
                 <Button variant="contained" onClick={this.setPasswordDefinitive} color="primary">
-                    Cambiar Contraseña
+                    Actualizar datos
                 </Button>
+                <br />
+                {this.state.errorMsg.length !== 0 ? <p>{this.state.errorMsg}</p> : null }
             </Container>
         )
     }

@@ -112,7 +112,7 @@ namespace DDSDGuarani.Controllers
                     //document.Title = "TEST FILE";
                     //byte[] doc = document.Draw();
 
-                    EmailSender.SendEmail(EmailTemplates.GetRegistrationEmailBody(user.Name,user.Surname, user.Email,user.Password),
+                    EmailSender.SendEmail(EmailTemplates.GetRegistrationEmailBody(user.UserName,user.Name,user.Surname, user.Email,user.Password),
                                           "Registración Exitosa", user.Email, smtpClient, userEmailName, userEmailPassword, port);
 
                 }
@@ -162,21 +162,22 @@ namespace DDSDGuarani.Controllers
         /// <summary>
         /// Modifica el campo PasswordChange del usuario
         /// </summary>
-        /// <param name="mail"></param>
-        /// <param name="newPassword"></param>
-        [HttpPatch("{mail}/[action]/{newPassword}")]
-        public ActionResult PassChange(string mail,string newPassword)
+        /// <param name="user"></param>
+        [HttpPatch("{mail}/[action]")]
+        public ActionResult PassChange([FromBody] User user)
         {
             try
             {
-                User user = context.User.FirstOrDefault(user => user.Email == mail);
-                if (user != null)
+                var dbUser = context.User.FirstOrDefault(user => user.Email == user.Email);
+                if (dbUser != null)
                 {    
-                    context.Entry(user).State = EntityState.Modified;
-                    user.Password = newPassword;
-                    user.PasswordChanged = true;
+                    context.Entry(dbUser).State = EntityState.Modified;
+                    dbUser.UserName = user.UserName;
+                    dbUser.Password = user.Password;
+                    dbUser.PasswordChanged = true;
+                    
                     context.SaveChanges();
-                    return Ok("Password de " + user.Name + " " + user.Surname + " cambiado a: " + newPassword);
+                    return Ok($"Password de {dbUser.Name} {dbUser.Surname} cambiado a user: {dbUser.UserName} y pass: {dbUser.Password}");
                 }
                 else
                 {
