@@ -6,6 +6,7 @@ import CustomDrawerStudent from '../navigation/CustomDrawerStudent';
 import { Router, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import InscriptionExam from './subPages/InscriptionExam';
+import GradesInform from '../components/GradesInform/index';
 
 const drawerWidth = 240;
 const history = createBrowserHistory();
@@ -97,6 +98,7 @@ const HomeStudent = (props) => {
                 <CustomDrawerStudent open={open} setOpen={setOpen} classes={classes} theme={theme} rolUser={props.rolUser}/>
                 <div className='mainContainer'>
                     <Route path="/inscriptionExam" render={(props) => <InscriptionExam open={open} classes={classes} {...props} /> } />
+                    <Route path="/gradesInform" render={(props) => <GradesInform open={open} classes={classes} {...props}/>} />
                 </div>
             </div>
         </Router>
