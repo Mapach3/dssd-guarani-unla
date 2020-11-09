@@ -57,7 +57,7 @@ namespace DDSDGuarani.Controllers
             {
                 context.Course.Add(course);
                 context.SaveChanges();
-                return Ok();
+                return Ok("Inscripción añadida exitosamente");
             }
             catch (Exception e)
             {
@@ -97,18 +97,18 @@ namespace DDSDGuarani.Controllers
         /// <summary>
         /// Elimina un Curso por ID de usuario
         /// </summary>
-        /// <param name="id"></param>  
-        [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        /// <param name="course"></param>  
+        [HttpDelete]
+        public ActionResult Delete([FromBody]Course course)
         {
             try
             {
-                var course = context.Course.FirstOrDefault(u => u.UserId == id);
+                var dbCourse = context.Course.Include(u => u.User).Include(u => u.Subject).FirstOrDefault(u => u.UserId == course.UserId && u.SubjectId == course.SubjectId);
                 if (course != null)
                 {
-                    context.Course.Remove(course);
+                    context.Course.Remove(dbCourse);
                     context.SaveChanges();
-                    return Ok();
+                    return Ok($"Usuario {dbCourse.User.UserName} eliminado de {dbCourse.Subject.Name}");
                 }
                 else
                 {
