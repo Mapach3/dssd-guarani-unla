@@ -159,12 +159,12 @@ class SubjectInsert extends Component {
 
     render() {
         return (
-            <main
-                className={clsx(this.props.classes.content, {
-                    [this.props.classes.contentShift]: this.props.open,
-                })}
-            >
-                <div className={this.props.classes.drawerHeader} />
+            // <main
+            //     className={clsx(this.props.classes.content, {
+            //         [this.props.classes.contentShift]: this.props.open,
+            //     })}
+            // >
+            //    <div className={this.props.classes.drawerHeader} />
                 <Container maxWidth="xs">
                     <h3>Ingrese datos de la materia</h3>
                     {this.state.errorMsg.length !== 0 ?
@@ -270,7 +270,7 @@ class SubjectInsert extends Component {
                     </form>
                     <br />
                 </Container>
-                </main>
+                // </main>
                 
                 
             )

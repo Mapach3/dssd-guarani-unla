@@ -53,13 +53,13 @@ class UserInsert extends Component{
     handleUserData(userData)  {
         debugger;
         this.setState({errorMsg : '', userInserted : false})
-        const {imgBase64,formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formUserType,formLocation,formPostCode,formCity,formCountry} = userData
+        const {imgBase64,formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formUserType,formLocation,formPostCode,formUserName,formCity,formCountry} = userData
 
         if (formName.length === 0 || formSurname.length === 0 || formEmail.length === 0 || formPassword.length === 0 || formDni.length === 0 || formUserType.length === 0 ||
             formStreetAndNumber.length === 0 || formLocation.length === 0 || formPostCode.length === 0 || formCity.length === 0 || formCountry.length === 0 || 
-            imgBase64.length === 0){
+            imgBase64.length === 0 || formUserName.length === 0){
             
-                this.setState({errorMsg : "Por favor, complete todos los campos"})
+            this.setState({errorMsg : "Por favor, complete todos los campos"})
 
         }else{
            
@@ -78,6 +78,7 @@ class UserInsert extends Component{
                         email: formEmail,
                         password: formPassword,
                         name: formName,
+                        username : formUserName,
                         surname: formSurname,
                         dni: formDni,
                         active: true,

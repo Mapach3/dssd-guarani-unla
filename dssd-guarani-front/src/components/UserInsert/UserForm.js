@@ -19,6 +19,7 @@ class UserForm extends Component {
         imgBase64: '',
         formName: '',
         formSurname: '',
+        formUserName : '',
         formDni: '',
         formEmail: '',
         formPassword: '',
@@ -42,6 +43,10 @@ class UserForm extends Component {
     onDniChange = (ev) => {
         var value = ev.target.value.replace(/[^0-9]/g, '');
         this.setState({ formDni: value })
+    }
+
+    onUserNameChange = (ev) => {
+        this.setState({formUserName : ev.target.value})
     }
 
     onUserTypeChange = (ev) => {
@@ -100,7 +105,7 @@ class UserForm extends Component {
     clearValues() {
         console.log("Clearing values")
         this.setState({
-            formEmail: '', formPassword: '', formName: '', formSurname: '', formDni: '', formUserType: '', formStreetAndNumber: '',
+            formEmail: '',formUserName : '', formPassword: '', formName: '', formSurname: '', formDni: '', formUserType: '', formStreetAndNumber: '',
             formLocation: '', formPostCode: '', formCity: '', formCountry: '', imgBase64: ''
         })
 
@@ -114,12 +119,12 @@ class UserForm extends Component {
 
     render() {
         return (
-            <main
-                className={clsx(this.props.classes.content, {
-                    [this.props.classes.contentShift]: this.props.open,
-                })}
-            >
-                <div className={this.props.classes.drawerHeader} />
+            // <main
+            //     className={clsx(this.props.classes.content, {
+            //         [this.props.classes.contentShift]: this.props.open,
+            //     })}
+            // >
+            //     <div className={this.props.classes.drawerHeader} />
                 <Container maxWidth="xs">
                     <h3>Ingrese los datos del usuario</h3>
                     <form autoComplete="off">
@@ -158,6 +163,10 @@ class UserForm extends Component {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField inputProps={{ maxLength: 30 }} fullWidth variant="outlined" value={this.state.formEmail} onChange={(ev) => this.onEmailChange(ev)} label="Email" type="text" />
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <TextField inputProps={{ maxLength: 30 }} fullWidth variant="outlined" value={this.state.formUserName} onChange={(ev) => this.onUserNameChange(ev)} label="Nombre de Usuario" type="text" />
                             </Grid>
 
                             <Grid item xs={12}>
@@ -213,7 +222,7 @@ class UserForm extends Component {
                     <br />
 
                 </Container>
-                </main>
+                // </main>
                 
             )
     

@@ -15,14 +15,14 @@ export class Login extends Component{
         
     state = {
         isLoading : false,
-        formEmail : '',
+        formUserName : '',
         formPassword : '',
         wrongCredentials : '',
     }
 
 
-    handleMailChange = (ev) => {
-        this.setState({formEmail : ev.target.value})
+    handleUserNameChange = (ev) => {
+        this.setState({formUserName : ev.target.value})
     }
 
     handlePasswordChange = (ev) => {
@@ -30,15 +30,14 @@ export class Login extends Component{
     }
 
     performLogin(){
+        debugger;
         this.setState({wrongCredentials : false, isLoading : true})
-        const {formEmail, formPassword} = this.state
+        const {formUserName, formPassword} = this.state
 
-        if (formEmail.length === 0 || formPassword.length === 0){
+
+        if (formUserName.length === 0 || formPassword.length === 0){
             this.setState({wrongCredentials : "Complete los campos", isLoading : false})
-        } else if (!formEmail.includes("@")){
-            this.setState({wrongCredentials : "Ingrese un Email válido",isLoading : false})
-        }
-        else{
+        } else{
             const options = {
                 method: "POST",
                 url: __API_LOGIN,
@@ -48,8 +47,8 @@ export class Login extends Component{
                 },
                 
                 data: {
-                    email : this.state.formEmail,
-                    password : this.state.formPassword
+                    username : formUserName,
+                    password : formPassword
                 }
             }
     
@@ -62,8 +61,8 @@ export class Login extends Component{
                     Storage.setRolUser(loginResponse.rol)
                     Storage.setNameUser(loginResponse.nameUser)
                     Storage.setPassChange(loginResponse.passwordChange)
-                    Storage.setMailUser(loginResponse.mailUser)
-                    this.props.setMailUser(loginResponse.mailUser)
+                    Storage.setMailUser(loginResponse.email)
+                    this.props.setMailUser(loginResponse.email)
                     this.props.setPassChange(loginResponse.passwordChange)
                     this.props.setToken(loginResponse.data)
                     this.props.setImageUser(loginResponse.imageUser)
@@ -96,8 +95,8 @@ export class Login extends Component{
                 <h1>Logearse al sitio</h1>
                 <form autoComplete="off">
                     <FormControl>
-                        <InputLabel htmlFor="component-simple">E-mail</InputLabel>
-                        <Input id="component-simple" inputProps={{ maxLength: 100 }} value={this.state.formEmail} onChange={this.handleMailChange}/>
+                        <InputLabel htmlFor="component-simple">Nombre de Usuario</InputLabel>
+                        <Input id="component-simple" inputProps={{ maxLength: 100 }} value={this.state.formUserName} onChange={this.handleUserNameChange}/>
                     </FormControl> <br />
                     <FormControl>
                         <InputLabel htmlFor="component-simple">Contraseña</InputLabel>
