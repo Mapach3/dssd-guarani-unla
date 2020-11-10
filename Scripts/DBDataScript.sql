@@ -51,11 +51,11 @@ SET IDENTITY_INSERT [dbo].[InscriptionWindow] OFF
 GO
 
 SET IDENTITY_INSERT [dbo].[Subject] ON 
-INSERT [dbo].[Subject] ([Id], [Name], [StartTime], [EndTime],[WeekDay], [Year], [Period], [Shift], [InscriptionWindowId], [CareerId]) VALUES (1, N'Objetos 2', CAST(N'2020-08-01T00:00:00.000' AS DateTime), CAST(N'2020-12-01T00:00:00.000' AS DateTime),'Lunes', 2020, 2020, 3, 1, 1)
-INSERT [dbo].[Subject] ([Id], [Name], [StartTime], [EndTime],[WeekDay], [Year], [Period], [Shift], [InscriptionWindowId], [CareerId]) VALUES (2, N'DSSD', CAST(N'2020-08-01T00:00:00.000' AS DateTime), CAST(N'2020-12-01T00:00:00.000' AS DateTime), 'Martes', 2020, 2020, 1, 1, 1)
-INSERT [dbo].[Subject] ([Id], [Name], [StartTime], [EndTime],[WeekDay], [Year], [Period], [Shift], [InscriptionWindowId], [CareerId]) VALUES (3, N'Programacion Concurrente', CAST(N'2020-03-01T00:00:00.000' AS DateTime), CAST(N'2020-07-01T00:00:00.000' AS DateTime),'Miércoles', 2020, 2020, 1, 2, 1)
-INSERT [dbo].[Subject] ([Id], [Name], [StartTime], [EndTime],[WeekDay], [Year], [Period], [Shift], [InscriptionWindowId], [CareerId]) VALUES (4, N'AYED', CAST(N'2021-03-01T00:00:00.000' AS DateTime), CAST(N'2021-07-01T00:00:00.000' AS DateTime),'Jueves', 2021, 2021, 3, 3, 1)
-INSERT [dbo].[Subject] ([Id], [Name], [StartTime], [EndTime],[WeekDay], [Year], [Period], [Shift], [InscriptionWindowId], [CareerId]) VALUES (5, N'Matematica Discreta', CAST(N'2021-03-01T00:00:00.000' AS DateTime), CAST(N'2021-07-01T00:00:00.000' AS DateTime),'Sábado', 2021, 2021, 2, 3, 1)
+INSERT [dbo].[Subject] ([Id], [Name], [StartTime], [EndTime],[WeekDay], [Year], [Period], [Shift], [InscriptionWindowId], [CareerId]) VALUES (1, N'Objetos 2', CAST(N'2020-08-01T00:00:00.000' AS DateTime), CAST(N'2020-12-01T00:00:00.000' AS DateTime),'Lunes', 3, 2, 3, 1, 1)
+INSERT [dbo].[Subject] ([Id], [Name], [StartTime], [EndTime],[WeekDay], [Year], [Period], [Shift], [InscriptionWindowId], [CareerId]) VALUES (2, N'DSSD', CAST(N'2020-08-01T00:00:00.000' AS DateTime), CAST(N'2020-12-01T00:00:00.000' AS DateTime), 'Martes', 4, 2, 1, 1, 1)
+INSERT [dbo].[Subject] ([Id], [Name], [StartTime], [EndTime],[WeekDay], [Year], [Period], [Shift], [InscriptionWindowId], [CareerId]) VALUES (3, N'Programacion Concurrente', CAST(N'2020-03-01T00:00:00.000' AS DateTime), CAST(N'2020-07-01T00:00:00.000' AS DateTime),'Miércoles', 3, 1, 1, 1, 1)
+INSERT [dbo].[Subject] ([Id], [Name], [StartTime], [EndTime],[WeekDay], [Year], [Period], [Shift], [InscriptionWindowId], [CareerId]) VALUES (4, N'AYED', CAST(N'2021-03-01T00:00:00.000' AS DateTime), CAST(N'2021-07-01T00:00:00.000' AS DateTime),'Jueves', 2, 1, 3, 1, 1)
+INSERT [dbo].[Subject] ([Id], [Name], [StartTime], [EndTime],[WeekDay], [Year], [Period], [Shift], [InscriptionWindowId], [CareerId]) VALUES (5, N'Matematica Discreta', CAST(N'2021-03-01T00:00:00.000' AS DateTime), CAST(N'2021-07-01T00:00:00.000' AS DateTime),'Sábado', 4, 1, 2, 1, 1)
 SET IDENTITY_INSERT [dbo].[Subject] OFF
 GO
 
@@ -74,7 +74,7 @@ GO
 
 
 SET IDENTITY_INSERT [dbo].[FinalCall] ON 
-INSERT [dbo].[FinalCall] ([Id], [Date], [SubjectId], [InscriptionWindowId]) VALUES (1, CAST(N'2020-07-15T00:00:00.000' AS DateTime), 3, 4)
+INSERT [dbo].[FinalCall] ([Id], [Date], [SubjectId], [InscriptionWindowId]) VALUES (1, CAST(N'2020-07-15T00:00:00.000' AS DateTime), 3, 2)
 SET IDENTITY_INSERT [dbo].[FinalCall] OFF
 GO
 
