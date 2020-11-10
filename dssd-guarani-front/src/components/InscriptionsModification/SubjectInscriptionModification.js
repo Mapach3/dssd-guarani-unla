@@ -37,6 +37,7 @@ class SubjectInscriptionModification extends Component{
         chosenSubject : '',
         studentsList : [],
         chosenCareerSubjects : [],
+        studentsForInscription : [],
         errorMsg : '',
         dialogOpen: false
     }
@@ -52,14 +53,18 @@ class SubjectInscriptionModification extends Component{
         }))
     }
 
-    updateStudentsList(){
+    updateStudentsList = () => {
         axios.get(__API_USER).then(resp => {
             this.setState({studentsList : resp.data.filter(student => student.role === 1)})
+            
+            this.setStudentsForInscription(this.state.chosenSubject)
         })
     }
 
     onChosenSubjectChange = (ev) => {
+
         this.setState({chosenSubject : ev.target.value})
+        this.setStudentsForInscription(ev.target.value)
 
     }
 
@@ -68,6 +73,17 @@ class SubjectInscriptionModification extends Component{
         this.setState({chosenCareer : ev.target.value})
         let subjectsOfCareer = this.state.subjectList.filter( subject => subject.career.id === ev.target.value)
         this.setState({chosenCareerSubjects : subjectsOfCareer})        
+    }
+
+    setStudentsForInscription = (subjectId) => {
+        debugger;
+        //elimino los estudiantes que tienen esta materia aprobada porque no les puedo sacar la inscripción
+        
+        var aprobados = this.state.studentsList.filter( student => student.courses.find( course => course.subjectId === subjectId && course.courseAverage !== 0))
+        var availableList  = this.state.studentsList.filter((el) => !aprobados.includes(el))
+        this.setState({studentsForInscription : availableList})
+
+
     }
 
     createInscription = (ev) => {
@@ -181,7 +197,7 @@ class SubjectInscriptionModification extends Component{
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {this.state.studentsList.filter(student => student.career.id === this.state.chosenCareer).map((user) => (
+                                        {this.state.studentsForInscription.filter(student => student.career.id === this.state.chosenCareer).map((user) => (
                                         <TableRow key={user.id}>
                                             <TableCell component="th" scope="row">{user.id}</TableCell>
                                             <TableCell align="left">{user.name} {user.surname}</TableCell>
