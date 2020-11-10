@@ -43,8 +43,8 @@ const App = () => {
           {userToken == null ? 
           <>
           <Redirect exact to="/login"/>
-          <Login setToken={setUserToken} setMailUser={setMailUser} setPassChange={setPassChange} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>         
-          {/* <SubjectInscriptionModification /> */}
+          {/* <Login setToken={setUserToken} setMailUser={setMailUser} setPassChange={setPassChange} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>          */}
+          <SubjectInscriptionModification />
           {/* <UserInsert /> */}
           {/* <SubjectInsert /> */}
           {/* <InsertInscriptionWindow /> */}
