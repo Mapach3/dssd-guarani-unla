@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import CustomAppBar from '../navigation/CustomAppBar';
-import CustomDrawer from '../navigation/CustomDrawer';
+import CustomDrawerStudent from '../navigation/CustomDrawerStudent';
 import { Router, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import InscriptionExam from './subPages/InscriptionExam';
+import GradesInform from '../components/GradesInform/index';
 
 const drawerWidth = 240;
 const history = createBrowserHistory();
@@ -27,9 +28,6 @@ const useStyles = makeStyles((theme) => ({
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen,
         }),
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
     },
     hide: {
         display: 'none',
@@ -65,9 +63,29 @@ const useStyles = makeStyles((theme) => ({
         }),
         marginLeft: 0,
     },
+
+    grow: {
+        flexGrow: 1,
+      },
+      menuButton: {
+        marginRight: theme.spacing(2),
+      },
+      title: {
+        display: 'none',
+        [theme.breakpoints.up('sm')]: {
+          display: 'block',
+        },
+      },
+     
+      sectionDesktop: {
+        display: 'none',
+        [theme.breakpoints.up('md')]: {
+          display: 'flex',
+        },
+      },
 }));
 
-const Home = () => {
+const HomeStudent = (props) => {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = useState(true);
@@ -76,13 +94,14 @@ const Home = () => {
         <Router history={history}>
             <div className={classes.root}>
                 <CssBaseline />
-                <CustomAppBar open={open} setOpen={setOpen} classes={classes} />
-                <CustomDrawer open={open} setOpen={setOpen} classes={classes} theme={theme} />
+                <CustomAppBar open={open} setOpen={setOpen} classes={classes} nameUser={props.nameUser} imageUser={props.imageUser} rolUser={props.rolUser}/>
+                <CustomDrawerStudent open={open} setOpen={setOpen} classes={classes} theme={theme} rolUser={props.rolUser}/>
                 <div className='mainContainer'>
                     <Route path="/inscriptionExam" render={(props) => <InscriptionExam open={open} classes={classes} {...props} /> } />
+                    <Route path="/gradesInform" render={(props) => <GradesInform open={open} classes={classes} {...props}/>} />
                 </div>
             </div>
         </Router>
     )
 }
-export default Home;
+export default HomeStudent;

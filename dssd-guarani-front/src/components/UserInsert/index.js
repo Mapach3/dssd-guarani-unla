@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-
 import {__API_USER } from '../../consts/consts';
 import axios from 'axios'
-
 import UserForm from './UserForm'
 
 
@@ -17,8 +15,6 @@ class UserInsert extends Component{
 
     getUserList(){
         axios.get(__API_USER).then( resp => {
-            console.log("Imprimiendo usuarios",resp)
-            console.log(resp.data);
             this.setState({userList : resp.data})
         })
 
@@ -57,13 +53,13 @@ class UserInsert extends Component{
     handleUserData(userData)  {
         debugger;
         this.setState({errorMsg : '', userInserted : false})
-        const {imgBase64,formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formUserType,formLocation,formPostCode,formCity,formCountry} = userData
+        const {imgBase64,formName,formSurname,formEmail,formPassword,formDni,formStreetAndNumber,formUserType,formLocation,formPostCode,formUserName,formCity,formCountry,formCareerId} = userData
 
         if (formName.length === 0 || formSurname.length === 0 || formEmail.length === 0 || formPassword.length === 0 || formDni.length === 0 || formUserType.length === 0 ||
             formStreetAndNumber.length === 0 || formLocation.length === 0 || formPostCode.length === 0 || formCity.length === 0 || formCountry.length === 0 || 
-            imgBase64.length === 0){
+            imgBase64.length === 0 || formUserName.length === 0){
             
-                this.setState({errorMsg : "Por favor, complete todos los campos"})
+            this.setState({errorMsg : "Por favor, complete todos los campos"})
 
         }else{
            
@@ -82,10 +78,12 @@ class UserInsert extends Component{
                         email: formEmail,
                         password: formPassword,
                         name: formName,
+                        username : formUserName,
                         surname: formSurname,
                         dni: formDni,
-                        active: true, //change to active FALSE in the future
-                        passwordChanged: true,
+                        active: true,
+                        passwordChanged: formUserType === 0 ? true : false, //Admins dont need to activate their accounts
+                        careerid : formCareerId,
                         role: formUserType,
                         imgBase64 : imgBase64,
                         address: {
@@ -116,7 +114,7 @@ class UserInsert extends Component{
     }
 
     render(){
-        return <UserForm action={(userData) => this.handleUserData(userData)} errorMsg={this.state.errorMsg} clearForm={this.state.clearForm} setClearForm={(value) => this.setClearForm(value)}/>
+        return <UserForm open={this.open} classes={this.classes} {...this.props} action={(userData) => this.handleUserData(userData)} errorMsg={this.state.errorMsg} clearForm={this.state.clearForm} setClearForm={(value) => this.setClearForm(value)}/>
     }
 
 }

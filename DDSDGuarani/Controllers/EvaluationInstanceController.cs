@@ -47,6 +47,19 @@ namespace DDSDGuarani.Controllers
         }
 
         /// <summary>
+        /// Trae Instancias de Evaluacion de Usuario
+        /// </summary>
+        /// <param name="userId"></param>  
+        [HttpGet("finals/{userId}")]
+        public IEnumerable<EvaluationInstanceResponse> GetByUser(int userId)
+        {
+            IEnumerable<EvaluationInstanceResponse> response = new List<EvaluationInstanceResponse>();
+            var resultDb = context.EvaluationInstance.Include(x => x.Subject).Include(x => x.User).ToList().Where(u => u.UserId == userId);
+            response = _mapper.Map<IEnumerable<EvaluationInstance>, IEnumerable<EvaluationInstanceResponse>>(resultDb);
+            return response;
+        }
+
+        /// <summary>
         /// Inserta una Instancia de Evaluacion
         /// </summary>
         /// <param name="evaluationInstance"></param>  

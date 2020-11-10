@@ -10,6 +10,7 @@ namespace DDSDGuarani.Entities
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
+        public DateTime ScoreUploadLimit { get; set; }
 
         //Relation - ManyToOne - Subject
         public int SubjectId { get; set; }

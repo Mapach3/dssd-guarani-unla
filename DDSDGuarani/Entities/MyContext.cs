@@ -19,6 +19,7 @@ namespace DDSDGuarani.Entities
         public DbSet<User> User { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<Subject> Subject { get; set; }
+        public DbSet<Career> Career { get; set; }
         public DbSet<InscriptionWindow> InscriptionWindow { get; set; }
         public DbSet<FinalCall> FinalCall { get; set; }
         public DbSet<Course> Course { get; set; }

@@ -27,7 +27,7 @@ namespace DDSDGuarani.Controllers
         }
 
         /// <summary>
-        /// Recibe Email y Contraseña de un User y realiza el Login devolviendo un Token
+        /// Recibe UserName y Contraseña de un User y realiza el Login devolviendo un Token
         /// </summary>
         /// <param name="user"/>
         [HttpPost]
@@ -35,13 +35,22 @@ namespace DDSDGuarani.Controllers
         public Response Login([FromBody] User user)
         {
             Response responseLogin = new Response();
+           // user.Password = user.Password.Replace("\\\\", "\\");
 
             try
             {
                 UserResponse userResp = new UserResponse();
-                var resultDb = context.User.FirstOrDefault(u => u.Email == user.Email);
+                var resultDb = context.User.FirstOrDefault(u => u.UserName == user.UserName);
                 userResp = _mapper.Map<User, UserResponse>(resultDb);
 
+                if ( userResp != null && !userResp.Active)
+                {
+                    responseLogin.Cod = 401;
+                    responseLogin.Data = null;
+                    responseLogin.Mensaje = "Usuario Dado de Baja";
+                    return responseLogin;
+                }
+                       
                 if (userResp != null && userResp.Password.Equals(user.Password))
                 {
                     // Leemos el secret_key desde nuestro appseting
@@ -69,6 +78,11 @@ namespace DDSDGuarani.Controllers
                     responseLogin.Cod = 200;
                     responseLogin.Data = tokenHandler.WriteToken(createdToken);
                     responseLogin.Mensaje = "OK";
+                    responseLogin.Rol = userResp.Role.ToString();
+                    responseLogin.ImageUser = userResp.ImgBase64;
+                    responseLogin.NameUser = userResp.Name + " " + userResp.Surname;
+                    responseLogin.PasswordChange = userResp.PasswordChanged;
+                    responseLogin.MailUser = userResp.Email;
                 }
                 else
                 {

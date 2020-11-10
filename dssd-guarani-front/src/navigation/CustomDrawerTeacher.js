@@ -13,7 +13,15 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import { withRouter } from 'react-router-dom';
 
-const CustomDrawer = ({ classes, open, setOpen, theme, ...props }) => {
+const CustomDrawerTeacher = ({ classes, open, setOpen, theme, ...props }) => {
+
+    //teacher
+    // a. Consulta de materias asignadas.
+    // b. Consulta de listado de alumnos de cada materia, este listado debe poder bajarse en formato Excel, con las respectivas columnas para cargar las notas de parciales y trabajos prácticos.
+    // c. Carga de notas de cursada: se podrá hacer mediante la vista en pantalla o cargando la planilla en formato Excel. La carga de notas tiene una fecha límite, pasada la fecha, no se podrá modificar.
+    // d. Carga de notas de finales: opera de la misma forma que la funcionalidad de cursada.
+
+
     return (
         <Drawer
             className={classes.drawer}
@@ -23,8 +31,8 @@ const CustomDrawer = ({ classes, open, setOpen, theme, ...props }) => {
             classes={{
                 paper: classes.drawerPaper
             }}
-            onClick={() => {setOpen(!open)}}
-        >    
+            onClick={() => { setOpen(!open) }}
+        >
             <div className={classes.drawerHeader}>
                 <IconButton >
                     <ChevronLeftIcon />
@@ -32,14 +40,10 @@ const CustomDrawer = ({ classes, open, setOpen, theme, ...props }) => {
             </div>
             <Divider />
             <List>
-                <ListItem button onClick={() => props.history.push("/inscriptionExam")}>
-                    <ListItemIcon><Add /></ListItemIcon>
-                    <ListItemText primary="Inscripcion a Examenes" />
-                </ListItem>
 
             </List>
             <Divider />
         </Drawer>
     )
 }
-export default withRouter(CustomDrawer);
+export default withRouter(CustomDrawerTeacher);

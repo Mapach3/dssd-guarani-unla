@@ -1,11 +1,16 @@
 ﻿using AutoMapper;
 using DDSDGuarani.DTOResponse;
+using DDSDGuarani.EmailService;
 using DDSDGuarani.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
+using Microsoft.Extensions.Configuration;
+using ceTe.DynamicPDF;
+using ceTe.DynamicPDF.PageElements;
 
 namespace DDSDGuarani.Controllers
 {
@@ -14,11 +19,13 @@ namespace DDSDGuarani.Controllers
     {
         private readonly MyContext context;
         private readonly IMapper _mapper;
+        private readonly IConfiguration configuration;
 
-        public UserController(MyContext context, IMapper mapper)
+        public UserController(MyContext context, IMapper mapper, IConfiguration iConfig)
         {
             this.context = context;
             this._mapper = mapper;
+            this.configuration = iConfig;
         }
 
         /// <summary>
@@ -28,7 +35,7 @@ namespace DDSDGuarani.Controllers
         public IEnumerable<UserResponse> Get()
         {
             IEnumerable<UserResponse> response = new List<UserResponse>();
-            var resultDb = context.User.Include(x => x.Address).Include(x => x.InscriptionFinals).Include(x => x.EvaluationInstances).Include(x => x.Courses).ToList().OrderBy(x => x.Id);
+            var resultDb = context.User.Include(x => x.Address).Include(x => x.InscriptionFinals).Include(x => x.EvaluationInstances).Include(x => x.Courses).Include(x => x.Career).ToList().OrderBy(x => x.Id);
             response = _mapper.Map<IEnumerable<User>, IEnumerable<UserResponse>>(resultDb);
             return response;
         }
@@ -85,7 +92,31 @@ namespace DDSDGuarani.Controllers
             {
                 context.User.Add(user);
                 context.SaveChanges();
-                return Ok();
+
+                if (user.Role.ToString() != "ADMIN") { 
+                    var userEmailName = configuration.GetSection("EmailSenderData").GetValue<string>("EmailUserName");
+                    var userEmailPassword = configuration.GetSection("EmailSenderData").GetValue<string>("EmailPassword");
+                    var smtpClient = configuration.GetSection("EmailSenderData").GetValue<string>("SMTPClient");
+                    var port = configuration.GetSection("EmailSenderData").GetValue<int>("Port");
+
+                    //Code to implement PDF Attachment in Email
+                    //Document document = new Document();
+                    //document.PdfFormat = PdfFormat.Linearized;
+                    //Page page = new Page(PageSize.Letter, PageOrientation.Portrait, 54.0f);
+                    //document.Pages.Add(page);
+
+                    //string labelText = "Hello World...\nFrom DynamicPDF Generator for .NET\nDynamicPDF.com HOLA!!!";
+                    //Label label = new Label(labelText, 0, 0, 504, 100, Font.Helvetica, 18, TextAlign.Center);
+                    //page.Elements.Add(label);
+                    //document.Title = "TEST FILE";
+                    //byte[] doc = document.Draw();
+
+                    EmailSender.SendEmail(EmailTemplates.GetRegistrationEmailBody(user.UserName,user.Name,user.Surname, user.Email,user.Password),
+                                          "Registración Exitosa", user.Email, smtpClient, userEmailName, userEmailPassword, port);
+
+                }
+
+                return Ok("Registración Exitosa");
             }
             catch (Exception e)
             {
@@ -93,6 +124,70 @@ namespace DDSDGuarani.Controllers
             }
         }
 
+        /// <summary>
+        /// Modifica el campo Active del usuario
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="active"></param>
+        [HttpPatch("{id}/[action]/{active}")]
+        public ActionResult Active(int id, bool active)
+        {
+            try
+            {
+                User user = context.User.FirstOrDefault(user => user.Id == id);
+                if (user != null)
+                {
+                    if (user.Active == active)
+                        return Ok("No se hicieron cambios");
+
+                    context.Entry(user).State = EntityState.Modified;
+                    user.Active = active;
+                    context.SaveChanges();
+                    return Ok("Active de " + user.Name + " " + user.Surname + " cambiado a: " + active);
+                }
+                else
+                {
+                    return BadRequest("No existe el usuario.");
+                }
+
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Modifica el campo PasswordChange del usuario
+        /// </summary>
+        /// <param name="user"></param>
+        [HttpPatch("{mail}/[action]")]
+        public ActionResult PassChange([FromBody] User user)
+        {
+            try
+            {
+                var dbUser = context.User.FirstOrDefault(user => user.Email == user.Email);
+                if (dbUser != null)
+                {    
+                    context.Entry(dbUser).State = EntityState.Modified;
+                    dbUser.UserName = user.UserName;
+                    dbUser.Password = user.Password;
+                    dbUser.PasswordChanged = true;
+                    
+                    context.SaveChanges();
+                    return Ok($"Password de {dbUser.Name} {dbUser.Surname} cambiado a user: {dbUser.UserName} y pass: {dbUser.Password}");
+                }
+                else
+                {
+                    return BadRequest("No existe el usuario.");
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
         /// <summary>
         /// Modifica un Usuario

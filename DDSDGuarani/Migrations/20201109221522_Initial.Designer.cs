@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DDSDGuarani.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20201025152053_Initial")]
+    [Migration("20201109221522_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,21 @@ namespace DDSDGuarani.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Address");
+                });
+
+            modelBuilder.Entity("DDSDGuarani.Entities.Career", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Career");
                 });
 
             modelBuilder.Entity("DDSDGuarani.Entities.Course", b =>
@@ -110,6 +125,9 @@ namespace DDSDGuarani.Migrations
                     b.Property<int>("InscriptionWindowId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("ScoreUploadLimit")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
@@ -162,14 +180,23 @@ namespace DDSDGuarani.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CareerId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("InscriptionWindowId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Period")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("ScoreUploadLimit")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Shift")
                         .HasColumnType("int");
@@ -181,6 +208,10 @@ namespace DDSDGuarani.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CareerId");
+
+                    b.HasIndex("InscriptionWindowId");
 
                     b.ToTable("Subject");
                 });
@@ -196,6 +227,9 @@ namespace DDSDGuarani.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CareerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Dni")
@@ -222,10 +256,15 @@ namespace DDSDGuarani.Migrations
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId")
                         .IsUnique();
+
+                    b.HasIndex("CareerId");
 
                     b.ToTable("User");
                 });
@@ -290,11 +329,32 @@ namespace DDSDGuarani.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DDSDGuarani.Entities.Subject", b =>
+                {
+                    b.HasOne("DDSDGuarani.Entities.Career", "Career")
+                        .WithMany("Subjects")
+                        .HasForeignKey("CareerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DDSDGuarani.Entities.InscriptionWindow", "InscriptionWindow")
+                        .WithMany("Subjects")
+                        .HasForeignKey("InscriptionWindowId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DDSDGuarani.Entities.User", b =>
                 {
                     b.HasOne("DDSDGuarani.Entities.Address", "Address")
                         .WithOne("User")
                         .HasForeignKey("DDSDGuarani.Entities.User", "AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DDSDGuarani.Entities.Career", "Career")
+                        .WithMany()
+                        .HasForeignKey("CareerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

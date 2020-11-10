@@ -14,42 +14,13 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <Compile Remove="Migrations\20201003214431_Initial.cs" />
-    <Compile Remove="Migrations\20201003214431_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201003214733_Initial.cs" />
-    <Compile Remove="Migrations\20201003214733_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201003214916_Initial.cs" />
-    <Compile Remove="Migrations\20201003214916_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201003220123_Initial.cs" />
-    <Compile Remove="Migrations\20201003220123_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201019010204_Initial.cs" />
-    <Compile Remove="Migrations\20201019010204_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201019011836_Initial.cs" />
-    <Compile Remove="Migrations\20201019011836_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201019214621_Initial.cs" />
-    <Compile Remove="Migrations\20201019214621_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201019214738_Initial.cs" />
-    <Compile Remove="Migrations\20201019214738_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201019215017_Initial.cs" />
-    <Compile Remove="Migrations\20201019215017_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201019233538_Initial.cs" />
-    <Compile Remove="Migrations\20201019233538_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201019234010_Initial.cs" />
-    <Compile Remove="Migrations\20201019234010_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201019234526_Initial.cs" />
-    <Compile Remove="Migrations\20201019234526_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201020002005_Initial.cs" />
-    <Compile Remove="Migrations\20201020002005_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201020002142_Initial.cs" />
-    <Compile Remove="Migrations\20201020002142_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201020002444_Initial.cs" />
-    <Compile Remove="Migrations\20201020002444_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201020022241_Initial.cs" />
-    <Compile Remove="Migrations\20201020022241_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201020031629_Initial.cs" />
-    <Compile Remove="Migrations\20201020031629_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20201020033548_Initial.cs" />
-    <Compile Remove="Migrations\20201020033548_Initial.Designer.cs" />
+
+    <Compile Remove="Migrations\20201107214355_Initial.cs" />
+    <Compile Remove="Migrations\20201107214355_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20201107215519_Initial.cs" />
+    <Compile Remove="Migrations\20201107215519_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20201108223638_Initial.cs" />
+    <Compile Remove="Migrations\20201108223638_Initial.Designer.cs" />
   </ItemGroup>
   
   <ItemGroup>
@@ -58,6 +29,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="ceTe.DynamicPDF.CoreSuite.NET" Version="10.36.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
@@ -74,6 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="Requests\" />
   </ItemGroup>
 

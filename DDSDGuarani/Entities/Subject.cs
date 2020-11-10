@@ -12,6 +12,7 @@ namespace DDSDGuarani.Entities
         public string Name { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        public DateTime ScoreUploadLimit { get; set; }
         public int Year { get; set; }
         public int Period { get; set; }
         public SubjectShift Shift { get; set; }
@@ -24,5 +25,14 @@ namespace DDSDGuarani.Entities
 
         //Relation - OneToMany - FinalCall
         public List<FinalCall> Finals { get; set; } = new List<FinalCall>();
+
+        //Relation - ManyToOne - InscriptionWindow
+        public int InscriptionWindowId { get; set; }
+        public InscriptionWindow InscriptionWindow { get; set; }
+
+        //Relation - ManyToOne- Career
+        public int CareerId { get; set; }
+        public Career Career { get; set; }
+
     }
 }

@@ -10,6 +10,7 @@ namespace DDSDGuarani.DTOResponse
     {
         public int Id { get; set; }
         public string Email { get; set; }
+        public string UserName { get; set; }
         public string Password { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -22,5 +23,6 @@ namespace DDSDGuarani.DTOResponse
         public List<InscriptionFinalResponse> InscriptionFinals { get; set; }
         public List<EvaluationInstanceResponse> EvaluationInstances { get; set; }
         public AddressResponse Address { get; set; }
+        public CareerResponse Career { get; set; }
     }
 }
