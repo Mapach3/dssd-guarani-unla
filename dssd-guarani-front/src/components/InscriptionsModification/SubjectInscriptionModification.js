@@ -176,18 +176,18 @@ class SubjectInscriptionModification extends Component{
                                         <TableCell align="left">Nombre y Apellido</TableCell>
                                         <TableCell align="left">E-mail</TableCell>
                                         <TableCell align="left">DNI</TableCell>
-                                        <TableCell align="left">Rol</TableCell>
+                                        <TableCell align="left">Usuario</TableCell>
                                         <TableCell align="left">Acción</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {this.state.studentsList.map((user) => (
+                                        {this.state.studentsList.filter(student => student.career.id === this.state.chosenCareer).map((user) => (
                                         <TableRow key={user.id}>
                                             <TableCell component="th" scope="row">{user.id}</TableCell>
                                             <TableCell align="left">{user.name} {user.surname}</TableCell>
                                             <TableCell align="left">{user.email}</TableCell>
                                             <TableCell align="left">{user.dni}</TableCell>
-                                            <TableCell align="left">Alumno</TableCell>
+                                            <TableCell align="left">{user.userName}</TableCell>
                                             <TableCell align="left">
                                             {user.courses.find( course => course.subjectId === this.state.chosenSubject && course.userId === user.id) !== undefined ?  
                                                 <Button variant="contained" onClick={this.deleteInscription} color="secondary" value={user.id}>Baja</Button> : 

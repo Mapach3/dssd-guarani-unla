@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
-using DDSDGuarani.EmailService;
 using Microsoft.Extensions.Configuration;
 using ceTe.DynamicPDF;
 using ceTe.DynamicPDF.PageElements;
@@ -36,7 +35,7 @@ namespace DDSDGuarani.Controllers
         public IEnumerable<UserResponse> Get()
         {
             IEnumerable<UserResponse> response = new List<UserResponse>();
-            var resultDb = context.User.Include(x => x.Address).Include(x => x.InscriptionFinals).Include(x => x.EvaluationInstances).Include(x => x.Courses).ToList().OrderBy(x => x.Id);
+            var resultDb = context.User.Include(x => x.Address).Include(x => x.InscriptionFinals).Include(x => x.EvaluationInstances).Include(x => x.Courses).Include(x => x.Career).ToList().OrderBy(x => x.Id);
             response = _mapper.Map<IEnumerable<User>, IEnumerable<UserResponse>>(resultDb);
             return response;
         }
