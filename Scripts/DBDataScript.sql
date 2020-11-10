@@ -30,15 +30,15 @@ SET IDENTITY_INSERT [dbo].[Address] OFF
 GO
 
 SET IDENTITY_INSERT [dbo].[User] ON 
-INSERT [dbo].[User] ([Id], [Email], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId]) VALUES (1, N'jmanuel@unla.com.ar', N'123456', N'Juan', N'Manuel', N'11111111', 1, 1, null, 0, 1)
-INSERT [dbo].[User] ([Id], [Email], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId]) VALUES (2, N'gnativo@unla.com.ar', N'123456', N'Gian', N'Nativo', N'44444444', 1, 1, null, 1, 2)
-INSERT [dbo].[User] ([Id], [Email], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId]) VALUES (3, N'lotegui@unla.com.ar', N'123456', N'Luciano', N'Otegui', N'55555555', 1, 1, null, 1, 3)
-INSERT [dbo].[User] ([Id], [Email], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId]) VALUES (4, N'gcontento@unla.com.ar', N'123456', N'Guido', N'Contento', N'66666666', 1, 1, null, 1, 4)
-INSERT [dbo].[User] ([Id], [Email], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId]) VALUES (5, N'tpereyra@unla.com.ar', N'123456', N'Tomas', N'Pereyra', N'77777777', 1, 1, null, 1, 5)
-INSERT [dbo].[User] ([Id], [Email], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId]) VALUES (6, N'hmerlino@unla.com.ar', N'123456', N'Hernan', N'Merlino', N'33333333', 1, 1, null, 2, 6)
-INSERT [dbo].[User] ([Id], [Email], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId]) VALUES (7, N'avranic@unla.com.ar', N'123456', N'Alejandra', N'Vranic', N'22222222', 1, 1, null, 2, 7)
-INSERT [dbo].[User] ([Id], [Email], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId]) VALUES (8, N'dazcurra@unla.com.ar', N'123456', N'Diego', N'Azcurra', N'88888888', 1, 1, null, 2, 8)
-INSERT [dbo].[User] ([Id], [Email], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId]) VALUES (9, N'ingresante@unla.com.ar', N'123456', N'El', N'Ingresante', N'99999999', 1, 0, null, 1, 9)
+INSERT [dbo].[User] ([Id], [Email], [UserName], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId], [CareerId]) VALUES (1, N'jmanuel@unla.com.ar', N'jmanuel', N'123456', N'Juan', N'Manuel', N'11111111', 1, 1, null, 0, 1, 1)
+INSERT [dbo].[User] ([Id], [Email], [UserName], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId], [CareerId]) VALUES (2, N'gnativo@unla.com.ar', N'gnativo', N'123456', N'Gian', N'Nativo', N'44444444', 1, 1, null, 1, 2, 1)
+INSERT [dbo].[User] ([Id], [Email], [UserName], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId], [CareerId]) VALUES (3, N'lotegui@unla.com.ar', N'lotegui', N'123456', N'Luciano', N'Otegui', N'55555555', 1, 1, null, 1, 3, 1)
+INSERT [dbo].[User] ([Id], [Email], [UserName], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId], [CareerId]) VALUES (4, N'gcontento@unla.com.ar', N'gcontento', N'123456', N'Guido', N'Contento', N'66666666', 1, 1, null, 1, 4, 1)
+INSERT [dbo].[User] ([Id], [Email], [UserName], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId], [CareerId]) VALUES (5, N'tpereyra@unla.com.ar', N'tpereyra', N'123456', N'Tomas', N'Pereyra', N'77777777', 1, 1, null, 1, 5, 1)
+INSERT [dbo].[User] ([Id], [Email], [UserName], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId], [CareerId]) VALUES (6, N'hmerlino@unla.com.ar', N'hmerlino', N'123456', N'Hernan', N'Merlino', N'33333333', 1, 1, null, 2, 6, 1)
+INSERT [dbo].[User] ([Id], [Email], [UserName], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId], [CareerId]) VALUES (7, N'avranic@unla.com.ar', N'avranic', N'123456', N'Alejandra', N'Vranic', N'22222222', 1, 1, null, 2, 7, 1)
+INSERT [dbo].[User] ([Id], [Email], [UserName], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId], [CareerId]) VALUES (8, N'dazcurra@unla.com.ar', N'dazcurra', N'123456', N'Diego', N'Azcurra', N'88888888', 1, 1, null, 2, 8, 1)
+INSERT [dbo].[User] ([Id], [Email], [UserName], [Password], [Name], [Surname], [Dni], [Active], [PasswordChanged], [ImgBase64], [Role], [AddressId], [CareerId]) VALUES (9, N'ingresante@unla.com.ar', N'eingresante', N'123456', N'El', N'Ingresante', N'99999999', 1, 0, null, 1, 9, 1)
 SET IDENTITY_INSERT [dbo].[User] OFF
 GO
 
