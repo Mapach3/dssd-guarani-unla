@@ -1,10 +1,11 @@
 version: "3"
 services:
     db:
-        image: mcr.microsoft.com/mssql/server:2017-latest
+        image:  "mcr.microsoft.com/mssql/server"
+        container_name: db
         environment:
             SA_PASSWORD: "Unla2020"
-            ACCEPT_EULA: "Y"      
+            ACCEPT_EULA: "Y"
     ddsdguarani_web:
         build: .
         depends_on:

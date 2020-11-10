@@ -86,7 +86,7 @@ namespace DDSDGuarani
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+        
 
             app.UseRouting();
 

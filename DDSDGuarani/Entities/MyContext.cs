@@ -58,6 +58,22 @@ namespace DDSDGuarani.Entities
                 .HasOne(co => co.FinalCall)
                 .WithMany(s => s.InscriptionFinals)
                 .HasForeignKey(co => co.FinalId);
+            
+            modelBuilder.Entity<Address>().HasData(
+                new Address
+                {
+                    Id=1,
+                    StreetAndNumber="Calle 123",
+                    Location="Lanus",
+                    PostalCode="1234",
+                    City="1234",
+                    Country="Argentina"
+                }
+              
+               );
+
+
+        
         }
     }
 }
