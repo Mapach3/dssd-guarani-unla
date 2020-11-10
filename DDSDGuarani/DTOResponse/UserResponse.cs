@@ -21,7 +21,7 @@ namespace DDSDGuarani.DTOResponse
         public UserRole Role { get; set; }
         public List<CourseResponse> Courses { get; set; }
         public List<InscriptionFinalResponse> InscriptionFinals { get; set; }
-        public List<EvaluationInstanceResponse> EvaluationInstances { get; set; }
+    //    public List<EvaluationInstanceResponse> EvaluationInstances { get; set; }
         public AddressResponse Address { get; set; }
         public CareerResponse Career { get; set; }
     }

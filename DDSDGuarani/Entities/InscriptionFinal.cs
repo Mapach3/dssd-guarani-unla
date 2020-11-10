@@ -10,8 +10,12 @@ namespace DDSDGuarani.Entities
         public int UserId { get; set; }
         public User User { get; set; }
 
+
         //Relation - ManyToOne - FinalCall
         public int FinalId { get; set; }
         public FinalCall FinalCall { get; set; }
+    
+        public int Score { get; set; }
     }
+
 }

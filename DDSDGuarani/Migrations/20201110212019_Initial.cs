@@ -96,7 +96,7 @@ namespace DDSDGuarani.Migrations
                     Name = table.Column<string>(nullable: true),
                     StartTime = table.Column<DateTime>(nullable: false),
                     EndTime = table.Column<DateTime>(nullable: false),
-                    ScoreUploadLimit = table.Column<DateTime>(nullable: false),
+                    WeekDay = table.Column<string>(nullable: true),
                     Year = table.Column<int>(nullable: false),
                     Period = table.Column<int>(nullable: false),
                     Shift = table.Column<int>(nullable: false),
@@ -146,42 +146,12 @@ namespace DDSDGuarani.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EvaluationInstance",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Score = table.Column<double>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false),
-                    Type = table.Column<int>(nullable: false),
-                    SubjectId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EvaluationInstance", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EvaluationInstance_Subject_SubjectId",
-                        column: x => x.SubjectId,
-                        principalTable: "Subject",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EvaluationInstance_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "FinalCall",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(nullable: false),
-                    ScoreUploadLimit = table.Column<DateTime>(nullable: false),
                     SubjectId = table.Column<int>(nullable: false),
                     InscriptionWindowId = table.Column<int>(nullable: false)
                 },
@@ -207,7 +177,8 @@ namespace DDSDGuarani.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
-                    FinalId = table.Column<int>(nullable: false)
+                    FinalId = table.Column<int>(nullable: false),
+                    Score = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -229,16 +200,6 @@ namespace DDSDGuarani.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Course_UserId",
                 table: "Course",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EvaluationInstance_SubjectId",
-                table: "EvaluationInstance",
-                column: "SubjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EvaluationInstance_UserId",
-                table: "EvaluationInstance",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -282,9 +243,6 @@ namespace DDSDGuarani.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Course");
-
-            migrationBuilder.DropTable(
-                name: "EvaluationInstance");
 
             migrationBuilder.DropTable(
                 name: "InscriptionFinal");

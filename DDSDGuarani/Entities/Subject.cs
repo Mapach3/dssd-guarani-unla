@@ -12,7 +12,7 @@ namespace DDSDGuarani.Entities
         public string Name { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public DateTime ScoreUploadLimit { get; set; }
+        public string WeekDay { get; set; }
         public int Year { get; set; }
         public int Period { get; set; }
         public SubjectShift Shift { get; set; }
@@ -21,7 +21,7 @@ namespace DDSDGuarani.Entities
         public List<Course> Courses { get; set; } = new List<Course>();
 
         //Relation - OneToMany - EvaluationInstance
-        public List<EvaluationInstance> EvaluationInstances { get; set; } = new List<EvaluationInstance>();
+        //public List<EvaluationInstance> EvaluationInstances { get; set; } = new List<EvaluationInstance>();
 
         //Relation - OneToMany - FinalCall
         public List<FinalCall> Finals { get; set; } = new List<FinalCall>();
