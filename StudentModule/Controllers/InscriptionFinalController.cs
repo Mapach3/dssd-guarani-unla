@@ -47,6 +47,28 @@ namespace StudentModule.Controllers
         }
 
         /// <summary>
+        /// Trae Inscripcion a Final por ID USER
+        /// </summary>
+        /// <param name="idUser"></param>  
+        [HttpGet("[action]/{idUser}")]
+        public InscriptionFinalResponseByUser GetByUser(int idUser)
+        {
+            InscriptionFinalResponseByUser response = new InscriptionFinalResponseByUser();
+            var resultDb = context.InscriptionFinal.Include(x => x.FinalCall).ThenInclude(x=>x.InscriptionWindow)
+                .Include(x => x.FinalCall).ThenInclude(x => x.InscriptionFinals)
+                .Include(x => x.FinalCall).ThenInclude(x => x.Subject)
+                .Include(x => x.FinalCall).ThenInclude(x => x.Subject).ThenInclude(x=>x.Career)
+                .Include(x => x.FinalCall).ThenInclude(x => x.Subject).ThenInclude(x => x.Courses)
+                .Include(x => x.FinalCall).ThenInclude(x => x.Subject).ThenInclude(x => x.InscriptionWindow)
+                .Include(x => x.FinalCall).ThenInclude(x => x.Subject).ThenInclude(x => x.Finals)
+                .Include(x => x.User).ThenInclude(x=>x.InscriptionFinals)
+                .Include(x => x.User).ThenInclude(x => x.Courses)
+                .FirstOrDefault(u => u.UserId == idUser);
+            response = _mapper.Map<InscriptionFinal, InscriptionFinalResponseByUser>(resultDb);
+            return response;
+        }
+
+        /// <summary>
         /// Inserta una Inscripcion de Final
         /// </summary>
         /// <param name="inscriptionFinal"></param>  
