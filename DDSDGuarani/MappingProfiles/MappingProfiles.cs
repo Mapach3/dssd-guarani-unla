@@ -62,7 +62,8 @@ namespace DDSDGuarani.MappingProfiles
                     inscriptionFinalsAux.Add(new InscriptionFinalResponse
                     {
                         FinalId = x.FinalId,
-                        UserId = x.UserId
+                        UserId = x.UserId,
+                        Score= x.Score
                     });
                 });
 
