@@ -10,13 +10,16 @@ import UserDrop from '../components/UserDrop/index'
 import UserModify from '../components/UserModify/index'
 import SubjectInsert from '../components/SubjectInsert/SubjectInsert';
 import InsertInscriptionWindow from '../components/InscriptionWindow/InsertInscriptionWindow';
+import FinalCallInsert from '../components/FinalCallInsert/FinalCallInsert'
+import FinalSpreadSheet from '../components/SpreadSheet/FinalSpreadSheet'
+import SubjectSpreadSheet from '../components/SpreadSheet/SubjectSpreadSheet'
 
 const drawerWidth = 240;
 const history = createBrowserHistory();
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        display: 'flex',
+        display: 'block',
     },
     appBar: {
         transition: theme.transitions.create(['margin', 'width'], {
@@ -45,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     drawerHeader: {
         display: 'flex',
         alignItems: 'center',
-        padding: theme.spacing(0, 1),
+        padding: theme.spacing(0, 10),
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
         justifyContent: 'flex-end',
@@ -103,8 +106,12 @@ const HomeAdmin = (props) => {
                     <Route path="/insertUser" render={(props) => <UserInsert open={open} classes={classes} {...props}/>} />
                     <Route path="/modifyUser" render={(props) => <UserModify open={open} classes={classes} {...props}/>} />
                     <Route path="/deleteUser" render={(props) => <UserDrop open={open} classes={classes} {...props}/> } />
-                    <Route path="/inscriptionWindow" render={(props) => <InsertInscriptionWindow open={open} classes={classes} {...props}/>  } />
+                    <Route path="/subjectSpreadSheet" render={(props) => <SubjectSpreadSheet open={open} classes={classes} {...props}/> } />
+                    <Route path="/finalSpreadSheet" render={(props) => <FinalSpreadSheet open={open} classes={classes} {...props}/> } />
                     <Route path="/insertSubject" render={(props) => <SubjectInsert open={open} classes={classes} {...props}/> } />
+                    <Route path="/insertFinalCall" render={(props) => <FinalCallInsert open={open} classes={classes} {...props}/> } />
+                    <Route path="/inscriptionWindow" render={(props) => <InsertInscriptionWindow open={open} classes={classes} {...props}/>  } />
+                    
                 </div>
             </div>
         </Router>

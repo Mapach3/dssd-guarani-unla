@@ -65,10 +65,10 @@ class UserDrop extends Component {
           [this.props.classes.contentShift]: this.props.open,
         })}
       >
-        <div className={this.props.classes.drawerHeader} />
-        <Container maxWidth="xs">
+        {/* <div className={this.props.classes.drawerHeader} /> */}
+        <Container maxWidth="md">
           <h3>Baja de usuario</h3>
-          { loading ? <CircularProgress color="secondary" /> : <UserGrid users={userList} action={(id) => this.changeUserActive(id)} />}
+          <UserGrid users={userList} action={(id) => this.changeUserActive(id)} />
           <Dialog
             open={this.state.dialogOpen}
             keepMounted

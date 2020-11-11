@@ -20,6 +20,7 @@ import UserInsert from './components/UserInsert';
 import SubjectInsert from './components/SubjectInsert/SubjectInsert';
 import InsertInscriptionWindow from './components/InscriptionWindow/InsertInscriptionWindow'
 import SubjectSpreadSheet from './components/SpreadSheet/SubjectSpreadSheet'
+import FinalSpreadSheet from './components/SpreadSheet/FinalSpreadSheet'
 
 const App = () => {
 
@@ -44,12 +45,7 @@ const App = () => {
           {userToken == null ? 
           <>
           <Redirect exact to="/login"/>
-          {/* <Login setToken={setUserToken} setMailUser={setMailUser} setPassChange={setPassChange} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>          */}
-          {/* <SubjectInscriptionModification /> */}
-          {/* <UserInsert /> */}
-          {/* <SubjectInsert /> */}
-          {/* <InsertInscriptionWindow /> */}
-          <SubjectSpreadSheet />
+          <Login setToken={setUserToken} setMailUser={setMailUser} setPassChange={setPassChange} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>         
           </>
           :
           <>
