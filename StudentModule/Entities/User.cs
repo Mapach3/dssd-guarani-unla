@@ -9,9 +9,10 @@ namespace StudentModule.Entities
     public class User
     {
         public int Id { get; set; }
-        public string Email { get; set; } 
+        public string Email { get; set; }
+        public string UserName { get; set; }
         public string Password { get; set; }
-        public string Name { get; set; } 
+        public string Name { get; set; }
         public string Surname { get; set; }
         public string Dni { get; set; }
         public bool Active { get; set; }
@@ -26,10 +27,14 @@ namespace StudentModule.Entities
         public List<InscriptionFinal> InscriptionFinals { get; set; } = new List<InscriptionFinal>();
 
         //Relation - OneToMany - EvaluationInstance
-        public List<EvaluationInstance> EvaluationInstances { get; set; } = new List<EvaluationInstance>();
+      //  public List<EvaluationInstance> EvaluationInstances { get; set; } = new List<EvaluationInstance>();
 
         //Relation - OneToOne - Address
         public int AddressId { get; set; }
         public Address Address { get; set; }
+
+        //Relation - OneToMany - Career
+        public int CareerId { get; set; }
+        public Career Career { get; set; }
     }
 }
