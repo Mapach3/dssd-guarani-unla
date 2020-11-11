@@ -19,6 +19,7 @@ import SubjectInscriptionModification from './components/InscriptionsModificatio
 import UserInsert from './components/UserInsert';
 import SubjectInsert from './components/SubjectInsert/SubjectInsert';
 import InsertInscriptionWindow from './components/InscriptionWindow/InsertInscriptionWindow'
+import SubjectSpreadSheet from './components/SpreadSheet/SubjectSpreadSheet'
 
 const App = () => {
 
@@ -46,8 +47,9 @@ const App = () => {
           {/* <Login setToken={setUserToken} setMailUser={setMailUser} setPassChange={setPassChange} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>          */}
           {/* <SubjectInscriptionModification /> */}
           {/* <UserInsert /> */}
-          <SubjectInsert />
+          {/* <SubjectInsert /> */}
           {/* <InsertInscriptionWindow /> */}
+          <SubjectSpreadSheet />
           </>
           :
           <>
