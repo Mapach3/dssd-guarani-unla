@@ -98,7 +98,7 @@ const HomeStudent = (props) => {
                 <CustomDrawerStudent open={open} setOpen={setOpen} classes={classes} theme={theme} rolUser={props.rolUser}/>
                 <div className='mainContainer'>
                     <Route path="/inscriptionExam" render={(props) => <InscriptionExam open={open} classes={classes} {...props} /> } />
-                    <Route path="/gradesInform" render={(props) => <GradesInform open={open} classes={classes} {...props}/>} />
+                    <Route path="/gradesInform" render={(props) => <GradesInform open={open} classes={classes} userId={props.userId} {...props}/>} />
                 </div>
             </div>
         </Router>

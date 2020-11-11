@@ -83,6 +83,7 @@ namespace DDSDGuarani.Controllers
                     responseLogin.NameUser = userResp.Name + " " + userResp.Surname;
                     responseLogin.PasswordChange = userResp.PasswordChanged;
                     responseLogin.MailUser = userResp.Email;
+                    responseLogin.UserId = userResp.Id;
                 }
                 else
                 {

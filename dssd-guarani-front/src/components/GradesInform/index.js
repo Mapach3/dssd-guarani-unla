@@ -19,7 +19,6 @@ class GradesInform extends Component {
     loading: true,
     errorMsg: '',
     dialogOpen: false
-
   }
 
   componentDidMount() {
@@ -27,7 +26,7 @@ class GradesInform extends Component {
   }
 
   updateGradesList() {
-    axios.get(__API_FINAL + 'GetByUser/' + 2).then(resp => {
+    axios.get(__API_FINAL + 'GetByUser/' + window.localStorage.getItem('userId')).then(resp => {
       var finals = [];
       console.log(resp.data);
       var grades = resp.data;
