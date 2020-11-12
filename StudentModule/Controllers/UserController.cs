@@ -99,6 +99,34 @@ namespace StudentModule.Controllers
         }
 
         /// <summary>
+        /// Modifica un Usuario
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="user"></param>
+        [HttpPut("{id}")]
+        public ActionResult Put(int id, [FromBody] User user)
+        {
+            try
+            {
+                if (user.Id == id)
+                {
+                    context.Entry(user).State = EntityState.Modified;
+                    context.SaveChanges();
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+
+        /// <summary>
         /// Modifica los datos de la cuenta del usuario.
         /// </summary>
         /// <param name="accountData"></param>
@@ -108,18 +136,22 @@ namespace StudentModule.Controllers
             try
             {
                 User user = context.User.FirstOrDefault(user => user.Id == accountData.Id);
+                Address address = context.Address.FirstOrDefault(address => address.Id == accountData.address.Id);
                 if (user != null)
-                {    
+                {
                     context.Entry(user).State = EntityState.Modified;
                     user.Email = string.IsNullOrEmpty(accountData.Email) ? user.Email : accountData.Email;
                     user.Password = string.IsNullOrEmpty(accountData.Password) ? user.Password : accountData.Password;
                     user.ImgBase64 = string.IsNullOrEmpty(accountData.ImgBase64) ? user.ImgBase64 : accountData.ImgBase64;
 
-                    if (user.Role == Enums.UserRole.ADMIN)
+                    if (address != null)
                     {
-                        user.Name = string.IsNullOrEmpty(accountData.Name) ? user.Name : accountData.Name;
-                        user.Surname = string.IsNullOrEmpty(accountData.Surname) ? user.Surname : accountData.Surname;
-                        user.Dni = string.IsNullOrEmpty(accountData.Dni) ? user.Dni : accountData.Dni;
+                        context.Entry(address).State = EntityState.Modified;
+                        address.Location = string.IsNullOrEmpty(accountData.address.Location) ? address.Location : accountData.address.Location;
+                        address.PostalCode = string.IsNullOrEmpty(accountData.address.PostalCode) ? address.PostalCode : accountData.address.PostalCode;
+                        address.StreetAndNumber = string.IsNullOrEmpty(accountData.address.StreetAndNumber) ? address.StreetAndNumber : accountData.address.StreetAndNumber;
+                        address.City = string.IsNullOrEmpty(accountData.address.City) ? address.City : accountData.address.City;
+                        address.Country = string.IsNullOrEmpty(accountData.address.Country) ? address.Country : accountData.address.Country;
                     }
 
                     context.SaveChanges();

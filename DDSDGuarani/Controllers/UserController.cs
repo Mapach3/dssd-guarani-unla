@@ -202,6 +202,7 @@ namespace DDSDGuarani.Controllers
                 if (user.Id == id)
                 {
                     context.Entry(user).State = EntityState.Modified;
+                    context.Entry(user.Address).State = EntityState.Modified;
                     context.SaveChanges();
                     return Ok();
                 }

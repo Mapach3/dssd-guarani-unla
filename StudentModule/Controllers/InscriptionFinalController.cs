@@ -51,9 +51,9 @@ namespace StudentModule.Controllers
         /// </summary>
         /// <param name="idUser"></param>  
         [HttpGet("[action]/{idUser}")]
-        public InscriptionFinalResponseByUser GetByUser(int idUser)
+        public IEnumerable<InscriptionFinalResponseByUser> GetByUser(int idUser)
         {
-            InscriptionFinalResponseByUser response = new InscriptionFinalResponseByUser();
+            IEnumerable<InscriptionFinalResponseByUser> response = new List<InscriptionFinalResponseByUser>();
             var resultDb = context.InscriptionFinal.Include(x => x.FinalCall).ThenInclude(x=>x.InscriptionWindow)
                 .Include(x => x.FinalCall).ThenInclude(x => x.InscriptionFinals)
                 .Include(x => x.FinalCall).ThenInclude(x => x.Subject)
@@ -63,8 +63,8 @@ namespace StudentModule.Controllers
                 .Include(x => x.FinalCall).ThenInclude(x => x.Subject).ThenInclude(x => x.Finals)
                 .Include(x => x.User).ThenInclude(x=>x.InscriptionFinals)
                 .Include(x => x.User).ThenInclude(x => x.Courses)
-                .FirstOrDefault(u => u.UserId == idUser);
-            response = _mapper.Map<InscriptionFinal, InscriptionFinalResponseByUser>(resultDb);
+                .Where(u => u.UserId == idUser).ToList();
+            response = _mapper.Map<IEnumerable<InscriptionFinal>, IEnumerable<InscriptionFinalResponseByUser>>(resultDb);
             return response;
         }
 

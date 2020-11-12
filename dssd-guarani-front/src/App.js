@@ -24,6 +24,7 @@ const App = () => {
   const [nameUser,setNameUser] = useState(Storage.getNameUser());
   const [passChange,setPassChange] = useState(Storage.getPassChange());
   const [mailUser,setMailUser] = useState(Storage.getMailUser());
+  const [userId,setUserId] = useState(Storage.getUserId());
 
   
 
@@ -39,7 +40,7 @@ const App = () => {
           {userToken == null ? 
           <>
           <Redirect exact to="/login"/>
-          <Login setToken={setUserToken} setMailUser={setMailUser} setPassChange={setPassChange} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>         
+          <Login setToken={setUserToken} setMailUser={setMailUser} setPassChange={setPassChange} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser} setUserId = {setUserId}/>          
           </>
           :
           <>
@@ -47,11 +48,11 @@ const App = () => {
           {(passChange === 'false'
               ? <FirstAccess setPassChange={setPassChange}/> 
               : (rolUser === 'ADMIN' && passChange === 'true'
-                ? <HomeAdmin rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/> 
+                ? <HomeAdmin rolUser={rolUser} imageUser={imageUser} nameUser={nameUser} userId={userId}/> 
                 : (rolUser === 'STUDENT' && passChange === 'true'
-                        ? <HomeStudent rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/> 
+                        ? <HomeStudent rolUser={rolUser} imageUser={imageUser} nameUser={nameUser} userId={userId}/> 
                         : (rolUser === 'TEACHER' && passChange === 'true' 
-                            ? <HomeTeacher rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/>
+                            ? <HomeTeacher rolUser={rolUser} imageUser={imageUser} nameUser={nameUser} userId={userId}/>
                             : <Loading/>))))}
           </>
           }

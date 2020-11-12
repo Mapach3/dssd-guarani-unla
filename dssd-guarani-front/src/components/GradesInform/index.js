@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { __API_EVALUATIONINSTANCE } from '../../consts/consts';
+import { __API_FINAL } from '../../consts/consts';
 import clsx from 'clsx';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -19,7 +19,6 @@ class GradesInform extends Component {
     loading: true,
     errorMsg: '',
     dialogOpen: false
-
   }
 
   componentDidMount() {
@@ -27,10 +26,20 @@ class GradesInform extends Component {
   }
 
   updateGradesList() {
-    axios.get(__API_EVALUATIONINSTANCE + 'finals/' + 2).then(resp => {
+    axios.get(__API_FINAL + 'GetByUser/' + window.localStorage.getItem('userId')).then(resp => {
+      var finals = [];
       console.log(resp.data);
+      var grades = resp.data;
+      for (var i = 0; i < grades.length; i++) {
+        finals.push({
+          id: grades[i].finalCall.id,
+          subject: grades[i].finalCall.subject.name,
+          date: grades[i].finalCall.date,
+          score: grades[i].score
+        })
+      }
       this.setState({
-        gradesList: resp.data,
+        gradesList: finals,
         loading: false
       })
     })

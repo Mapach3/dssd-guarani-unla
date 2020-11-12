@@ -1,0 +1,68 @@
+.e-grid{
+    opacity: 1;
+    margin: 4px!important;
+    width: 100%!important;
+    border-color: #303030!important;
+    font-family: "Roboto"!important;
+}
+
+.e-groupdroparea{
+    background-color: #d43f3a!important;
+    color: #fff!important;
+    font-weight: 400!important;
+    border-color: #d43f3a!important;
+    opacity: 1!important;
+}
+
+.gridDrawerOpen{
+    width: 80%;
+}
+
+.gridDrawerClose{
+    width: 80%;
+}
+
+.gridDrawerOpenCleanCacheDistributor{
+    width: 30%;
+}
+
+.gridDrawerOpenCleanCacheHDR{
+    width: 50%;
+}
+
+tbody td{
+    font-size: 10px!important;
+    padding-left: 0%!important;
+    padding-right: 7px!important;
+    white-space: nowrap!important;
+    text-overflow:ellipsis!important;
+}
+
+thead span{
+    font-size: 10px;
+    font-weight: bold;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+}
+
+.e-groupheadercell{
+    background-color: #ececec!important; 
+    border: 1px solid black!important;
+}
+
+.e-grid-icon, .e-icon-ascending, .e-icon-hide, .e-icon-descending{
+    color: #717171!important
+}
+
+.e-grid .e-sortnumber { 
+    display: none; 
+} 
+
+.e-pager .e-currentitem, .e-pager .e-currentitem:hover{
+    background: #d43f3a!important;
+}
+
+.e-grid .e-viewKey::before,
+.e-grid-menu .e-viewKey::before {
+  content: '\e345';
+}
