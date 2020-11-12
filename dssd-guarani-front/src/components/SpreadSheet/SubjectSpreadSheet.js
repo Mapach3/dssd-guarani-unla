@@ -25,7 +25,7 @@ import { __API_CAREER, __API_SUBJECT } from '../../consts/consts';
 
 
 
-class SubjectInscriptionModification extends Component{
+class SubjectSpreadSheet extends Component{
 
     state = {
         careerList : [],
@@ -144,4 +144,4 @@ class SubjectInscriptionModification extends Component{
 
 }
 
-export default SubjectInscriptionModification;
+export default SubjectSpreadSheet;

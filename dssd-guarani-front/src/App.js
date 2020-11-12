@@ -13,14 +13,8 @@ import HomeAdmin from './pages/HomeAdmin';
 import HomeStudent from './pages/HomeStudent';
 import HomeTeacher from './pages/HomeTeacher';
 import {FirstAccess} from './components/Login/FirstAccess';
-import UserModify from './components/UserModify/index'
 import { Loading } from './components/Login/Loading';
-import SubjectInscriptionModification from './components/InscriptionsModification/SubjectInscriptionModification'
-import UserInsert from './components/UserInsert';
-import SubjectInsert from './components/SubjectInsert/SubjectInsert';
-import InsertInscriptionWindow from './components/InscriptionWindow/InsertInscriptionWindow'
-import SubjectSpreadSheet from './components/SpreadSheet/SubjectSpreadSheet'
-import FinalSpreadSheet from './components/SpreadSheet/FinalSpreadSheet'
+
 
 const App = () => {
 

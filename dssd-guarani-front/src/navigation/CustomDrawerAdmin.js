@@ -5,6 +5,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Add from '@material-ui/icons/Add';
 import Delete from '@material-ui/icons/Delete';
+import CreateRoundedIcon from '@material-ui/icons/CreateRounded';
+import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
 import Search from '@material-ui/icons/Search';
 import Build from '@material-ui/icons/Build';
 import Drawer from '@material-ui/core/Drawer';
@@ -53,11 +55,11 @@ const CustomDrawerAdmin = ({ classes, open, setOpen, theme, ...props }) => {
                     <ListItemText primary="Borrar Usuario" />
                 </ListItem>
                 <ListItem button onClick={() => props.history.push("/subjectSpreadSheet")}>
-                    <ListItemIcon><Add /></ListItemIcon>
+                    <ListItemIcon><ListAltRoundedIcon /></ListItemIcon>
                     <ListItemText primary="Planilla de Cuatrimestre" />
                 </ListItem>
                 <ListItem button onClick={() => props.history.push("/finalSpreadSheet")}>
-                    <ListItemIcon><Add /></ListItemIcon>
+                    <ListItemIcon><ListAltRoundedIcon /></ListItemIcon>
                     <ListItemText primary="Planilla de Finales" />
                 </ListItem>
 
@@ -74,6 +76,16 @@ const CustomDrawerAdmin = ({ classes, open, setOpen, theme, ...props }) => {
                 <ListItem button onClick={() => props.history.push("/inscriptionWindow")}>
                     <ListItemIcon><Add /></ListItemIcon>
                     <ListItemText primary="Ventana de Inscripcion" />
+                </ListItem>
+
+                <ListItem button onClick={() => props.history.push("/finalInscriptionModification")}>
+                    <ListItemIcon><CreateRoundedIcon /></ListItemIcon>
+                    <ListItemText primary="Modificación de Inscripciones a Finales" />
+                </ListItem>
+
+                <ListItem button onClick={() => props.history.push("/subjectInscriptionModification")}>
+                    <ListItemIcon><CreateRoundedIcon /></ListItemIcon>
+                    <ListItemText primary="Modificación de Inscripciones a Materias" />
                 </ListItem>
 
                 

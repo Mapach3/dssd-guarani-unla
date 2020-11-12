@@ -13,6 +13,8 @@ import InsertInscriptionWindow from '../components/InscriptionWindow/InsertInscr
 import FinalCallInsert from '../components/FinalCallInsert/FinalCallInsert'
 import FinalSpreadSheet from '../components/SpreadSheet/FinalSpreadSheet'
 import SubjectSpreadSheet from '../components/SpreadSheet/SubjectSpreadSheet'
+import FinalInscriptionModification from '../components/InscriptionsModification/FinalInscriptionModification';
+import SubjectInscriptionModification from '../components/InscriptionsModification/SubjectInscriptionModification';
 
 const drawerWidth = 240;
 const history = createBrowserHistory();
@@ -111,6 +113,8 @@ const HomeAdmin = (props) => {
                     <Route path="/insertSubject" render={(props) => <SubjectInsert open={open} classes={classes} {...props}/> } />
                     <Route path="/insertFinalCall" render={(props) => <FinalCallInsert open={open} classes={classes} {...props}/> } />
                     <Route path="/inscriptionWindow" render={(props) => <InsertInscriptionWindow open={open} classes={classes} {...props}/>  } />
+                    <Route path="/finalInscriptionModification" render={(props) => <FinalInscriptionModification open={open} classes={classes} {...props}/> } />
+                    <Route path="/subjectInscriptionModification" render={(props) => <SubjectInscriptionModification open={open} classes={classes} {...props}/>  } />
                     
                 </div>
             </div>
