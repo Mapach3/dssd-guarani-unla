@@ -136,12 +136,23 @@ namespace StudentModule.Controllers
             try
             {
                 User user = context.User.FirstOrDefault(user => user.Id == accountData.Id);
+                Address address = context.Address.FirstOrDefault(address => address.Id == accountData.address.Id);
                 if (user != null)
-                {    
+                {
                     context.Entry(user).State = EntityState.Modified;
                     user.Email = string.IsNullOrEmpty(accountData.Email) ? user.Email : accountData.Email;
                     user.Password = string.IsNullOrEmpty(accountData.Password) ? user.Password : accountData.Password;
                     user.ImgBase64 = string.IsNullOrEmpty(accountData.ImgBase64) ? user.ImgBase64 : accountData.ImgBase64;
+
+                    if (address != null)
+                    {
+                        context.Entry(address).State = EntityState.Modified;
+                        address.Location = string.IsNullOrEmpty(accountData.address.Location) ? address.Location : accountData.address.Location;
+                        address.PostalCode = string.IsNullOrEmpty(accountData.address.PostalCode) ? address.PostalCode : accountData.address.PostalCode;
+                        address.StreetAndNumber = string.IsNullOrEmpty(accountData.address.StreetAndNumber) ? address.StreetAndNumber : accountData.address.StreetAndNumber;
+                        address.City = string.IsNullOrEmpty(accountData.address.City) ? address.City : accountData.address.City;
+                        address.Country = string.IsNullOrEmpty(accountData.address.Country) ? address.Country : accountData.address.Country;
+                    }
 
                     context.SaveChanges();
                     return Ok("El usuario se modifico correctamente");
