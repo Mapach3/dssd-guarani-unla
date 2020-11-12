@@ -78,7 +78,6 @@ class SubjectInscriptionModification extends Component{
     setStudentsForInscription = (subjectId) => {
         debugger;
         //elimino los estudiantes que tienen esta materia aprobada porque no les puedo sacar la inscripción
-        
         var aprobados = this.state.studentsList.filter( student => student.courses.find( course => course.subjectId === subjectId && course.courseAverage !== 0))
         var availableList  = this.state.studentsList.filter((el) => !aprobados.includes(el))
         this.setState({studentsForInscription : availableList})
@@ -155,7 +154,7 @@ class SubjectInscriptionModification extends Component{
                         </Button>
                         </DialogActions>
                     </Dialog>
-                    <h3>Modificación de inscripciones a materias</h3>
+                    <h3>Modificación de inscripciones a Materias</h3>
                         <>
                         <Grid container xs={12} spacing={1}>
                             <Grid item sm={12}>

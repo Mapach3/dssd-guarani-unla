@@ -23,7 +23,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
 import axios from 'axios'
-import { __API_CAREER, __API_SUBJECT, __API_USER,__API_COURSE, __API_FINALCALL } from '../../consts/consts';
+import { __API_CAREER, __API_SUBJECT, __API_USER, __API_INSCFINAL } from '../../consts/consts';
+
+import moment from 'moment';
+import 'moment/locale/es';
 
 
 
@@ -37,8 +40,8 @@ class FinalInscriptionModification extends Component{
         chosenSubject : '',
         studentsList : [],
         chosenCareerSubjects : [],
-        finalList : [],
         finalsOfChosenSubject : [],
+        studentsOfThisFinal : [],
         chosenFinal : '',
         errorMsg : '',
         dialogOpen: false
@@ -47,57 +50,99 @@ class FinalInscriptionModification extends Component{
     componentDidMount(){
         const getCareers = axios.get(__API_CAREER)
         const getSubjects = axios.get(__API_SUBJECT)
-        const getFinals = axios.get(__API_FINALCALL)
         const getStudents = axios.get(__API_USER)
 
-        axios.all([getCareers,getSubjects,getFinals,getStudents]).then(axios.spread((careers,subjects,finals,students) => {
+        axios.all([getCareers,getSubjects,getStudents]).then(axios.spread((careers,subjects,students) => {
             console.log(careers.data,subjects.data,students.data.filter(student => student.role === 1))
             this.setState({careerList : careers.data, 
                            subjectList : subjects.data, 
-                           studentsList : students.data.filter(student => student.role === 1),
-                           finalList : finals.data})
+                           studentsList : students.data.filter(student => student.role === 1)
+                        })
         }))
     }
 
-    updateStudentsList(){
-        axios.get(__API_USER).then(resp => {
-            this.setState({studentsList : resp.data.filter(student => student.role === 1)})
+    updateStudentsList = () => {
+        axios.get(__API_USER).then( resp => {
+            var studentsFromDB = resp.data
+            var chosenFinal = this.state.chosenFinal
+            //Elimino los que no tengan una cursada con nota mayor a 4 para esta materia.. porque sino no pueden dar final
+            var aprobadosAndConCursada  = studentsFromDB.filter(student => student.courses.find(course => course.subjectId === this.state.chosenSubject && course.courseAverage >= 4))
+    
+            //elimino los estudiantes que tienen este final aprobado porque no les puedo sacar la inscripción
+            var conFinalAprobado = aprobadosAndConCursada.filter( student => student.inscriptionFinals.find( final => final.finalId === chosenFinal && final.score >= 4))
+            var disponiblesParaTomarFinal = aprobadosAndConCursada.filter((el) => !conFinalAprobado.includes(el)) 
+            
+            this.setState({studentsOfThisFinal : disponiblesParaTomarFinal,
+                           studentsList : studentsFromDB})
+
+
         })
+
+    }
+
+
+
+    onChosenFinalChange = (ev) => {
+        debugger;
+        this.setState({chosenFinal : ev.target.value,studentsOfThisFinal : []})
+        let chosenFinal = this.state.chosenFinal
+        //Elimino los que no tengan una cursada con nota mayor a 4 para esta materia.. porque sino no pueden dar final
+        let aprobadosAndConCursada  = this.state.studentsList.filter(student => (student.courses.find(course => course.subjectId === this.state.chosenSubject && course.courseAverage >= 4)) 
+                                                                             && (!student.inscriptionFinals.find(final => final.finalId === chosenFinal && final.score === 0)))
+        //TODO: REVISAR PORQUE ESTO NO FUNCIONA BIEN Y NO FILTRA POR LA SEGUNDA CONDICIÓN
+        console.log(aprobadosAndConCursada)
+
+        this.setState({studentsOfThisFinal : aprobadosAndConCursada})
+
     }
 
     onChosenSubjectChange = (ev) => {
+        debugger;
         this.setState({chosenSubject : ev.target.value})
+        let subject = this.state.subjectList.find( subject => subject.id === ev.target.value)
+
+        this.setState({finalsOfChosenSubject : subject.finals,
+                       studentsOfThisFinal : [],
+                       chosenFinal : ''})
     }
 
     onCareerChange = (ev) => {
         debugger;
         this.setState({chosenCareer : ev.target.value})
         let subjectsOfCareer = this.state.subjectList.filter( subject => subject.career.id === ev.target.value)
-        this.setState({chosenCareerSubjects : subjectsOfCareer})        
+        this.setState({chosenCareerSubjects : subjectsOfCareer,
+                       studentsOfThisFinal : [],
+                       chosenFinal : ''})        
     }
-
-
 
     createInscription = (ev) => {
         this.setState({errorMsg : ''})
         debugger;
         var userId = parseInt(ev.currentTarget.value)
-        var subjectId = parseInt(this.state.chosenSubject)
+        var finalId = parseInt(this.state.chosenFinal)
 
         const options = {
             method : "POST",
-            url : __API_COURSE,
+            url : __API_INSCFINAL,
             
             data : {
                 userid : userId,
-                subjectid : subjectId
+                finalid : finalId
             }
         } 
         axios(options).then(resp => {
             console.log(resp.data)
             this.setState({errorMsg : resp.data, dialogOpen : true})
+            
             this.updateStudentsList()
         })
+
+    }
+
+    getFinalData(date){
+        moment.locale('es')
+        return moment(date).format('dddd DD [de] MMMM hh:mm')
+    
 
     }
 
@@ -108,15 +153,15 @@ class FinalInscriptionModification extends Component{
     deleteInscription = (ev) => {
         debugger;
         var userId = parseInt(ev.currentTarget.value)
-        var subjectId = parseInt(this.state.chosenSubject)
+        var finalId = parseInt(this.state.chosenFinal)
 
         const options = {
             method : "DELETE",
-            url : __API_COURSE,
+            url : __API_INSCFINAL,
             
             data : {
                 userid : userId,
-                subjectid : subjectId
+                finalid : finalId
             }
         }
         
@@ -165,9 +210,9 @@ class FinalInscriptionModification extends Component{
                                 <Grid item sm={12}>
                                     <FormControl fullWidth variant="outlined">
                                         <InputLabel>Materia</InputLabel>
-                                        <Select onChange={(ev) => this.onChosenSubjectChange(ev)} value={this.state.chosenSubject}>
+                                        <Select onChange={this.onChosenSubjectChange} value={this.state.chosenSubject}>
                                             {this.state.chosenCareerSubjects.map(subject =>
-                                                <MenuItem value={subject.id}>{subject.name}</MenuItem>
+                                                <MenuItem key={subject.id} value={subject.id}>{subject.name}</MenuItem>
                                             )}
                                         </Select>
                                     </FormControl>
@@ -178,16 +223,16 @@ class FinalInscriptionModification extends Component{
                                 <Grid item sm={12}>
                                     <FormControl fullWidth variant="outlined">
                                         <InputLabel>Final</InputLabel>
-                                        <Select onChange={(ev) => this.onChosenFinal(ev)} value={this.state.chosenFinal}>
-                                            {this.state.chosenCareerSubjects.map(subject =>
-                                                <MenuItem value={subject.id}>{subject.name}</MenuItem>
+                                        <Select onChange={this.onChosenFinalChange} value={this.state.chosenFinal}>
+                                            {this.state.finalsOfChosenSubject.map(final =>
+                                            <MenuItem key={final.id} value={final.id}>{this.getFinalData(final.date)}</MenuItem>
                                             )}
                                         </Select>
                                     </FormControl>
                                 </Grid>
                                 : null
                             }
-                            {this.state.chosenSubject.length !== 0 ?
+                            {this.state.studentsOfThisFinal.length !== 0 ?
                             <>
                             <TableContainer component={Paper}>
                                 <Table aria-label="simple table">
@@ -202,7 +247,7 @@ class FinalInscriptionModification extends Component{
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {this.state.studentsList.filter(student => student.career.id === this.state.chosenCareer).map((user) => (
+                                        {this.state.studentsOfThisFinal.map(user => (
                                         <TableRow key={user.id}>
                                             <TableCell component="th" scope="row">{user.id}</TableCell>
                                             <TableCell align="left">{user.name} {user.surname}</TableCell>
@@ -210,7 +255,7 @@ class FinalInscriptionModification extends Component{
                                             <TableCell align="left">{user.dni}</TableCell>
                                             <TableCell align="left">{user.userName}</TableCell>
                                             <TableCell align="left">
-                                            {user.courses.find( course => course.subjectId === this.state.chosenSubject && course.userId === user.id) !== undefined ?  
+                                            {user.inscriptionFinals.find( final => final.finalId === this.state.chosenFinal && final.userId === user.id) !== undefined ?  
                                                 <Button variant="contained" onClick={this.deleteInscription} color="secondary" value={user.id}>Baja</Button> : 
                                                 <Button variant="contained" onClick={this.createInscription} color="primary" value={user.id}>Alta</Button> 
                                             }

@@ -17,76 +17,67 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import moment from 'moment'
-
+import 'moment/locale/es';
 
 import axios from 'axios'
-import { __API_CAREER, __API_SUBJECT } from '../../consts/consts';
+import { __API_CAREER, __API_FINALCALL, __API_SUBJECT } from '../../consts/consts';
 
 
-
-
-class SubjectSpreadSheet extends Component{
+class FinalSpreadSheet extends Component{
 
     state = {
         careerList : [],
         chosenCareer : '',
         subjectList : [],
         chosenPeriod : '',
+        finalList : [],
+        chosenCareerFinals : [],
         chosenCareerSubjects : [],
-        chosenPeriodSubjects : [],
+        chosenPeriodSubjects : []
     }
 
     componentDidMount(){
         const getCareers = axios.get(__API_CAREER)
         const getSubjects = axios.get(__API_SUBJECT)
+        const getFinals = axios.get(__API_FINALCALL)
 
-        axios.all([getCareers,getSubjects]).then(axios.spread((careers,subjects) => {
+        axios.all([getCareers,getSubjects,getFinals]).then(axios.spread((careers,subjects,finals) => {
             this.setState({careerList : careers.data, 
                            subjectList : subjects.data, 
-                        })
+                           finalList : finals.data
+                         })
         }));
     }
 
-    onChosenPeriodChange = (ev) => {
-        debugger;
-        this.setState({chosenPeriod : ev.target.value})
-        let subjectsOfPeriod = this.state.chosenCareerSubjects.filter( subject => subject.period === ev.target.value).sort((a,b) => a.year - b.year || a.shift- b.shift)
-        this.setState({chosenPeriodSubjects : subjectsOfPeriod})
-
-    }
 
     onCareerChange = (ev) => {
-        debugger;
         this.setState({chosenCareer : ev.target.value})
         let subjectsOfCareer = this.state.subjectList.filter( subject => subject.career.id === ev.target.value)
-        this.setState({chosenCareerSubjects : subjectsOfCareer})        
+        let subjectsOfCareerIds =  []
+        subjectsOfCareer.forEach( sub => {
+            subjectsOfCareerIds.push(sub.id)
+        })
+        let finalsOfCareer = this.state.finalList.filter( final => subjectsOfCareerIds.includes(final.subject)).sort((a,b) => a.date > b.date)
+        this.setState({chosenCareerFinals : finalsOfCareer,
+                       chosenCareerSubjects : subjectsOfCareer})        
     }
 
-    setSubjectYear(intYear){
-        switch(intYear){
-            case 1: return "Primero"
-            case 2: return "Segundo"
-            case 3: return "Tercero"
-            case 4: return "Cuarto"
-            case 5: return "Quinto"
-            default: return "Desconocido"
-        }
+    setSubjectName = (id) => {
+        debugger;
+        var name = this.state.chosenCareerSubjects.find( sub => sub.id === id).name
+        return name
     }
 
-    setSubjectShift(intShift){
-        switch(intShift){
-            case 1: return "Mañana"
-            case 2: return "Tarde"
-            case 3: return "Noche"
-            default: return "Desconocido"
-        }
-    }
+    setFinalDateTime(date) {
+        moment.locale('es')
+        return moment(date).format('DD [de] MMMM hh:mm')
 
+    }
 
     render(){
         return (
                 <Container maxWidth="md">
-                    <h3>Planilla de Cuatrimestre</h3>
+                    <h3>Planilla de Finales</h3>
                         <>
                         <Grid container xs={12} spacing={1}>
                             <Grid item sm={12}>
@@ -100,17 +91,7 @@ class SubjectSpreadSheet extends Component{
                                     </Select>
                                 </FormControl>
                             </Grid>
-                            {this.state.chosenCareer.length !== 0 ? 
-                            <Grid item sm={12}>
-                                <FormControl fullWidth variant="outlined">
-                                    <InputLabel>Cuatrimestre</InputLabel>
-                                    <Select onChange={this.onChosenPeriodChange} value={this.state.chosenPeriod}>
-                                            <MenuItem value={1}>Primero</MenuItem>
-                                            <MenuItem value={2}>Segundo</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid> : null}
-                            {this.state.chosenPeriod.length !== 0 ?
+                            {this.state.chosenCareer.length !== 0 ?
                             <>
                             <TableContainer component={Paper}>
                                 <Table aria-label="simple table">
@@ -118,17 +99,15 @@ class SubjectSpreadSheet extends Component{
                                         <TableRow>
                                         <TableCell align="left">Materia</TableCell>
                                         <TableCell align="left">Día y Horario</TableCell>
-                                        <TableCell align="left">Año</TableCell>
-                                        <TableCell align="left">Turno</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {this.state.chosenPeriodSubjects.map(subject => (
-                                        <TableRow key={subject.id}>
-                                            <TableCell align="left">{subject.name}</TableCell>
-                                            <TableCell align="left">{subject.weekDay} {moment(subject.startTime).format("hh:mm")} a {moment(subject.endTime).format("hh:mm")} </TableCell>
-                                            <TableCell align="left">{this.setSubjectYear(subject.year)}</TableCell>
-                                            <TableCell align="left">{this.setSubjectShift(subject.shift)}</TableCell>
+                                        {this.state.chosenCareerFinals.map(final => (
+                                        <TableRow key={final.id}>
+                                        <TableCell align="left">{this.setSubjectName(final.id)}</TableCell>
+                                        <TableCell align="left"> 
+                                        {this.setFinalDateTime(final.date)}
+                                        </TableCell>
                                         </TableRow>
                                         ))}
                                     </TableBody>
@@ -144,4 +123,4 @@ class SubjectSpreadSheet extends Component{
 
 }
 
-export default SubjectSpreadSheet;
+export default FinalSpreadSheet;

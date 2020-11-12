@@ -13,13 +13,8 @@ import HomeAdmin from './pages/HomeAdmin';
 import HomeStudent from './pages/HomeStudent';
 import HomeTeacher from './pages/HomeTeacher';
 import {FirstAccess} from './components/Login/FirstAccess';
-import UserModify from './components/UserModify/index'
 import { Loading } from './components/Login/Loading';
-import SubjectInscriptionModification from './components/InscriptionsModification/SubjectInscriptionModification'
-import UserInsert from './components/UserInsert';
-import SubjectInsert from './components/SubjectInsert/SubjectInsert';
-import InsertInscriptionWindow from './components/InscriptionWindow/InsertInscriptionWindow'
-import SubjectSpreadSheet from './components/SpreadSheet/SubjectSpreadSheet'
+
 
 const App = () => {
 
@@ -46,11 +41,6 @@ const App = () => {
           <>
           <Redirect exact to="/login"/>
           <Login setToken={setUserToken} setMailUser={setMailUser} setPassChange={setPassChange} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser} setUserId = {setUserId}/>          
-          {/* <SubjectInscriptionModification /> */}
-          {/* <UserInsert /> */}
-          {/* <SubjectInsert /> */}
-          {/* <InsertInscriptionWindow /> */}
-          {/* <SubjectSpreadSheet /> */}
           </>
           :
           <>
