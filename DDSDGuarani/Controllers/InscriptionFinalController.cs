@@ -57,7 +57,7 @@ namespace DDSDGuarani.Controllers
             {
                 context.InscriptionFinal.Add(inscriptionFinal);
                 context.SaveChanges();
-                return Ok();
+                return Ok("Inscripción a final guardada correctamente");
             }
             catch (Exception e)
             {
@@ -97,18 +97,22 @@ namespace DDSDGuarani.Controllers
         /// <summary>
         /// Elimina una Inscripcion de Final
         /// </summary>
-        /// <param name="id"></param>  
-        [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        /// <param name="inscription"></param>  
+        [HttpDelete]
+        public ActionResult Delete([FromBody] InscriptionFinal inscription)
         {
             try
             {
-                var inscriptionFinal = context.InscriptionFinal.FirstOrDefault(u => u.UserId == id);
+                var inscriptionFinal = context.InscriptionFinal.FirstOrDefault(i => i.UserId == inscription.UserId && i.FinalId == inscription.FinalId);
                 if (inscriptionFinal != null)
                 {
+                    if (inscriptionFinal.Score >= 4)
+                    {
+                        return Ok("No se puede dar de baja ya que el final está aprobado");
+                    }
                     context.InscriptionFinal.Remove(inscriptionFinal);
                     context.SaveChanges();
-                    return Ok();
+                    return Ok("Inscripción a final eliminada correctamente");
                 }
                 else
                 {
