@@ -5,6 +5,7 @@ import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -13,7 +14,7 @@ import Chip from '@material-ui/core/Chip';
 import axios from 'axios'
 import moment from 'moment'
 
-import {__API_SUBJECT, __API_FINALCALL} from '../../consts/consts'
+import {__API_SUBJECT, __API_FINALCALL, __API_USER} from '../../consts/consts'
 
 
 class FinalCallInsert extends Component{
@@ -25,21 +26,23 @@ class FinalCallInsert extends Component{
         formFinalScoreUploadLimit : '',
         formSubject : '',
         subjectList : [] , 
+        teacherList : [],
+        selectedTeachers : [],
     }
 
-    componentDidMount() {
-        axios.get(__API_SUBJECT).then( resp => {
-            this.setState({subjectList : resp.data}) 
-        })
+    componentDidMount = () =>  {
+        const getSubjects = axios.get(__API_SUBJECT)
+        const getUsers = axios.get(__API_USER)
+        axios.all([getSubjects,getUsers]).then(axios.spread((subjects, users) => {
+                
+            this.setState({subjectList : subjects.data,
+                           teacherList : users.data.filter( user => user.role === 2)}) 
+        }))
     }
 
     onFinalDateChange = (ev) => {
         console.log(ev.target.value)
         this.setState({formFinalDate : ev.target.value})
-    }
-
-    onWindowChange = (ev) => {
-        this.setState({ formInscWindow: ev.target.value })
     }
 
     onSubjectChange = (ev) => {
@@ -51,11 +54,16 @@ class FinalCallInsert extends Component{
         this.setState({formFinalScoreUploadLimit : ev.target.value})
     }
 
+    onSelectedTeachersChange = (ev, values) => {
+        debugger;
+        this.setState({ selectedTeachers: values })
+    }
+
     insertFinalCall = (ev) => {
         this.setState({errorMsg : ""})
         ev.preventDefault()
         ev.persist()
-        const {formFinalDate, formSubject} = this.state
+        const {formFinalDate, formSubject,selectedTeachers} = this.state
 
         if (formFinalDate.length === 0 || formSubject.length === 0 ){
                 this.setState({errorMsg : "Por favor, complete todos los campos y revise las fechas"})
@@ -64,13 +72,18 @@ class FinalCallInsert extends Component{
             this.setState({errorMsg : "El formato de fecha no es correcto"})
 
         }else{
+
+            var teachers = []
+            selectedTeachers.map(teacher => teachers.push({ userid: teacher.id }))
+
             const options = {
                 url : __API_FINALCALL,
                 method : "POST",
                 data : {
                     date : formFinalDate,
                     subjectid : formSubject,
-                    inscriptionwindowid : 2
+                    inscriptionwindowid : 2,
+                    inscriptionfinals : teachers
                 }
                 
             }
@@ -125,6 +138,18 @@ class FinalCallInsert extends Component{
                                             <MenuItem key={subject.id} value={subject.id}>{subject.name}</MenuItem>
                                         )}
                                     </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item sm={12}>
+                                <FormControl fullWidth variant="outlined">
+                                    <Autocomplete options={this.state.teacherList}
+                                        onChange={(ev, values) => this.onSelectedTeachersChange(ev, values)}
+                                        filterSelectedOptions
+                                        value={this.state.selectedTeachers}
+                                        getOptionLabel={(option) => option.name + " " + option.surname}
+                                        renderInput={(params) => <TextField {...params} variant="outlined" label="Docentes" />}
+                                        multiple id="tags-standard" noOptionsText="No hay coincidencias"
+                                    />
                                 </FormControl>
                             </Grid>
                         <br />
