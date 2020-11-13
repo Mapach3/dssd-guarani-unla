@@ -20,7 +20,7 @@ import moment from 'moment'
 
 
 import axios from 'axios'
-import { __API_CAREER, __API_SUBJECT } from '../../consts/consts';
+import { __API_CAREER, __API_SUBJECT, __API_USER } from '../../consts/consts';
 
 
 
@@ -31,6 +31,7 @@ class SubjectSpreadSheet extends Component{
         careerList : [],
         chosenCareer : '',
         subjectList : [],
+        teacherList : [],
         chosenPeriod : '',
         chosenCareerSubjects : [],
         chosenPeriodSubjects : [],
@@ -39,10 +40,12 @@ class SubjectSpreadSheet extends Component{
     componentDidMount(){
         const getCareers = axios.get(__API_CAREER)
         const getSubjects = axios.get(__API_SUBJECT)
+        const getUsers = axios.get(__API_USER)
 
-        axios.all([getCareers,getSubjects]).then(axios.spread((careers,subjects) => {
-            this.setState({careerList : careers.data, 
+        axios.all([getCareers,getSubjects,getUsers]).then(axios.spread((careers,subjects,users) => {
+            this.setState({careerList  : careers.data, 
                            subjectList : subjects.data, 
+                           teacherList : users.data.filter( user => user.role === 2), 
                         })
         }));
     }
@@ -82,6 +85,21 @@ class SubjectSpreadSheet extends Component{
         }
     }
 
+    getTeacherNames(subject){
+        debugger;
+        var teacherNamesConcat = ""
+        subject.courses.forEach( course => {
+            var teacher = this.state.teacherList.find(teacher => teacher.id === course.userId)
+            if(teacher !== undefined){
+                teacherNamesConcat+= teacher.name + " "+teacher.surname + ", "
+            }
+        })
+        debugger;
+        teacherNamesConcat = teacherNamesConcat.slice(0, -2);
+
+        return teacherNamesConcat.length === 0 ? "A definir" : teacherNamesConcat
+    }
+
 
     render(){
         return (
@@ -118,6 +136,7 @@ class SubjectSpreadSheet extends Component{
                                         <TableRow>
                                         <TableCell align="left">Materia</TableCell>
                                         <TableCell align="left">Día y Horario</TableCell>
+                                        <TableCell align="left">Docentes</TableCell>
                                         <TableCell align="left">Año</TableCell>
                                         <TableCell align="left">Turno</TableCell>
                                         </TableRow>
@@ -127,6 +146,7 @@ class SubjectSpreadSheet extends Component{
                                         <TableRow key={subject.id}>
                                             <TableCell align="left">{subject.name}</TableCell>
                                             <TableCell align="left">{subject.weekDay} {moment(subject.startTime).format("hh:mm")} a {moment(subject.endTime).format("hh:mm")} </TableCell>
+                                            <TableCell align="left">{this.getTeacherNames(subject)}</TableCell>
                                             <TableCell align="left">{this.setSubjectYear(subject.year)}</TableCell>
                                             <TableCell align="left">{this.setSubjectShift(subject.shift)}</TableCell>
                                         </TableRow>

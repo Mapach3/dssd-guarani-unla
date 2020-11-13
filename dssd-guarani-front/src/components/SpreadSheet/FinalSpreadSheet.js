@@ -20,7 +20,7 @@ import moment from 'moment'
 import 'moment/locale/es';
 
 import axios from 'axios'
-import { __API_CAREER, __API_FINALCALL, __API_SUBJECT } from '../../consts/consts';
+import { __API_CAREER, __API_FINALCALL, __API_SUBJECT, __API_USER } from '../../consts/consts';
 
 
 class FinalSpreadSheet extends Component{
@@ -30,6 +30,7 @@ class FinalSpreadSheet extends Component{
         chosenCareer : '',
         subjectList : [],
         chosenPeriod : '',
+        teacherList : [],
         finalList : [],
         chosenCareerFinals : [],
         chosenCareerSubjects : [],
@@ -40,11 +41,14 @@ class FinalSpreadSheet extends Component{
         const getCareers = axios.get(__API_CAREER)
         const getSubjects = axios.get(__API_SUBJECT)
         const getFinals = axios.get(__API_FINALCALL)
+        const getUsers = axios.get(__API_USER)
 
-        axios.all([getCareers,getSubjects,getFinals]).then(axios.spread((careers,subjects,finals) => {
+        axios.all([getCareers,getSubjects,getFinals,getUsers]).then(axios.spread((careers,subjects,finals,users) => {
+            console.log(users.data)
             this.setState({careerList : careers.data, 
                            subjectList : subjects.data, 
-                           finalList : finals.data
+                           finalList : finals.data,
+                           teacherList : users.data.filter( user => user.role === 2)
                          })
         }));
     }
@@ -63,7 +67,6 @@ class FinalSpreadSheet extends Component{
     }
 
     setSubjectName = (id) => {
-        debugger;
         var name = this.state.chosenCareerSubjects.find( sub => sub.id === id).name
         return name
     }
@@ -71,7 +74,21 @@ class FinalSpreadSheet extends Component{
     setFinalDateTime(date) {
         moment.locale('es')
         return moment(date).format('DD [de] MMMM hh:mm')
+    }
 
+    getTeacherNames(final){
+        console.log(final)
+        var teacherNamesConcat = ""
+        final.inscriptionFinals.forEach( insc => {
+            var teacher = this.state.teacherList.find(teacher => teacher.id === insc.userId)
+            if(teacher !== undefined){
+                teacherNamesConcat+= teacher.name + " "+teacher.surname + ", "
+            }
+        })
+        debugger;
+        teacherNamesConcat = teacherNamesConcat.slice(0, -2);
+
+        return teacherNamesConcat.length === 0 ? "A definir" : teacherNamesConcat
     }
 
     render(){
@@ -99,6 +116,7 @@ class FinalSpreadSheet extends Component{
                                         <TableRow>
                                         <TableCell align="left">Materia</TableCell>
                                         <TableCell align="left">Día y Horario</TableCell>
+                                        <TableCell align="left">Docentes</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -108,6 +126,7 @@ class FinalSpreadSheet extends Component{
                                         <TableCell align="left"> 
                                         {this.setFinalDateTime(final.date)}
                                         </TableCell>
+                                        <TableCell align="left">{this.getTeacherNames(final)}</TableCell>
                                         </TableRow>
                                         ))}
                                     </TableBody>
