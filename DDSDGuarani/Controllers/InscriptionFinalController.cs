@@ -25,18 +25,23 @@ namespace DDSDGuarani.Controllers
         /// Trae Listado de Inscripciones a Finales
         /// </summary>
         [HttpGet]
-        public IEnumerable<InscriptionFinal> Get()
+        public IEnumerable<InscriptionFinalResponse> Get()
         {
-            var resultDb = context.InscriptionFinal.Include(x => x.FinalCall)
-                .Include(x => x.User).ThenInclude(x=>x.Courses)
-                .Include(x => x.User).ThenInclude(x => x.Address)
-                .Include(x => x.User).ThenInclude(x => x.Career)
-                .Include(x => x.User).ThenInclude(x => x.InscriptionFinals)
-                .Include(x => x.FinalCall).ThenInclude(x => x.InscriptionWindow)
-                .Include(x => x.FinalCall).ThenInclude(x => x.Subject)
-                .ToList().OrderBy(x => x.UserId);
+            IEnumerable<InscriptionFinalResponse> response = new List<InscriptionFinalResponse>();
+            var resultDb = context.InscriptionFinal.Include(x => x.FinalCall).Include(x => x.User).ToList().OrderBy(x => x.UserId);
+            response = _mapper.Map<IEnumerable<InscriptionFinal>, IEnumerable<InscriptionFinalResponse>>(resultDb);
+            return response;
+
+            //var resultDb = context.InscriptionFinal.Include(x => x.FinalCall)
+            //    .Include(x => x.User).ThenInclude(x=>x.Courses)
+            //    .Include(x => x.User).ThenInclude(x => x.Address)
+            //    .Include(x => x.User).ThenInclude(x => x.Career)
+            //    .Include(x => x.User).ThenInclude(x => x.InscriptionFinals)
+            //    .Include(x => x.FinalCall).ThenInclude(x => x.InscriptionWindow)
+            //    .Include(x => x.FinalCall).ThenInclude(x => x.Subject)
+            //    .ToList().OrderBy(x => x.UserId);
       
-            return resultDb;
+            //return resultDb;
         }
 
         /// <summary>
@@ -44,18 +49,23 @@ namespace DDSDGuarani.Controllers
         /// </summary>
         /// <param name="id"></param>  
         [HttpGet("{id}")]
-        public InscriptionFinal Get(int id)
+        public InscriptionFinalResponse Get(int id)
         {
-            var resultDb = context.InscriptionFinal.Include(x => x.FinalCall)
-                .Include(x => x.User).ThenInclude(x => x.Courses)
-                .Include(x => x.User).ThenInclude(x => x.Address)
-                .Include(x => x.User).ThenInclude(x => x.Career)
-                .Include(x => x.User).ThenInclude(x => x.InscriptionFinals)
-                .Include(x => x.FinalCall).ThenInclude(x => x.InscriptionWindow)
-                .Include(x => x.FinalCall).ThenInclude(x => x.Subject)
-                .FirstOrDefault(u => u.UserId == id);
+            InscriptionFinalResponse response = new InscriptionFinalResponse();
+            var resultDb = context.InscriptionFinal.Include(x => x.FinalCall).Include(x => x.User).FirstOrDefault(u => u.UserId == id);
+            response = _mapper.Map<InscriptionFinal, InscriptionFinalResponse>(resultDb);
+            return response;
+
+            //var resultDb = context.InscriptionFinal.Include(x => x.FinalCall)
+            //    .Include(x => x.User).ThenInclude(x => x.Courses)
+            //    .Include(x => x.User).ThenInclude(x => x.Address)
+            //    .Include(x => x.User).ThenInclude(x => x.Career)
+            //    .Include(x => x.User).ThenInclude(x => x.InscriptionFinals)
+            //    .Include(x => x.FinalCall).ThenInclude(x => x.InscriptionWindow)
+            //    .Include(x => x.FinalCall).ThenInclude(x => x.Subject)
+            //    .FirstOrDefault(u => u.UserId == id);
      
-            return resultDb;
+            //return resultDb;
         }
 
         /// <summary>
