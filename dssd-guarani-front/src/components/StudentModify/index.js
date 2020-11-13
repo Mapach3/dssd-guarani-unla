@@ -70,6 +70,7 @@ class StudentModify extends Component{
                         password: formPassword,
                         imgBase64 : imgBase64,
                         address: {
+                          id: Number(addressToModify),
                           streetAndNumber: formStreetAndNumber,
                           location: formLocation,
                           postalCode: formPostCode,
