@@ -34,7 +34,8 @@ class FinalSpreadSheet extends Component{
         finalList : [],
         chosenCareerFinals : [],
         chosenCareerSubjects : [],
-        chosenPeriodSubjects : []
+        chosenPeriodSubjects : [],
+        gridDataSource : [],
     }
 
     componentDidMount(){
@@ -44,7 +45,6 @@ class FinalSpreadSheet extends Component{
         const getUsers = axios.get(__API_USER)
 
         axios.all([getCareers,getSubjects,getFinals,getUsers]).then(axios.spread((careers,subjects,finals,users) => {
-            console.log(users.data)
             this.setState({careerList : careers.data, 
                            subjectList : subjects.data, 
                            finalList : finals.data,
@@ -55,15 +55,33 @@ class FinalSpreadSheet extends Component{
 
 
     onCareerChange = (ev) => {
-        this.setState({chosenCareer : ev.target.value})
+
+        this.setState({chosenCareer : ev.target.value, gridDataSource : []})
         let subjectsOfCareer = this.state.subjectList.filter( subject => subject.career.id === ev.target.value)
         let subjectsOfCareerIds =  []
         subjectsOfCareer.forEach( sub => {
             subjectsOfCareerIds.push(sub.id)
         })
         let finalsOfCareer = this.state.finalList.filter( final => subjectsOfCareerIds.includes(final.subject)).sort((a,b) => a.date > b.date)
+
         this.setState({chosenCareerFinals : finalsOfCareer,
-                       chosenCareerSubjects : subjectsOfCareer})        
+                       chosenCareerSubjects : subjectsOfCareer})
+        
+        if (finalsOfCareer.length !== 0)
+            this.generateGridDataSource(finalsOfCareer,subjectsOfCareer);        
+    }
+
+    generateGridDataSource = (finalsOfCareer,subjectsOfCareer) =>  {
+        var dataSource = []
+        finalsOfCareer.forEach( final => 
+            dataSource.push({
+                subject : subjectsOfCareer.find( sub => sub.id === final.id).name,
+                date :    this.setFinalDateTime(final.date),
+                teachers :  this.getTeacherNames(final)
+            })
+        )
+        console.log(dataSource)
+        this.setState({gridDataSource : dataSource})
     }
 
     setSubjectName = (id) => {
@@ -77,7 +95,6 @@ class FinalSpreadSheet extends Component{
     }
 
     getTeacherNames(final){
-        console.log(final)
         var teacherNamesConcat = ""
         final.inscriptionFinals.forEach( insc => {
             var teacher = this.state.teacherList.find(teacher => teacher.id === insc.userId)
@@ -85,11 +102,10 @@ class FinalSpreadSheet extends Component{
                 teacherNamesConcat+= teacher.name + " "+teacher.surname + ", "
             }
         })
-        debugger;
         teacherNamesConcat = teacherNamesConcat.slice(0, -2);
-
         return teacherNamesConcat.length === 0 ? "A definir" : teacherNamesConcat
     }
+
 
     render(){
         return (

@@ -64,9 +64,9 @@ const builderToolbar  = (props) =>{
     }
 
     if(props.export){
-        toolbarBuild.push('ExcelExport');
+       // toolbarBuild.push('ExcelExport');
         toolbarBuild.push('PdfExport');
-        toolbarBuild.push('CsvExport');
+       // toolbarBuild.push('CsvExport');
     }
 
     if(props.allowDeleting){
@@ -171,8 +171,8 @@ export default function CustomGrid(props) {
 // SE PASAN LAS PROPS
 // <CustomGrid id='defaultGrid'
 // dataSource={keysDistributors}
-// pageSettings={{ pageCount: 3, pageSizes: [5, 10, 12, 15, 20, 50] }}
-// allowPaging={true}
+// pageSettings={{ pageCount: 1, pageSizes: [5, 10, 12, 15, 20, 50] }}
+// allowPaging={false}
 // selectionSettings={{ type: 'Multiple' }}
 // allowResizing={true}
 // allowSorting={true}
@@ -193,5 +193,9 @@ export default function CustomGrid(props) {
 // PARA EXPORTAR MANDAR LA PROP EXPORT EN TRUE
 //EN LA CLASE DE LLAMADA DE LA GRILLA , DEFNIR LAS COLUMANS ASI
 // const accessorsDistributors = [
-//     { header: "Keys Transportistas", field: "key", width: '40', textAlign: 'Center' }
+//     { header: "Materia", field: "name", width: '40', textAlign: 'Center' }
+//     { header: "Día y Horario", field: "weekDay", width: '40', textAlign: 'Center' }
+//     { header: "Docentes", field: {this.getTeacherNames(subject)}, width: '40', textAlign: 'Center' }
+//     { header: "Año", field: "key", width: '40', textAlign: 'Center' }
+//     { header: "Turno", field: "key", width: '40', textAlign: 'Center' }
 // ];

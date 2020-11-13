@@ -35,6 +35,7 @@ class SubjectSpreadSheet extends Component{
         chosenPeriod : '',
         chosenCareerSubjects : [],
         chosenPeriodSubjects : [],
+        dataSourceGrid : []
     }
 
     componentDidMount(){
@@ -52,14 +53,31 @@ class SubjectSpreadSheet extends Component{
 
     onChosenPeriodChange = (ev) => {
         debugger;
-        this.setState({chosenPeriod : ev.target.value})
+        this.setState({chosenPeriod : ev.target.value,dataSourceGrid : [], chosenPeriodSubjects : []})
         let subjectsOfPeriod = this.state.chosenCareerSubjects.filter( subject => subject.period === ev.target.value).sort((a,b) => a.year - b.year || a.shift- b.shift)
         this.setState({chosenPeriodSubjects : subjectsOfPeriod})
+        if (subjectsOfPeriod.length !== 0)
+            this.generateGridDataSource(subjectsOfPeriod);
+    }
 
+    generateGridDataSource = (subjectsOfPeriod) =>  {
+        var dataSource = []
+        subjectsOfPeriod.forEach( subject => 
+            dataSource.push({
+                name : subject.name,
+                date :    subject.weekDay +" "+ moment(subject.startTime).format("hh:mm")+ " a " + moment(subject.endTime).format("hh:mm"),
+                teachers :  this.getTeacherNames(subject),
+                year : this.setSubjectYear(subject.year),
+                shift : this.setSubjectShift(subject.shift)
+            })
+        )
+        console.log(dataSource)
+        this.setState({gridDataSource : dataSource})
     }
 
     onCareerChange = (ev) => {
         debugger;
+        this.setState({dataSourceGrid : [], chosenPeriodSubjects : [], chosenPeriod : []})
         this.setState({chosenCareer : ev.target.value})
         let subjectsOfCareer = this.state.subjectList.filter( subject => subject.career.id === ev.target.value)
         this.setState({chosenCareerSubjects : subjectsOfCareer})        
