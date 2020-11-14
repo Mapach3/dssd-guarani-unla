@@ -173,6 +173,20 @@ class FinalInscriptionModification extends Component{
 
     }
 
+    getSubjectNameAndShift(subject){
+        var ret = subject.name + " -"
+        switch(subject.shift){
+            case 1: ret+=" Mañana"
+            break;
+            case 2: ret+=" Tarde"
+            break;
+            case 3: ret+=" Noche"
+            break;
+            default: ret+=" Mañana"
+        }
+        return ret;
+    }
+
     render(){
         return (
                 <Container maxWidth="md">
@@ -212,7 +226,7 @@ class FinalInscriptionModification extends Component{
                                         <InputLabel>Materia</InputLabel>
                                         <Select onChange={this.onChosenSubjectChange} value={this.state.chosenSubject}>
                                             {this.state.chosenCareerSubjects.map(subject =>
-                                                <MenuItem key={subject.id} value={subject.id}>{subject.name}</MenuItem>
+                                                <MenuItem key={subject.id} value={subject.id}>{this.getSubjectNameAndShift(subject)}</MenuItem>
                                             )}
                                         </Select>
                                     </FormControl>
