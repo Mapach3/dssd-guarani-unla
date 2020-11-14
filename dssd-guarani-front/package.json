@@ -7,6 +7,7 @@
     "@material-ui/icons": "latest",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@syncfusion/ej2-base": "^18.3.49",
+    "@syncfusion/ej2-locale": "^18.2.59",
     "@syncfusion/ej2-react-base": "^17.3.27",
     "@syncfusion/ej2-react-grids": "^17.4.40",
     "@testing-library/jest-dom": "^4.2.4",

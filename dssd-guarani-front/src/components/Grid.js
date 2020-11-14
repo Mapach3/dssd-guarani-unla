@@ -1,4 +1,4 @@
-import { L10n, setCulture } from '@syncfusion/ej2-base';
+import { L10n, setCulture} from '@syncfusion/ej2-base';
 import * as React from 'react';
 import {
     GridComponent,
@@ -25,37 +25,6 @@ import {
 import Tooltip from '@material-ui/core/Tooltip';
 import './grid-style.css';
 
-setCulture('es-AR');
-L10n.load({
-    'es-AR': {
-        'grid': {
-            EmptyDataSourceError: 'Ocurrió un error al intentar obtener los datos',
-            EmptyRecord: 'No hay registros para mostrar',
-            Search: 'Buscar',
-            pagerDropDown: 'Items por página',
-            Pdfexport: 'Exportar a PDF',
-            Excelexport: 'Exportar a Excel',
-            Csvexport: 'Exportar a CSV',
-            Add: 'Agregar',
-            Cancel: 'Cancelar',
-            GroupDropArea: 'Arrastrar encabezado para agrupar por columna',
-            Delete: 'Borrar',
-        },
-        'pager': {
-            FirstPage: 'Primera página',
-            LastPage: 'Última página',
-            PreviousPage: 'Página anterior',
-            NextPage: 'Página siguiente',
-            currentPageInfo: '{0} de {1} registros',
-            firstPageTooltip: 'Primera página',
-            lastPageTooltip: 'Última página',
-            nextPageTooltip: 'Página siguiente',
-            previousPageTooltip: 'Página anterior',
-            totalItemsInfo: '({0} registros)',
-            pagerDropDown: 'Items por página',
-        }
-    }
-});
 var toolbarBuild = []
 const builderToolbar  = (props) =>{
     toolbarBuild = []
@@ -64,9 +33,9 @@ const builderToolbar  = (props) =>{
     }
 
     if(props.export){
-        toolbarBuild.push('ExcelExport');
+       // toolbarBuild.push('ExcelExport');
         toolbarBuild.push('PdfExport');
-        toolbarBuild.push('CsvExport');
+      //  toolbarBuild.push('CsvExport');
     }
 
     if(props.allowDeleting){
@@ -90,9 +59,24 @@ export default function CustomGrid(props) {
     }
 
     function toolbarClick(args,value) {
+        debugger;
         switch (args.item.text) {
-            case 'Exportar a PDF':
-                gridInstance.pdfExport();
+            case 'PDF Export':
+                let exportProperties = {
+                    fileName:"Planilla.pdf",
+                    header : {
+                        fromTop : 0,
+                        height: 50,
+                        contents : [{
+                            type: 'Text',
+                            value: props.headerExportText,
+                            position: { x: 200, y: 5 },
+                            style: { textBrushColor: '#000000', fontSize: 18}       
+                        },
+                        ]
+                    }
+                 };
+                gridInstance.pdfExport(exportProperties);
                 break;
             case 'CSV Export':
                 gridInstance.csvExport();
@@ -111,7 +95,7 @@ export default function CustomGrid(props) {
     return (
         <React.Fragment>
             <b>{props.header}</b>
-            <GridComponent id={props.id} dataSource={props.dataSource} locale={'es-AR'}     
+            <GridComponent id={props.id} dataSource={props.dataSource} locale='es-ES'   
                 allowPaging={true} pageSettings={props.pageSettings} allowRowDragAndDrop={props.allowRowDragAndDrop}
                 rowDropSettings={{ targetID: 'DestGrid' }} selectionSettings={props.selectionSettings} created={props.created}
                 allowSorting={props.allowSorting} rowDrop={(event) => props.callbackFunction(event)} sortSettings={props.sortSettings}
@@ -166,6 +150,39 @@ export default function CustomGrid(props) {
         </React.Fragment>
     );
 }
+
+setCulture('es-ES')
+
+L10n.load({
+    'es-ES': {
+        'grid': {
+            'EmptyDataSourceError': 'Ocurrió un error al intentar obtener los datos',
+            'EmptyRecord': 'No hay registros para mostrar',
+            'Search': 'Buscar',
+            'pagerDropDown': 'Items por página',
+            'Pdfexport': 'Exportar a PDF',
+            'Excelexport': 'Exportar a Excel',
+            'Csvexport': 'Exportar a CSV',
+            'Add': 'Agregar',
+            'Cancel': 'Cancelar',
+            'GroupDropArea': 'Arrastrar encabezado para agrupar por columna',
+            'Delete': 'Borrar',
+        },
+        'pager': {
+            'FirstPage': 'Primera página',
+            'LastPage': 'Última página',
+            'PreviousPage': 'Página anterior',
+            'NextPage': 'Página siguiente',
+            'currentPageInfo': '{0} de {1} registros',
+            'firstPageTooltip': 'Primera página',
+            'lastPageTooltip': 'Última página',
+            'nextPageTooltip': 'Página siguiente',
+            'previousPageTooltip': 'Página anterior',
+            'totalItemsInfo': '({0} registros)',
+            'pagerDropDown': 'Items por página',
+        }
+    }
+});
 
 // EJEMPLO DE COMO  SE DEBERIA LLAMAR 
 // SE PASAN LAS PROPS

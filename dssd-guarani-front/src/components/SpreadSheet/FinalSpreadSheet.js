@@ -28,6 +28,7 @@ class FinalSpreadSheet extends Component{
     state = {
         careerList : [],
         chosenCareer : '',
+        careerName : '',
         subjectList : [],
         chosenPeriod : '',
         teacherList : [],
@@ -58,6 +59,7 @@ class FinalSpreadSheet extends Component{
 
         this.setState({chosenCareer : ev.target.value, gridDataSource : []})
         let subjectsOfCareer = this.state.subjectList.filter( subject => subject.career.id === ev.target.value)
+        let careerName = this.state.careerList.find( career => career.id == ev.target.value).name
         let subjectsOfCareerIds =  []
         subjectsOfCareer.forEach( sub => {
             subjectsOfCareerIds.push(sub.id)
@@ -65,7 +67,8 @@ class FinalSpreadSheet extends Component{
         let finalsOfCareer = this.state.finalList.filter( final => subjectsOfCareerIds.includes(final.subject)).sort((a,b) => a.date > b.date)
 
         this.setState({chosenCareerFinals : finalsOfCareer,
-                       chosenCareerSubjects : subjectsOfCareer})
+                       chosenCareerSubjects : subjectsOfCareer,
+                        careerName : careerName})
         
         if (finalsOfCareer.length !== 0)
             this.generateGridDataSource(finalsOfCareer,subjectsOfCareer);        
@@ -128,24 +131,23 @@ class FinalSpreadSheet extends Component{
                             <>
                             <CustomGrid id='finalsGrid'
                                 dataSource={this.state.gridDataSource}
-                                pageSettings={{ pageCount: 1, pageSizes: [5, 10, 12, 15, 20, 50] }}
                                 allowPaging={false}
                                 selectionSettings={{ type: 'Multiple' }}
                                 allowResizing={true}
-                                allowSorting={true}
+                                allowSorting={false}
                                 allowTextWrap={true}
                                 toolbar={true}
+                                export={true}
                                 rowHeight={20}
                                 columns={[
                                     { header: "Materia", field: "subject", width: '50', textAlign: 'Center' },
                                     { header: "Día y Hora", field: "date", width: '30', textAlign: 'Center' },
                                     { header: "Docentes", field: "teachers", width: '50', textAlign: 'Center' }
                                 ]}
-                                allowGrouping={false}
+                                headerExportText={"Finales de "+this.state.careerName}
                                 allowDeleting={false}
-                                editSettings={{ allowDeleting: false }}
-                                buttonPersonalized={{ text: 'Visualizar Info', tooltipText: 'Visualizar Info', prefixIcon: 'e-viewKey', id: 'ViewButtonPersonalized' }}
-                                showButtonPersonalized={true}
+                                editSettings={{ allowDeleting: true }}
+
                             />
 
                             </> : null
