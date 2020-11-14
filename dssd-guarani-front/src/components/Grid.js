@@ -64,9 +64,9 @@ const builderToolbar  = (props) =>{
     }
 
     if(props.export){
-       // toolbarBuild.push('ExcelExport');
+        toolbarBuild.push('ExcelExport');
         toolbarBuild.push('PdfExport');
-       // toolbarBuild.push('CsvExport');
+        toolbarBuild.push('CsvExport');
     }
 
     if(props.allowDeleting){
@@ -192,10 +192,17 @@ export default function CustomGrid(props) {
 //las mas importantes son las columns y el datasource 
 // PARA EXPORTAR MANDAR LA PROP EXPORT EN TRUE
 //EN LA CLASE DE LLAMADA DE LA GRILLA , DEFNIR LAS COLUMANS ASI
-// const accessorsDistributors = [
+// const accessorsDistributorsSubject = [
 //     { header: "Materia", field: "name", width: '40', textAlign: 'Center' }
-//     { header: "Día y Horario", field: "weekDay", width: '40', textAlign: 'Center' }
-//     { header: "Docentes", field: {this.getTeacherNames(subject)}, width: '40', textAlign: 'Center' }
-//     { header: "Año", field: "key", width: '40', textAlign: 'Center' }
-//     { header: "Turno", field: "key", width: '40', textAlign: 'Center' }
+//     { header: "Día y Horario", field: "date", width: '40', textAlign: 'Center' }
+//     { header: "Docentes", field: "teachers", width: '40', textAlign: 'Center' }
+//     { header: "Año", field: "year", width: '40', textAlign: 'Center' }
+//     { header: "Turno", field: "shift", width: '40', textAlign: 'Center' }
 // ];
+
+// const accessorsDistributorsFinal = [
+//     { header: "Materia", field: "subject", width: '40', textAlign: 'Center' },
+//     { header: "Día y Hora", field: "weekDay", width: '40', textAlign: 'Center' },
+//     { header: "Docentes", field: "teachers", width: '40', textAlign: 'Center' }
+// ];
+

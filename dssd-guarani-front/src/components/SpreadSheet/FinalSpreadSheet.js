@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import Container from '@material-ui/core/Container';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import Button from '@material-ui/core/Button';
+import CustomGrid from '../Grid'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
@@ -126,28 +126,28 @@ class FinalSpreadSheet extends Component{
                             </Grid>
                             {this.state.chosenCareer.length !== 0 ?
                             <>
-                            <TableContainer component={Paper}>
-                                <Table aria-label="simple table">
-                                    <TableHead>
-                                        <TableRow>
-                                        <TableCell align="left">Materia</TableCell>
-                                        <TableCell align="left">Día y Horario</TableCell>
-                                        <TableCell align="left">Docentes</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {this.state.chosenCareerFinals.map(final => (
-                                        <TableRow key={final.id}>
-                                        <TableCell align="left">{this.setSubjectName(final.id)}</TableCell>
-                                        <TableCell align="left"> 
-                                        {this.setFinalDateTime(final.date)}
-                                        </TableCell>
-                                        <TableCell align="left">{this.getTeacherNames(final)}</TableCell>
-                                        </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
+                            <CustomGrid id='finalsGrid'
+                                dataSource={this.state.gridDataSource}
+                                pageSettings={{ pageCount: 1, pageSizes: [5, 10, 12, 15, 20, 50] }}
+                                allowPaging={false}
+                                selectionSettings={{ type: 'Multiple' }}
+                                allowResizing={true}
+                                allowSorting={true}
+                                allowTextWrap={true}
+                                toolbar={true}
+                                rowHeight={20}
+                                columns={[
+                                    { header: "Materia", field: "subject", width: '50', textAlign: 'Center' },
+                                    { header: "Día y Hora", field: "date", width: '30', textAlign: 'Center' },
+                                    { header: "Docentes", field: "teachers", width: '50', textAlign: 'Center' }
+                                ]}
+                                allowGrouping={false}
+                                allowDeleting={false}
+                                editSettings={{ allowDeleting: false }}
+                                buttonPersonalized={{ text: 'Visualizar Info', tooltipText: 'Visualizar Info', prefixIcon: 'e-viewKey', id: 'ViewButtonPersonalized' }}
+                                showButtonPersonalized={true}
+                            />
+
                             </> : null
                             }
                         </Grid>

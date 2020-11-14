@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
+import CustomGrid from '../Grid'
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -148,7 +149,7 @@ class SubjectSpreadSheet extends Component{
                             </Grid> : null}
                             {this.state.chosenPeriod.length !== 0 ?
                             <>
-                            <TableContainer component={Paper}>
+                            {/* <TableContainer component={Paper}>
                                 <Table aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
@@ -171,7 +172,30 @@ class SubjectSpreadSheet extends Component{
                                         ))}
                                     </TableBody>
                                 </Table>
-                            </TableContainer>
+                            </TableContainer> */}
+                            <CustomGrid id='finalsGrid'
+                                dataSource={this.state.gridDataSource}
+                                pageSettings={{ pageCount: 1, pageSizes: [5, 10, 12, 15, 20, 50] }}
+                                allowPaging={false}
+                                selectionSettings={{ type: 'Multiple' }}
+                                allowResizing={true}
+                                allowSorting={true}
+                                allowTextWrap={true}
+                                toolbar={true}
+                                rowHeight={20}
+                                columns={[
+                                        { header: "Materia", field: "name", width: '20', textAlign: 'Center' },
+                                        { header: "Día y Horario", field: "date", width: '20', textAlign: 'Center' },
+                                        { header: "Docentes", field: "teachers", width: '20', textAlign: 'Center' },
+                                        { header: "Año", field: "year", width: '10', textAlign: 'Center' },
+                                        { header: "Turno", field: "shift", width: '10', textAlign: 'Center' }
+                                    ]}
+                                allowGrouping={false}
+                                allowDeleting={false}
+                                editSettings={{ allowDeleting: false }}
+                                buttonPersonalized={{ text: 'Visualizar Info', tooltipText: 'Visualizar Info', prefixIcon: 'e-viewKey', id: 'ViewButtonPersonalized' }}
+                                showButtonPersonalized={true}
+                            />
                             </> : null
                             }
                         </Grid>
