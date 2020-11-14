@@ -64,6 +64,7 @@ export class Login extends Component{
                     Storage.setPassChange(loginResponse.passwordChange)
                     Storage.setMailUser(loginResponse.mailUser)
                     Storage.setUserId(loginResponse.userId)
+                    Storage.setCareerId(loginResponse.careerId)
                     this.props.setMailUser(loginResponse.mailUser)
                     this.props.setPassChange(loginResponse.passwordChange)
                     this.props.setToken(loginResponse.data)
@@ -71,6 +72,7 @@ export class Login extends Component{
                     this.props.setRolUser(loginResponse.rol)
                     this.props.setNameUser(loginResponse.nameUser)
                     this.props.setUserId(loginResponse.userId)
+                    this.props.setCareerId(loginResponse.careerId)
                 }
                 else
                 {

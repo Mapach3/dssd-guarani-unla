@@ -8,6 +8,7 @@ import { createBrowserHistory } from 'history';
 import InscriptionExam from './subPages/InscriptionExam';
 import GradesInform from '../components/GradesInform/index';
 import StudentModify from '../components/StudentModify/index';
+import CourseInscription from '../components/StudentInscription/CourseInscription/index';
 
 const drawerWidth = 240;
 const history = createBrowserHistory();
@@ -98,7 +99,7 @@ const HomeStudent = (props) => {
                 <CustomAppBar open={open} setOpen={setOpen} classes={classes} nameUser={props.nameUser} imageUser={props.imageUser} rolUser={props.rolUser}/>
                 <CustomDrawerStudent open={open} setOpen={setOpen} classes={classes} theme={theme} rolUser={props.rolUser}/>
                 <div className='mainContainer'>
-                    <Route path="/inscriptionExam" render={(props) => <InscriptionExam open={open} classes={classes} {...props} /> } />
+                    <Route path="/inscriptionCourse" render={(props) => <CourseInscription open={open} classes={classes} {...props} /> } />
                     <Route path="/gradesInform" render={(props) => <GradesInform open={open} classes={classes} userId={props.userId} {...props}/>} />
                     <Route path="/modifyStudent" render={(props) => <StudentModify open={open} classes={classes} userId={props.userId} {...props}/>} />
                 </div>
