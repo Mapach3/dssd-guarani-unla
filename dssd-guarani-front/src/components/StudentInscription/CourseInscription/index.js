@@ -51,12 +51,12 @@ class CourseInscription extends Component {
   render() {
     const { subjectList, loading, errorMsg } = this.state
     return (
-      <main
-        className={clsx(this.props.classes.content, {
-          [this.props.classes.contentShift]: this.props.open,
-        })}
-      >
-        {/* <div className={this.props.classes.drawerHeader} /> */}
+      // <main
+      //   className={clsx(this.props.classes.content, {
+      //     [this.props.classes.contentShift]: this.props.open,
+      //   })}
+      // >
+        // <div className={this.props.classes.drawerHeader} />
         <Container maxWidth="md">
           <h3>Listado de cursadas</h3>
           <SubjectGrid subjects={subjectList} />
@@ -77,7 +77,7 @@ class CourseInscription extends Component {
             </DialogActions>
           </Dialog>
         </Container>
-      </main>
+      // </main>
     )
   }
 

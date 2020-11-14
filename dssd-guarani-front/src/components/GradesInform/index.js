@@ -52,12 +52,12 @@ class GradesInform extends Component {
   render() {
     const { gradesList, loading, errorMsg } = this.state
     return (
-      <main
-        className={clsx(this.props.classes.content, {
-          [this.props.classes.contentShift]: this.props.open,
-        })}
-      >
-        <div className={this.props.classes.drawerHeader} />
+      // <main
+      //   className={clsx(this.props.classes.content, {
+      //     [this.props.classes.contentShift]: this.props.open,
+      //   })}
+      // >
+      //   <div className={this.props.classes.drawerHeader} />
         <Container maxWidth="xs">
           <h3>Informe Analitico</h3>
           { loading ? <CircularProgress color="secondary" /> : <GradesGrid grades={gradesList} />}
@@ -78,7 +78,7 @@ class GradesInform extends Component {
             </DialogActions>
           </Dialog>
         </Container>
-      </main>
+      // </main>
     )
   }
 
