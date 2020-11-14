@@ -140,9 +140,9 @@ class SubjectSpreadSheet extends Component{
                                     </Select>
                                 </FormControl>
                             </Grid> : null}
-                            {this.state.chosenPeriod.length !== 0 ?
+                            {this.state.chosenCareerSubjects.length !== 0 && this.state.chosenPeriod.length !== 0 ?
                             <>
-                            <CustomGrid id='finalsGrid'
+                            <CustomGrid id='subjectsGrid'
                                 dataSource={this.state.gridDataSource}
                                 pageSettings={{ pageCount: 1, pageSizes: [5, 10, 12, 15, 20, 50] }}
                                 allowPaging={false}
@@ -153,7 +153,7 @@ class SubjectSpreadSheet extends Component{
                                 searching={true}
                                 export={true}
                                 toolbar={true}
-                                rowHeight={20}
+                                rowHeight={30}
                                 columns={[
                                         { header: "Materia", field: "name", width: '20', textAlign: 'Center' },
                                         { header: "Día y Horario", field: "date", width: '20', textAlign: 'Center' },
@@ -162,7 +162,7 @@ class SubjectSpreadSheet extends Component{
                                         { header: "Turno", field: "shift", width: '10', textAlign: 'Center' }
                                     ]}
                                 headerExportText={this.state.careerList.find(career => career.id === this.state.chosenCareer).name + 
-                                                  " - "+ (this.chosenPeriod === 1 ? "Primer" : "Segundo")+ " Cuatrimestre"}
+                                                  " - "+ (this.state.chosenPeriod === 1 ? "Primer" : "Segundo")+ " Cuatrimestre"}
                                 allowGrouping={false}
                                 allowDeleting={false}
                             />

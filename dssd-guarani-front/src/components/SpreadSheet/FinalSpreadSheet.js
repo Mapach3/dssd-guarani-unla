@@ -127,26 +127,19 @@ class FinalSpreadSheet extends Component{
                                     </Select>
                                 </FormControl>
                             </Grid>
-                            {this.state.chosenCareer.length !== 0 ?
+                            {this.state.chosenCareerFinals.length !== 0 ?
                             <>
                             <CustomGrid id='finalsGrid'
                                 dataSource={this.state.gridDataSource}
-                                allowPaging={false}
-                                selectionSettings={{ type: 'Multiple' }}
-                                allowResizing={true}
-                                allowSorting={false}
-                                allowTextWrap={true}
                                 toolbar={true}
                                 export={true}
-                                rowHeight={20}
+                                rowHeight={30}
                                 columns={[
                                     { header: "Materia", field: "subject", width: '50', textAlign: 'Center' },
                                     { header: "Día y Hora", field: "date", width: '30', textAlign: 'Center' },
                                     { header: "Docentes", field: "teachers", width: '50', textAlign: 'Center' }
                                 ]}
                                 headerExportText={"Finales de "+this.state.careerName}
-                                allowDeleting={false}
-                                editSettings={{ allowDeleting: true }}
 
                             />
 

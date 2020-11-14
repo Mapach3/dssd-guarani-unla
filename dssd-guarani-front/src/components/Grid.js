@@ -145,7 +145,7 @@ export default function CustomGrid(props) {
                         </AggregateDirective>
                     </AggregatesDirective>
                 }
-                <Inject services={[Page, RowDD, Resize, Reorder, Selection, Sort, Aggregate, Edit, Toolbar, Group, ExcelExport, PdfExport]} />
+                <Inject services={[RowDD, Resize, Reorder, Selection, Sort, Aggregate, Edit, Toolbar, Group, ExcelExport, PdfExport]} />
             </GridComponent>
         </React.Fragment>
     );
