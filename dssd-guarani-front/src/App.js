@@ -25,6 +25,7 @@ const App = () => {
   const [passChange,setPassChange] = useState(Storage.getPassChange());
   const [mailUser,setMailUser] = useState(Storage.getMailUser());
   const [userId,setUserId] = useState(Storage.getUserId());
+  const [careerId,setCareerId] = useState(Storage.getCareerId());
 
   
 
@@ -40,7 +41,7 @@ const App = () => {
           {userToken == null ? 
           <>
           <Redirect exact to="/login"/>
-          <Login setToken={setUserToken} setMailUser={setMailUser} setPassChange={setPassChange} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser} setUserId = {setUserId}/>          
+          <Login setToken={setUserToken} setMailUser={setMailUser} setPassChange={setPassChange} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser} setUserId={setUserId} setCareerId={setCareerId} />          
           </>
           :
           <>

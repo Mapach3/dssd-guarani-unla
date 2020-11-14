@@ -55,4 +55,12 @@ export class Storage {
     static getUserId(){
         return window.localStorage.getItem('userId')
     }
+
+    static setCareerId(userId){
+        window.localStorage.setItem('careerId',userId)
+    }
+
+    static getCareerId(){
+        return window.localStorage.getItem('careerId')
+    }
 }

@@ -24,5 +24,6 @@ namespace DDSDGuarani.DTOResponse
     //    public List<EvaluationInstanceResponse> EvaluationInstances { get; set; }
         public AddressResponse Address { get; set; }
         public CareerResponse Career { get; set; }
+        public int CareerId { get; set; }
     }
 }
