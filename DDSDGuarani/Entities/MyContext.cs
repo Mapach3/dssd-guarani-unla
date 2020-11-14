@@ -58,6 +58,13 @@ namespace DDSDGuarani.Entities
                 .HasOne(co => co.FinalCall)
                 .WithMany(s => s.InscriptionFinals)
                 .HasForeignKey(co => co.FinalId);
+
+                modelBuilder.Entity<Career>().HasData(
+                    new Career{
+                        Id=1,
+                        Name="Lic en Sistemas"
+                    }
+                );
             
             modelBuilder.Entity<Address>().HasData(
                 new Address
@@ -135,7 +142,8 @@ namespace DDSDGuarani.Entities
                       Year=2020,
                       Period=1,
                       Shift=Enums.SubjectShift.AFTERNOON,
-                      InscriptionWindowId=1
+                      InscriptionWindowId=1,
+                      CareerId=1
 
 
 
@@ -149,7 +157,8 @@ namespace DDSDGuarani.Entities
                       Year=2020,
                       Period=2,
                       Shift=Enums.SubjectShift.EVENING,
-                      InscriptionWindowId=1
+                      InscriptionWindowId=1,
+                      CareerId=1
 
 
 

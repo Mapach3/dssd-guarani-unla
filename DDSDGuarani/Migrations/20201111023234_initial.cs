@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DDSDGuarani.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -225,6 +225,70 @@ namespace DDSDGuarani.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+            migrationBuilder.InsertData(
+                table: "Career",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 1, "Lic en Sistemas"});
+            migrationBuilder.InsertData(
+                table: "Address",
+                columns: new[] { "Id", "City", "Country", "Location", "PostalCode", "StreetAndNumber" },
+                values: new object[,]
+                {
+                    { 1, "1234", "Argentina", "Lanus", "1234", "Calle 123" },
+                    { 2, "1223", "Argentina", "Banfield", "1234", "Calle 123" },
+                    { 3, "1223", "Argentina", "Lomas", "1234", "Calle 123" },
+                    { 4, "1245", "Argentina", "Temperley", "1234", "Calle 123" },
+                    { 5, "1222", "Argentina", "Adrogue", "1234", "Calle 123" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "InscriptionWindow",
+                columns: new[] { "Id", "EndDate", "StartDate" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(2020, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2020, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Subject",
+                columns: new[] { "Id", "CareerId", "EndTime", "InscriptionWindowId", "Name", "Period", "ScoreUploadLimit", "Shift", "StartTime", "Year" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Matematica 1", 1, new DateTime(2020, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 2020 },
+                    { 2, 1, new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Matematica 2", 2, new DateTime(2020, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 2020 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "User",
+                columns: new[] { "Id", "Active", "AddressId", "CareerId", "Dni", "Email", "ImgBase64", "Name", "Password", "PasswordChanged", "Role", "Surname", "UserName" },
+                values: new object[,]
+                {
+                    { 1, true, 1, 1, "40897248", "pereyratomas18@gmail.com", null, "Tomas", "1234", true, 2, "Pereyra", null },
+                    { 2, true, 2, 1, "11111111", "pereyratomas18@gmail.com", null,  "Gian", "1234", true, 2, "Manuel", null },
+                    { 3, true, 3, 1, "22222222", "pereyratomas18@gmail.com", null, "Lucho", "1234", true, 1, "Manuel", null },
+                    { 4, true, 4, 1, "33333333", "pereyratomas18@gmail.com", null, "Juan", "1234", true, 1, "Manuel", null },
+                    { 5, true, 5, 1, "44444444", "pereyratomas18@gmail.com", null, "Guido", "1234", true, 1, "Manuel", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Course",
+                columns: new[] { "SubjectId", "UserId", "CourseAverage" },
+                values: new object[,] 
+                { 
+                    {1, 1, 0.0 } ,
+                    {1, 3, 4.0 } ,
+                    {1, 4, 5.0 } ,
+                    {1, 5, 8.0 } 
+
+                    
+                });
+                
+
+            migrationBuilder.InsertData(
+                table: "Course",
+                columns: new[] { "SubjectId", "UserId", "CourseAverage" },
+                values: new object[] { 2, 1, 0.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Course_UserId",

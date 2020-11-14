@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DDSDGuarani.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20201109221522_Initial")]
-    partial class Initial
+    [Migration("20201111023234_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,26 @@ namespace DDSDGuarani.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Address");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "1234",
+                            Country = "Argentina",
+                            Location = "Lanus",
+                            PostalCode = "1234",
+                            StreetAndNumber = "Calle 123"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City = "1234",
+                            Country = "Argentina",
+                            Location = "Lanus",
+                            PostalCode = "1234",
+                            StreetAndNumber = "Calle 123"
+                        });
                 });
 
             modelBuilder.Entity("DDSDGuarani.Entities.Career", b =>
@@ -79,6 +99,20 @@ namespace DDSDGuarani.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Course");
+
+                    b.HasData(
+                        new
+                        {
+                            SubjectId = 1,
+                            UserId = 1,
+                            CourseAverage = 0.0
+                        },
+                        new
+                        {
+                            SubjectId = 2,
+                            UserId = 1,
+                            CourseAverage = 0.0
+                        });
                 });
 
             modelBuilder.Entity("DDSDGuarani.Entities.EvaluationInstance", b =>
@@ -171,6 +205,20 @@ namespace DDSDGuarani.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("InscriptionWindow");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EndDate = new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2020, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EndDate = new DateTime(2020, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StartDate = new DateTime(2020, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("DDSDGuarani.Entities.Subject", b =>
@@ -214,6 +262,34 @@ namespace DDSDGuarani.Migrations
                     b.HasIndex("InscriptionWindowId");
 
                     b.ToTable("Subject");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CareerId = 0,
+                            EndTime = new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            InscriptionWindowId = 1,
+                            Name = "Matematica 1",
+                            Period = 1,
+                            ScoreUploadLimit = new DateTime(2020, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Shift = 2,
+                            StartTime = new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Year = 2020
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CareerId = 0,
+                            EndTime = new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            InscriptionWindowId = 1,
+                            Name = "Matematica 2",
+                            Period = 2,
+                            ScoreUploadLimit = new DateTime(2020, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Shift = 3,
+                            StartTime = new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Year = 2020
+                        });
                 });
 
             modelBuilder.Entity("DDSDGuarani.Entities.User", b =>
@@ -267,6 +343,36 @@ namespace DDSDGuarani.Migrations
                     b.HasIndex("CareerId");
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Active = true,
+                            AddressId = 1,
+                            CareerId = 0,
+                            Dni = "40897248",
+                            Email = "pereyratomas18@gmail.com",
+                            Name = "Tomas",
+                            Password = "1234",
+                            PasswordChanged = true,
+                            Role = 2,
+                            Surname = "Pereyra"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Active = true,
+                            AddressId = 2,
+                            CareerId = 0,
+                            Dni = "11111111",
+                            Email = "pereyratomas18@gmail.com",
+                            Name = "Juan",
+                            Password = "1234",
+                            PasswordChanged = true,
+                            Role = 2,
+                            Surname = "Manuel"
+                        });
                 });
 
             modelBuilder.Entity("DDSDGuarani.Entities.Course", b =>
