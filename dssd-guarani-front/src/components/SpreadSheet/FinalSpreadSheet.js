@@ -58,8 +58,9 @@ class FinalSpreadSheet extends Component{
     onCareerChange = (ev) => {
 
         this.setState({chosenCareer : ev.target.value, gridDataSource : []})
+        debugger;
         let subjectsOfCareer = this.state.subjectList.filter( subject => subject.career.id === ev.target.value)
-        let careerName = this.state.careerList.find( career => career.id == ev.target.value).name
+        let careerName = this.state.careerList.find( career => career.id === ev.target.value).name
         let subjectsOfCareerIds =  []
         subjectsOfCareer.forEach( sub => {
             subjectsOfCareerIds.push(sub.id)
@@ -78,7 +79,7 @@ class FinalSpreadSheet extends Component{
         var dataSource = []
         finalsOfCareer.forEach( final => 
             dataSource.push({
-                subject : subjectsOfCareer.find( sub => sub.id === final.id).name,
+                subject : subjectsOfCareer.find( sub => sub.id === final.subject).name,
                 date :    this.setFinalDateTime(final.date),
                 teachers :  this.getTeacherNames(final)
             })

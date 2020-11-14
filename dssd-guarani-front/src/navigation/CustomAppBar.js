@@ -81,7 +81,7 @@ const CustomAppBar = ({ classes, open, setOpen, rolUser, imageUser, nameUser }) 
                             onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
-                            <img style={{ borderRadius: "50%" }} id="profile-pic" src={imageUser.length === 0 || imageUser == "null" ? NoImage : imageUser} width="100" height="100" alt=""></img>
+                            <img style={{ borderRadius: "50%" }} id="profile-pic-navbar" src={imageUser.length === 0 || imageUser == "null" ? NoImage : imageUser} width="100" height="100" alt=""></img>
                         </IconButton>
                     </div>
                 </Toolbar>
