@@ -169,7 +169,7 @@ namespace DDSDGuarani.Controllers
             {
                 var dbUser = context.User.SingleOrDefault(x => x.Email == user.Email);
                 if (dbUser != null)
-                {    
+                {   
                     context.Entry(dbUser).State = EntityState.Modified;
                     dbUser.UserName = user.UserName;
                     dbUser.Password = user.Password;

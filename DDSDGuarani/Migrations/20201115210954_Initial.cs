@@ -52,6 +52,18 @@ namespace DDSDGuarani.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SubjectCodes",
+                columns: table => new
+                {
+                    Code = table.Column<string>(nullable: false),
+                    SubjectName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubjectCodes", x => x.Code);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -100,6 +112,7 @@ namespace DDSDGuarani.Migrations
                     Year = table.Column<int>(nullable: false),
                     Period = table.Column<int>(nullable: false),
                     Shift = table.Column<int>(nullable: false),
+                    SubjectCode = table.Column<string>(nullable: true),
                     InscriptionWindowId = table.Column<int>(nullable: false),
                     CareerId = table.Column<int>(nullable: false)
                 },
@@ -152,6 +165,7 @@ namespace DDSDGuarani.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(nullable: false),
+                    Active = table.Column<bool>(nullable: false),
                     SubjectId = table.Column<int>(nullable: false),
                     InscriptionWindowId = table.Column<int>(nullable: false)
                 },
@@ -246,6 +260,9 @@ namespace DDSDGuarani.Migrations
 
             migrationBuilder.DropTable(
                 name: "InscriptionFinal");
+
+            migrationBuilder.DropTable(
+                name: "SubjectCodes");
 
             migrationBuilder.DropTable(
                 name: "FinalCall");

@@ -55,6 +55,7 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
+                finalCall.Active = true;
                 context.FinalCall.Add(finalCall);
                 context.SaveChanges();
                 return Ok();

@@ -4,6 +4,8 @@ export const __API_LOGIN = __API__URL + "/Auth/Login"
 export const __API_FIND_USER_DNI = __API__URL + "/User/Dni/"
 export const __API_FIND_USER_EMAIL = __API__URL + "/User/Email/"
 export const __API_USER = __API__URL + "/User/"
+export const __API_SUBCODES = __API__URL + "/SubjectCodes/"
+
 export const __API_USERSTUDENT = __API__STUDENT + "/User/"
 export const __API_SUBJECTSTUDENT = __API__STUDENT + "/Subject/"
 export const __API_ADDRESS = __API__URL + "/Address/"

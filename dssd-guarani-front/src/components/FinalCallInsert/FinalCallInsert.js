@@ -34,10 +34,21 @@ class FinalCallInsert extends Component{
         const getSubjects = axios.get(__API_SUBJECT)
         const getUsers = axios.get(__API_USER)
         axios.all([getSubjects,getUsers]).then(axios.spread((subjects, users) => {
-                
-            this.setState({subjectList : subjects.data,
+            console.log("Valor: ",this.removeDuplicates(subjects.data))
+            this.setState({subjectList : this.removeDuplicates(subjects.data),
                            teacherList : users.data.filter( user => user.role === 2)}) 
         }))
+    }
+
+    removeDuplicates(arr){
+        debugger;
+       for(let index in arr){
+           if (arr.find(sub => sub.subjectCode === arr[index].subjectCode && sub.id !== arr[index].id)){
+               arr.splice(index,1)
+           }
+       }
+       return arr;
+
     }
 
     onFinalDateChange = (ev) => {

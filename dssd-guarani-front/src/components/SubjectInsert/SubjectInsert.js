@@ -13,7 +13,7 @@ import Chip from '@material-ui/core/Chip';
 
 import axios from 'axios'
 
-import {__API_CAREER, __API_SUBJECT, __API_USER} from '../../consts/consts'
+import {__API_CAREER, __API_SUBJECT, __API_USER, __API_SUBCODES} from '../../consts/consts'
 
 
 class SubjectInsert extends Component {
@@ -31,6 +31,7 @@ class SubjectInsert extends Component {
         subjectCareer : '',
         teacherList : [],
         selectedTeachers : [],
+        subjectCodes : [],
         careerList : []
         
     }
@@ -38,8 +39,11 @@ class SubjectInsert extends Component {
     componentDidMount() {
         const getUsers = axios.get(__API_USER)
         const getCareers = axios.get(__API_CAREER)
-        axios.all([getUsers,getCareers]).then(axios.spread((users,careers) => {
-            this.setState({teacherList : users.data.filter(user => user.role === 2), careerList : careers.data })
+        const getSubjectCodes = axios.get(__API_SUBCODES)
+        axios.all([getUsers,getCareers,getSubjectCodes]).then(axios.spread((users,careers,subjectCodes) => {
+            this.setState({teacherList : users.data.filter(user => user.role === 2), 
+                           careerList : careers.data,
+                           subjectCodes : subjectCodes.data })
         }));
 
     }
@@ -86,7 +90,7 @@ class SubjectInsert extends Component {
 
     insertSubject = () => {
         debugger;
-        const {formName,formStartTime,formEndTime,formYear,formShift,formPeriod,selectedTeachers, subjectCareer, formWeekDay} = this.state
+        const {formName,formStartTime,formEndTime,formYear,formShift,formPeriod,selectedTeachers, subjectCareer, formWeekDay, subjectCodes} = this.state
         if (formName.length === 0 || formStartTime.length === 0 || formEndTime.length === 0 
             || formYear.length === 0 || formShift.length === 0 || formPeriod.length === 0 
             || subjectCareer.length === 0 || formWeekDay.length === 0){
@@ -104,6 +108,7 @@ class SubjectInsert extends Component {
             console.log(endTime)
 
             //docentes asignados
+            debugger;
             var teachers = []
             selectedTeachers.map(teacher => teachers.push({ userid: teacher.id }))
 
@@ -123,6 +128,7 @@ class SubjectInsert extends Component {
                         courses : teachers,
                         careerid : subjectCareer,
                         inscriptionwindowid : 1,
+                        subjectcode : subjectCodes.find( code => code.subjectName === formName).code
                     }
                 }
 
@@ -151,7 +157,7 @@ class SubjectInsert extends Component {
             // >
             //    <div className={this.props.classes.drawerHeader} />
                 <Container maxWidth="xs">
-                    <h3>Ingrese datos de la materia</h3>
+                    <h3>Alta de Materia en Cuatrimestre</h3>
                     {this.state.errorMsg.length !== 0 ?
                         <>
                             <Chip
@@ -168,7 +174,14 @@ class SubjectInsert extends Component {
                         <Grid container spacing={1}>
 
                             <Grid item sm={12} >
-                                <TextField fullWidth inputProps={{ maxLength: 100 }} variant="outlined" value={this.state.formName} onChange={(ev) => this.onNameChange(ev)} label="Nombre" type="text" />
+                                <FormControl fullWidth variant="outlined">
+                                    <InputLabel>Nombre</InputLabel>
+                                    <Select onChange={(ev) => this.onNameChange(ev)} value={this.state.formName}>
+                                        {this.state.subjectCodes.map(code => 
+                                            <MenuItem value={code.subjectName}>{code.subjectName}</MenuItem>
+                                        )}
+                                    </Select>
+                                </FormControl>
                             </Grid>
                             <Grid item sm={12}>
                                 <FormControl fullWidth variant="outlined">

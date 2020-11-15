@@ -86,6 +86,9 @@ namespace DDSDGuarani.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -168,6 +171,9 @@ namespace DDSDGuarani.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("SubjectCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("WeekDay")
                         .HasColumnType("nvarchar(max)");
 
@@ -181,6 +187,19 @@ namespace DDSDGuarani.Migrations
                     b.HasIndex("InscriptionWindowId");
 
                     b.ToTable("Subject");
+                });
+
+            modelBuilder.Entity("DDSDGuarani.Entities.SubjectCodes", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SubjectName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Code");
+
+                    b.ToTable("SubjectCodes");
                 });
 
             modelBuilder.Entity("DDSDGuarani.Entities.User", b =>

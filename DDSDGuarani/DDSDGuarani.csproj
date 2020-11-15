@@ -23,6 +23,16 @@
     <Compile Remove="Migrations\20201108223638_Initial.Designer.cs" />
     <Compile Remove="Migrations\20201109221522_Initial.cs" />
     <Compile Remove="Migrations\20201109221522_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20201110212019_Initial.cs" />
+    <Compile Remove="Migrations\20201110212019_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20201115174936_Initial.cs" />
+    <Compile Remove="Migrations\20201115174936_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20201115175906_Initial.cs" />
+    <Compile Remove="Migrations\20201115175906_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20201115181213_Initial.cs" />
+    <Compile Remove="Migrations\20201115181213_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20201115193342_Initial.cs" />
+    <Compile Remove="Migrations\20201115193342_Initial.Designer.cs" />
   </ItemGroup>
   
   <ItemGroup>

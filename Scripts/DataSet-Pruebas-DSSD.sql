@@ -5,6 +5,24 @@ insert into Career values('Licenciatura en Sistemas')
 insert into Career values('Licenciatura en Turismo')
 insert into Career values('Licenciatura en Nutrición')
 
+
+/*tabla de codigos*/
+/*datos de la tabla*/
+insert into SubjectCodes values('PROG1','Programación de Computadoras');
+insert into SubjectCodes values('MATE11','Matemática 1');
+insert into SubjectCodes values('ORGC1','Organización de Computadoras');
+insert into SubjectCodes values('ALGO1','Expresión de Problemas y Algoritmos');
+insert into SubjectCodes values('MATE21','Matemática 2');
+insert into SubjectCodes values('ARQ1','Arquitectura de Computadoras');
+insert into SubjectCodes values('IPC1','Introducción al Pensamiento Científico');
+insert into SubjectCodes values('MATE32','Matemática 3');
+insert into SubjectCodes values('IBD2','Introducción a Bases de Datos');
+insert into SubjectCodes values('ISO12','Ingeniería de Software 1');
+insert into SubjectCodes values('ALGO2','Algoritmos y Estructuras de Datos');
+insert into SubjectCodes values('OBJ12','Orientación a Objetos 1');
+insert into SubjectCodes values('SEMI2','Seminario de Lenguajes');
+insert into SubjectCodes values('PROBA2','Probabilidad y Estadística');
+
 /*Ventanas de Inscripción*/
 insert into InscriptionWindow values(CAST(N'2020-09-01T01:00:00.000' AS DateTime),CAST(N'2020-12-15T09:00:00.000' AS DateTime))
 insert into InscriptionWindow values(CAST(N'2020-09-01T01:00:00.000' AS DateTime),CAST(N'2020-12-14T09:00:00.000' AS DateTime))
@@ -14,39 +32,37 @@ insert into InscriptionWindow values(CAST(N'2020-09-01T01:00:00.000' AS DateTime
 /*materias*/
 /*PRIMER AÑO PRIMER CUATRIMESTRE*/
 /*programacion turno mañana*/
-insert into [Subject] values('Programación de Computadoras',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Lunes',1,1,1,1,1)
+insert into [Subject] values('Programación de Computadoras',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Lunes',1,1,1,'PROG1',1,1)
 /*programación turno noche*/
-insert into [Subject] values('Programación de Computadoras',CAST(N'2020-12-01T18:00:00.000' AS DateTime),CAST(N'2020-12-01T22:00:00.000' AS DateTime),'Martes',1,1,3,1,1)
+insert into [Subject] values('Programación de Computadoras',CAST(N'2020-12-01T18:00:00.000' AS DateTime),CAST(N'2020-12-01T22:00:00.000' AS DateTime),'Martes',1,1,3,'PROG1',1,1)
 /*mate 1 turno mañana*/
-insert into [Subject] values('Matemática 1',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Jueves',1,1,1,1,1)
+insert into [Subject] values('Matemática 1',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Jueves',1,1,1,'MATE11',1,1)
 /*mate 1 turno noche*/
-insert into [Subject] values('Matemática 1',CAST(N'2020-12-01T18:00:00.000' AS DateTime),CAST(N'2020-12-01T21:00:00.000' AS DateTime),'Jueves',1,1,3,1,1)
+insert into [Subject] values('Matemática 1',CAST(N'2020-12-01T18:00:00.000' AS DateTime),CAST(N'2020-12-01T21:00:00.000' AS DateTime),'Jueves',1,1,3,'MATE11',1,1)
 /*otras materias de primer año primer cuatrimestre*/
-insert into [Subject] values('Organizacion de Computadoras',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Miercoles',1,1,1,1,1)
-insert into [Subject] values('Expresión de Problemas y Algoritmos',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Viernes',1,1,1,1,1)
+insert into [Subject] values('Organización de Computadoras',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Miercoles',1,1,1,'ORGC1',1,1)
+insert into [Subject] values('Expresión de Problemas y Algoritmos',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Viernes',1,1,1,'ALGO1',1,1)
 
 /*PRIMER AÑO SEGUNDO CUATRIMESTRE*/
-insert into [Subject] values('Matemática 2',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Lunes',1,2,1,1,1)
-insert into [Subject] values('Arquitectura de Computadoras',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Martes',1,2,1,1,1)
-insert into [Subject] values('Introducción a Pensamiento Cientifico',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T11:00:00.000' AS DateTime),'Jueves',1,2,1,1,1)
+insert into [Subject] values('Matemática 2',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Lunes',1,2,1,'MATE21',1,1)
+insert into [Subject] values('Arquitectura de Computadoras',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Martes',1,2,1,'ARQ1',1,1)
+insert into [Subject] values('Introducción al Pensamiento Cientifico',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T11:00:00.000' AS DateTime),'Jueves',1,2,1,'IPC1',1,1)
 
 
 /*SEGUNDO AÑO PRIMER CUATRIMESTRE*/
 /*mate 3 solo turno noche*/
-insert into [Subject] values('Matemática 3',CAST(N'2020-12-01T18:00:00.000' AS DateTime),CAST(N'2020-12-01T21:00:00.000' AS DateTime),'Jueves',2,1,3,1,1)
+insert into [Subject] values('Matemática 3',CAST(N'2020-12-01T18:00:00.000' AS DateTime),CAST(N'2020-12-01T21:00:00.000' AS DateTime),'Jueves',2,1,3,'MATE32',1,1)
 /*intro bd solo turno tarde*/
-insert into [Subject] values('Introduccion a Bases de Datos',CAST(N'2020-12-01T14:00:00.000' AS DateTime),CAST(N'2020-12-01T17:00:00.000' AS DateTime),'Lunes',2,1,2,1,1)
+insert into [Subject] values('Introducción a Bases de Datos',CAST(N'2020-12-01T14:00:00.000' AS DateTime),CAST(N'2020-12-01T17:00:00.000' AS DateTime),'Lunes',2,1,2,'IBD2',1,1)
 
 /*otras materias de segundo año primer cuatrimestre*/
-insert into [Subject] values('Ingeniería de Software 1',CAST(N'2020-12-01T08:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Jueves',2,1,1,1,1)
-insert into [Subject] values('Algoritmo y Estructura de Datos',CAST(N'2020-12-01T08:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Jueves',2,1,1,1,1)
+insert into [Subject] values('Ingeniería de Software 1',CAST(N'2020-12-01T08:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Jueves',2,1,1,'IS12',1,1)
+insert into [Subject] values('Algoritmos y Estructuras de Datos',CAST(N'2020-12-01T08:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Jueves',2,1,1,'ALGO2',1,1)
 
 /*SEGUNDO AÑO SEGUNDO CUATRIMESTRE*/
-insert into [Subject] values('Orientación a Objetos 1',CAST(N'2020-12-01T08:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Viernes',2,2,1,1,1)
-insert into [Subject] values('Seminario de Lenguajes',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Martes',2,2,1,1,1)
-insert into [Subject] values('Probabilidad y Estadística',CAST(N'2020-12-01T08:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Lunes',2,2,1,1,1)
-
-
+insert into [Subject] values('Orientación a Objetos 1',CAST(N'2020-12-01T08:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Viernes',2,2,1,'OBJ12',1,1)
+insert into [Subject] values('Seminario de Lenguajes',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Martes',2,2,1,'SEMI2',1,1)
+insert into [Subject] values('Probabilidad y Estadística',CAST(N'2020-12-01T08:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Lunes',2,2,1,'PROBA2',1,1)
 
 
 
@@ -176,6 +192,8 @@ insert into course values(13,12,10)
 insert into course values(14,12,10)
 insert into course values(15,12,8)
 insert into course values(16,12,7)
+
+/*TODO: Crear finales e InscriptionFinal para el graduado*/
 
 /*un mismo docente para matematica turno mañana y noche => cdrodriguez*/
 insert into course values(3,3,0);

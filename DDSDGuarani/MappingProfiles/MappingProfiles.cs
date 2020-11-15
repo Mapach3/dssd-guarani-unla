@@ -96,6 +96,7 @@ namespace DDSDGuarani.MappingProfiles
             .ForMember(dest => dest.Year, opts => opts.MapFrom(src => src.Year))
             .ForMember(dest => dest.Period, opts => opts.MapFrom(src => src.Period))
             .ForMember(dest => dest.Shift, opts => opts.MapFrom(src => src.Shift))
+            .ForMember(dest => dest.SubjectCode, opts => opts.MapFrom(src => src.SubjectCode))
 
             .ForPath(dest => dest.InscriptionWindow, opts => opts.MapFrom(src => new InscriptionWindowResponse
             {
@@ -167,6 +168,13 @@ namespace DDSDGuarani.MappingProfiles
             });
             #endregion
 
+            #region Map SubjectCodes
+            CreateMap<SubjectCodes, SubjectCodesResponse>()
+            .ForMember(dest => dest.Code, opts => opts.MapFrom(src => src.Code))
+            .ForMember(dest => dest.SubjectName, opts => opts.MapFrom(src => src.SubjectName));
+
+            #endregion
+
             #region Map InscriptionWindow
             CreateMap<InscriptionWindow, InscriptionWindowResponse>()
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
@@ -186,6 +194,7 @@ namespace DDSDGuarani.MappingProfiles
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.Date, opts => opts.MapFrom(src => src.Date))
             .ForMember(dest => dest.Subject, opts => opts.MapFrom(src => src.SubjectId))
+            .ForMember(dest => dest.Active, opts => opts.MapFrom(src => src.Active))
 
             .ForPath(dest => dest.InscriptionWindow, opts => opts.MapFrom(src => new InscriptionWindowResponse
             {
