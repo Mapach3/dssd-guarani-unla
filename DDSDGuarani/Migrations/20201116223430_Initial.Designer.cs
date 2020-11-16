@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DDSDGuarani.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20201115210954_Initial")]
+    [Migration("20201116223430_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,6 +73,9 @@ namespace DDSDGuarani.Migrations
 
                     b.Property<double>("CourseAverage")
                         .HasColumnType("float");
+
+                    b.Property<bool>("InscriptionReminder")
+                        .HasColumnType("bit");
 
                     b.HasKey("SubjectId", "UserId");
 
