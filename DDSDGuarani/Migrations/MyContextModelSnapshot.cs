@@ -72,6 +72,9 @@ namespace DDSDGuarani.Migrations
                     b.Property<double>("CourseAverage")
                         .HasColumnType("float");
 
+                    b.Property<bool>("InscriptionReminder")
+                        .HasColumnType("bit");
+
                     b.HasKey("SubjectId", "UserId");
 
                     b.HasIndex("UserId");

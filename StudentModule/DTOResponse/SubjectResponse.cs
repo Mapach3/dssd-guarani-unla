@@ -17,7 +17,8 @@ namespace StudentModule.DTOResponse
         public string WeekDay { get; set; }
         public SubjectShift Shift { get; set; }
         public List<CourseResponse> Courses { get; set; }
-      //  public List<EvaluationInstanceResponse> EvaluationInstances { get; set; }
+        public string SubjectCode { get; set; }
+
         public List<FinalCallResponse> Finals { get; set; }
         public InscriptionWindowResponse InscriptionWindow { get; set; }
         public CareerResponse Career { get; set; }

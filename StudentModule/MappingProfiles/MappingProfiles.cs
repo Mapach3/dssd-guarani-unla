@@ -96,6 +96,7 @@ namespace StudentModule.MappingProfiles
             .ForMember(dest => dest.Year, opts => opts.MapFrom(src => src.Year))
             .ForMember(dest => dest.Period, opts => opts.MapFrom(src => src.Period))
             .ForMember(dest => dest.Shift, opts => opts.MapFrom(src => src.Shift))
+            .ForMember(dest => dest.SubjectCode, opts => opts.MapFrom(src => src.SubjectCode))
 
             .ForPath(dest => dest.InscriptionWindow, opts => opts.MapFrom(src => new InscriptionWindowResponse
             {
@@ -232,7 +233,8 @@ namespace StudentModule.MappingProfiles
             CreateMap<Course, CourseResponse>()
             .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.UserId))
             .ForMember(dest => dest.SubjectId, opts => opts.MapFrom(src => src.SubjectId))
-            .ForMember(dest => dest.CourseAverage, opts => opts.MapFrom(src => src.CourseAverage));
+            .ForMember(dest => dest.CourseAverage, opts => opts.MapFrom(src => src.CourseAverage))
+            .ForMember(dest => dest.InscriptionReminder, opts => opts.MapFrom(src => src.InscriptionReminder));
             #endregion
 
             #region Map Career

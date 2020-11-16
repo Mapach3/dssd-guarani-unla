@@ -142,56 +142,56 @@ insert into [User] values('introdb3@gmail.com','iintrodb3','12345','IntroDB3','T
 /*ALUMNOS*/
 /*primer año: */
 /*uno que no haya cursado mate 1, pero todas las demas aprobadas => testMate1 ID=9*/
-insert into course values(1,9,8)
-insert into course values(5,9,9)
-insert into course values(6,9,9)
-insert into course values(7,9,8)
-insert into course values(8,9,7)
-insert into course values(9,9,8)
+insert into course values(1,9,8,0)
+insert into course values(5,9,9,0)
+insert into course values(6,9,9,0)
+insert into course values(7,9,8,0)
+insert into course values(8,9,7,0)
+insert into course values(9,9,8,0)
 
 /*uno que no haya cursado prog, pero todas las demas aprobadas => testProg1*/
-insert into course values(3,10,7)
-insert into course values(5,10,8)
-insert into course values(6,10,9)
-insert into course values(7,10,10)
-insert into course values(8,10,9)
-insert into course values(9,10,7)
+insert into course values(3,10,7,0)
+insert into course values(5,10,8,0)
+insert into course values(6,10,9,0)
+insert into course values(7,10,10,0)
+insert into course values(8,10,9,0)
+insert into course values(9,10,7,0)
 
 /*SEGUNDO AÑO: */
 /*5 alumnos inscriptos tanto en IBD como en mate 3. => uno es ibdmat3*/
-insert into course values(11,11,0)
-insert into course values(11,13,0)
-insert into course values(11,14,0)
-insert into course values(11,15,0)
-insert into course values(11,16,0)
+insert into course values(11,11,0,0)
+insert into course values(11,13,0,0)
+insert into course values(11,14,0,0)
+insert into course values(11,15,0,0)
+insert into course values(11,16,0,0)
 
-insert into course values(10,11,0)
-insert into course values(10,13,0)
-insert into course values(10,14,0)
-insert into course values(10,15,0)
-insert into course values(10,16,0)
+insert into course values(10,11,0,0)
+insert into course values(10,13,0,0)
+insert into course values(10,14,0,0)
+insert into course values(10,15,0,0)
+insert into course values(10,16,0,0)
 
 /*3 alumnos solo introDB*/
-insert into course values(11,17,0)
-insert into course values(11,18,0)
-insert into course values(11,19,0)
+insert into course values(11,17,0,0)
+insert into course values(11,18,0,0)
+insert into course values(11,19,0,0)
 
 
 /*graduado cursadas*/
-insert into course values(1,12,7)
-insert into course values(3,12,8)
-insert into course values(5,12,9)
-insert into course values(6,12,7)
-insert into course values(7,12,9)
-insert into course values(8,12,9)
-insert into course values(9,12,10)
-insert into course values(10,12,6)
-insert into course values(11,12,9)
-insert into course values(12,12,10)
-insert into course values(13,12,10)
-insert into course values(14,12,10)
-insert into course values(15,12,8)
-insert into course values(16,12,7)
+insert into course values(1,12,7,0)
+insert into course values(3,12,8,0)
+insert into course values(5,12,9,0)
+insert into course values(6,12,7,0)
+insert into course values(7,12,9,0)
+insert into course values(8,12,9,0)
+insert into course values(9,12,10,0)
+insert into course values(10,12,6,0)
+insert into course values(11,12,9,0)
+insert into course values(12,12,10,0)
+insert into course values(13,12,10,0)
+insert into course values(14,12,10,0)
+insert into course values(15,12,8,0)
+insert into course values(16,12,7,0)
 
 /*TODO: Crear finales e InscriptionFinal para el graduado*/
 
@@ -228,41 +228,40 @@ insert into InscriptionFinal values(12,13,9)
 insert into InscriptionFinal values(12,14,7)
 
 /*un mismo docente para matematica turno mañana y noche => cdrodriguez*/
-insert into course values(3,3,0);
-insert into course values(4,3,0);
+insert into course values(3,3,0,0)
+insert into course values(4,3,0,0)
 
 /*uno en programacion, organizacion y IntroBD => */
-insert into course values(1,4,0);
-insert into course values(2,4,0);
-insert into course values(5,4,0);
-insert into course values(11,4,0);
+insert into course values(1,4,0,0)
+insert into course values(2,4,0,0)
+insert into course values(5,4,0,0)
+insert into course values(11,4,0,0)
 
 
 
 /*Docentes en otras materias, para llenar espacio y que no quede feo*/
 
 /*ALGORITMOS*/
-insert into course values(13,5,0);
-insert into course values(13,6,0);
+insert into course values(13,5,0,0)
+insert into course values(13,6,0,0)
 
 /*Arquitectura*/
-insert into course values(8,8,0);
-insert into course values(8,6,0);
+insert into course values(8,8,0,0)
+insert into course values(8,6,0,0)
 
 /*Seminario de Lenguajes*/
-insert into course values(15,7,0);
-insert into course values(15,5,0);
+insert into course values(15,7,0,0)
+insert into course values(15,5,0,0)
 
 /*Orientación a Objetos*/
-insert into course values(14,8,0);
-insert into course values(14,6,0);
+insert into course values(14,8,0,0)
+insert into course values(14,6,0,0)
 
 /*Matematica 2*/
 
-insert into course values(7,5,0);
-insert into course values(7,6,0);
+insert into course values(7,5,0,0)
+insert into course values(7,6,0,0)
 
 /*Pensamiento Científico*/
-insert into course values(9,8,0);
-insert into course values(9,5,0);
-
+insert into course values(9,8,0,0)
+insert into course values(9,5,0,0)

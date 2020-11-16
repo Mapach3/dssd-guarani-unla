@@ -139,7 +139,8 @@ namespace DDSDGuarani.Migrations
                 {
                     SubjectId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
-                    CourseAverage = table.Column<double>(nullable: false)
+                    CourseAverage = table.Column<double>(nullable: false),
+                    InscriptionReminder = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

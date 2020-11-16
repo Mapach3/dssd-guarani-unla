@@ -53,7 +53,8 @@ namespace DDSDGuarani.MappingProfiles
                     {
                         UserId = x.UserId,
                         SubjectId = x.SubjectId,
-                        CourseAverage = x.CourseAverage
+                        CourseAverage = x.CourseAverage,
+                        InscriptionReminder = x.InscriptionReminder
                     });
                 });
 
@@ -115,7 +116,6 @@ namespace DDSDGuarani.MappingProfiles
             {
                 List<CourseResponse> coursesAux = new List<CourseResponse>();
                 List<FinalCallResponse> inscriptionFinalsAux = new List<FinalCallResponse>();
-             //   List<EvaluationInstanceResponse> evaluationInstancesAux = new List<EvaluationInstanceResponse>();
 
                 List<InscriptionFinalResponse> inscriptionFinalsAux_InFinalCall = new List<InscriptionFinalResponse>();
 
@@ -242,7 +242,8 @@ namespace DDSDGuarani.MappingProfiles
             CreateMap<Course, CourseResponse>()
             .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.UserId))
             .ForMember(dest => dest.SubjectId, opts => opts.MapFrom(src => src.SubjectId))
-            .ForMember(dest => dest.CourseAverage, opts => opts.MapFrom(src => src.CourseAverage));
+            .ForMember(dest => dest.CourseAverage, opts => opts.MapFrom(src => src.CourseAverage))
+            .ForMember(dest => dest.InscriptionReminder, opts => opts.MapFrom(src => src.InscriptionReminder));
             #endregion
 
             #region Map Career
