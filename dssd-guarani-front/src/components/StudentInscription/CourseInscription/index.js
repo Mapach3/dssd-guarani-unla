@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { __API_SUBJECTSTUDENT, __API_USERSTUDENT } from '../../../consts/consts';
+import { __API_SUBJECT, __API_USERSTUDENT } from '../../../consts/consts';
 import clsx from 'clsx';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -16,6 +16,7 @@ class CourseInscription extends Component {
 
   state = {
     subjectList: [],
+    approvedSubjectsCodes: [],
     loading: true,
     errorMsg: '',
     dialogOpen: false
@@ -26,16 +27,32 @@ class CourseInscription extends Component {
   }
 
   getNotApprovedSubjects(subjects) {
-    console.log(subjects.filter(subject => this.subjectIsApproved(subject.courses) && subject.inscriptionWindow.id == 1 && subject.career.id == window.localStorage.getItem('careerId')))
-    return subjects.filter(subject => !this.subjectIsApproved(subject.courses) && subject.inscriptionWindow.id == 1 && subject.career.id == window.localStorage.getItem('careerId'))
+    this.approvedSubjectsCodes = this.getApprovedSubjectCodes(subjects)
+    console.log(subjects.filter(subject => !this.isAnApprovedCode(subject.subjectCode) && subject.inscriptionWindow.id == 1 && subject.career.id == window.localStorage.getItem('careerId')))
+    return subjects.filter(subject => !this.isAnApprovedCode(subject.subjectCode) && subject.inscriptionWindow.id == 1 && subject.career.id == window.localStorage.getItem('careerId'))
+  }
+
+  isAnApprovedCode(code) {
+    return this.approvedSubjectsCodes.find(subjectCode => subjectCode == code)
   }
 
   subjectIsApproved(courses) {
     return courses.find(course => course.userId == window.localStorage.getItem('userId') && Number(course.courseAverage) >= 4)
   }
 
+  getApprovedSubjectCodes(subjects) {
+    var codes = []
+    subjects.map((subject) => {
+      if(this.subjectIsApproved(subject.courses)){
+        codes.push(subject.subjectCode)
+      }
+    });
+    console.log(codes);
+    return codes;
+  }
+
   updateSubjectList() {
-    axios.get(__API_SUBJECTSTUDENT).then(resp => {
+    axios.get(__API_SUBJECT).then(resp => {
       console.log(resp.data);
       this.setState({
         subjectList: this.getNotApprovedSubjects(resp.data),

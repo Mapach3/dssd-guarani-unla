@@ -17,6 +17,20 @@ class SubjectGrid extends Component{
         return subject.courses.find(course => course.userId == window.localStorage.getItem('userId'))
     }
 
+    getSubjectShift(subject){
+        var ret = "";
+        switch(subject.shift){
+            case 1: ret+=" Mañana"
+            break;
+            case 2: ret+=" Tarde"
+            break;
+            case 3: ret+=" Noche"
+            break;
+            default: ret+=" Mañana"
+        }
+        return ret;
+    }
+
     render(){
         const {subjects} = this.props
         return <>
@@ -26,6 +40,7 @@ class SubjectGrid extends Component{
                     <TableRow>
                     <TableCell># ID</TableCell>
                     <TableCell align="left">Nombre</TableCell>
+                    <TableCell align="left">Turno</TableCell>
                     <TableCell align="left">Acción</TableCell>
                     </TableRow>
                 </TableHead>
@@ -34,6 +49,7 @@ class SubjectGrid extends Component{
                     <TableRow key={subject.id}>
                         <TableCell component="th" scope="row">{subject.id}</TableCell>
                         <TableCell align="left">{subject.name}</TableCell>
+                        <TableCell align="left">{this.getSubjectShift(subject)}</TableCell>
                         <TableCell align="left">
                         <Button variant="contained" value={window.localStorage.getItem('userId')} disabled={false} color={this.isUserInSubject(subject) ? "secondary" : "primary"}>{this.isUserInSubject(subject) ? "Baja" : "Alta"}</Button>      
                         </TableCell>
