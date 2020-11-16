@@ -5,8 +5,8 @@ import CustomAppBar from '../navigation/CustomAppBar';
 import CustomDrawerTeacher from '../navigation/CustomDrawerTeacher';
 import { Router, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import InscriptionExam from './subPages/InscriptionExam';
-
+import SubjectAsigned from '../components/SubjectAsigned/SubjectAsigned';
+import StudentBySubject from '../components/StudentBySubject/StudentBySubject';
 const drawerWidth = 240;
 const history = createBrowserHistory();
 
@@ -96,7 +96,8 @@ const HomeTeacher = (props) => {
                 <CustomAppBar open={open} setOpen={setOpen} classes={classes} nameUser={props.nameUser} imageUser={props.imageUser} rolUser={props.rolUser}/>
                 <CustomDrawerTeacher open={open} setOpen={setOpen} classes={classes} theme={theme} rolUser={props.rolUser}/>
                 <div className='mainContainer'>
-                    <Route path="/inscriptionExam" render={(props) => <InscriptionExam open={open} classes={classes} {...props} /> } />
+                    <Route path="/courseAsigned" render={(props) => <SubjectAsigned open={open} classes={classes} {...props} /> } />
+                    <Route path="/studentBySubject" render={(props) => <StudentBySubject open={open} classes={classes} {...props} /> } />
                 </div>
             </div>
         </Router>

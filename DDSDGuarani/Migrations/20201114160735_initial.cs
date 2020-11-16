@@ -96,7 +96,7 @@ namespace DDSDGuarani.Migrations
                     Name = table.Column<string>(nullable: true),
                     StartTime = table.Column<DateTime>(nullable: false),
                     EndTime = table.Column<DateTime>(nullable: false),
-                    ScoreUploadLimit = table.Column<DateTime>(nullable: false),
+                    WeekDay = table.Column<string>(nullable: true),
                     Year = table.Column<int>(nullable: false),
                     Period = table.Column<int>(nullable: false),
                     Shift = table.Column<int>(nullable: false),
@@ -146,42 +146,12 @@ namespace DDSDGuarani.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EvaluationInstance",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Score = table.Column<double>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false),
-                    Type = table.Column<int>(nullable: false),
-                    SubjectId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EvaluationInstance", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EvaluationInstance_Subject_SubjectId",
-                        column: x => x.SubjectId,
-                        principalTable: "Subject",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EvaluationInstance_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "FinalCall",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(nullable: false),
-                    ScoreUploadLimit = table.Column<DateTime>(nullable: false),
                     SubjectId = table.Column<int>(nullable: false),
                     InscriptionWindowId = table.Column<int>(nullable: false)
                 },
@@ -207,7 +177,8 @@ namespace DDSDGuarani.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
-                    FinalId = table.Column<int>(nullable: false)
+                    FinalId = table.Column<int>(nullable: false),
+                    Score = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -225,7 +196,7 @@ namespace DDSDGuarani.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-            migrationBuilder.InsertData(
+                 migrationBuilder.InsertData(
                 table: "Career",
                 columns: new[] { "Id", "Name" },
                 values: new object[] { 1, "Lic en Sistemas"});
@@ -252,11 +223,11 @@ namespace DDSDGuarani.Migrations
 
             migrationBuilder.InsertData(
                 table: "Subject",
-                columns: new[] { "Id", "CareerId", "EndTime", "InscriptionWindowId", "Name", "Period", "ScoreUploadLimit", "Shift", "StartTime", "Year" },
+                columns: new[] { "Id", "CareerId", "EndTime", "InscriptionWindowId", "Name", "Period", "Shift", "StartTime", "Year" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Matematica 1", 1, new DateTime(2020, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 2020 },
-                    { 2, 1, new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Matematica 2", 2, new DateTime(2020, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 2020 }
+                    { 1, 1, new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Matematica 1", 1, 2, new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 2020 },
+                    { 2, 1, new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Matematica 2", 2, 3, new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 2020 }
                 });
 
             migrationBuilder.InsertData(
@@ -264,11 +235,11 @@ namespace DDSDGuarani.Migrations
                 columns: new[] { "Id", "Active", "AddressId", "CareerId", "Dni", "Email", "ImgBase64", "Name", "Password", "PasswordChanged", "Role", "Surname", "UserName" },
                 values: new object[,]
                 {
-                    { 1, true, 1, 1, "40897248", "pereyratomas18@gmail.com", null, "Tomas", "1234", true, 2, "Pereyra", null },
-                    { 2, true, 2, 1, "11111111", "pereyratomas18@gmail.com", null,  "Gian", "1234", true, 2, "Manuel", null },
-                    { 3, true, 3, 1, "22222222", "pereyratomas18@gmail.com", null, "Lucho", "1234", true, 1, "Manuel", null },
-                    { 4, true, 4, 1, "33333333", "pereyratomas18@gmail.com", null, "Juan", "1234", true, 1, "Manuel", null },
-                    { 5, true, 5, 1, "44444444", "pereyratomas18@gmail.com", null, "Guido", "1234", true, 1, "Manuel", null }
+                    { 1, true, 1, 1, "40897248", "pereyratomas18@gmail.com", null, "Tomas", "1234", true, 2, "Pereyra", "tomas" },
+                    { 2, true, 2, 1, "11111111", "pereyratomas18@gmail.com", null,  "Gian", "1234", true, 2, "Manuel", "gian" },
+                    { 3, true, 3, 1, "22222222", "pereyratomas18@gmail.com", null, "Lucho", "1234", true, 1, "Manuel", "lucho" },
+                    { 4, true, 4, 1, "33333333", "pereyratomas18@gmail.com", null, "Juan", "1234", true, 1, "Manuel", "juan" },
+                    { 5, true, 5, 1, "44444444", "pereyratomas18@gmail.com", null, "Guido", "1234", true, 1, "Manuel", "guido" }
                 });
 
             migrationBuilder.InsertData(
@@ -289,20 +260,24 @@ namespace DDSDGuarani.Migrations
                 table: "Course",
                 columns: new[] { "SubjectId", "UserId", "CourseAverage" },
                 values: new object[] { 2, 1, 0.0 });
+            migrationBuilder.InsertData(
+                table: "FinalCall",
+                columns: new[] { "Id", "Date", "SubjectId","InscriptionWindowId" },
+                values: new object[] { 2, new DateTime(2020, 9, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 1,1 });
+            migrationBuilder.InsertData(
+                table: "InscriptionFinal",
+                columns: new[] { "UserId", "FinalId", "Score" },
+                values: new object[,] 
+                { 
+                    {3, 2, 6.0 } ,
+                    {4, 2, 4.0 } ,
+                    {5, 2, 5.0 }                    
+                });
+
 
             migrationBuilder.CreateIndex(
                 name: "IX_Course_UserId",
                 table: "Course",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EvaluationInstance_SubjectId",
-                table: "EvaluationInstance",
-                column: "SubjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EvaluationInstance_UserId",
-                table: "EvaluationInstance",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -346,9 +321,6 @@ namespace DDSDGuarani.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Course");
-
-            migrationBuilder.DropTable(
-                name: "EvaluationInstance");
 
             migrationBuilder.DropTable(
                 name: "InscriptionFinal");

@@ -27,7 +27,7 @@ namespace DDSDGuarani.Entities
         public List<InscriptionFinal> InscriptionFinals { get; set; } = new List<InscriptionFinal>();
 
         //Relation - OneToMany - EvaluationInstance
-        public List<EvaluationInstance> EvaluationInstances { get; set; } = new List<EvaluationInstance>();
+      //  public List<EvaluationInstance> EvaluationInstances { get; set; } = new List<EvaluationInstance>();
 
         //Relation - OneToOne - Address
         public int AddressId { get; set; }

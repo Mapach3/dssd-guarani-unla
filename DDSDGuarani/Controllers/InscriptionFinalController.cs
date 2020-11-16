@@ -31,6 +31,17 @@ namespace DDSDGuarani.Controllers
             var resultDb = context.InscriptionFinal.Include(x => x.FinalCall).Include(x => x.User).ToList().OrderBy(x => x.UserId);
             response = _mapper.Map<IEnumerable<InscriptionFinal>, IEnumerable<InscriptionFinalResponse>>(resultDb);
             return response;
+
+            //var resultDb = context.InscriptionFinal.Include(x => x.FinalCall)
+            //    .Include(x => x.User).ThenInclude(x=>x.Courses)
+            //    .Include(x => x.User).ThenInclude(x => x.Address)
+            //    .Include(x => x.User).ThenInclude(x => x.Career)
+            //    .Include(x => x.User).ThenInclude(x => x.InscriptionFinals)
+            //    .Include(x => x.FinalCall).ThenInclude(x => x.InscriptionWindow)
+            //    .Include(x => x.FinalCall).ThenInclude(x => x.Subject)
+            //    .ToList().OrderBy(x => x.UserId);
+      
+            //return resultDb;
         }
 
         /// <summary>
@@ -44,6 +55,17 @@ namespace DDSDGuarani.Controllers
             var resultDb = context.InscriptionFinal.Include(x => x.FinalCall).Include(x => x.User).FirstOrDefault(u => u.UserId == id);
             response = _mapper.Map<InscriptionFinal, InscriptionFinalResponse>(resultDb);
             return response;
+
+            //var resultDb = context.InscriptionFinal.Include(x => x.FinalCall)
+            //    .Include(x => x.User).ThenInclude(x => x.Courses)
+            //    .Include(x => x.User).ThenInclude(x => x.Address)
+            //    .Include(x => x.User).ThenInclude(x => x.Career)
+            //    .Include(x => x.User).ThenInclude(x => x.InscriptionFinals)
+            //    .Include(x => x.FinalCall).ThenInclude(x => x.InscriptionWindow)
+            //    .Include(x => x.FinalCall).ThenInclude(x => x.Subject)
+            //    .FirstOrDefault(u => u.UserId == id);
+     
+            //return resultDb;
         }
 
         /// <summary>
@@ -57,7 +79,7 @@ namespace DDSDGuarani.Controllers
             {
                 context.InscriptionFinal.Add(inscriptionFinal);
                 context.SaveChanges();
-                return Ok();
+                return Ok("Inscripción a final guardada correctamente");
             }
             catch (Exception e)
             {
@@ -97,18 +119,22 @@ namespace DDSDGuarani.Controllers
         /// <summary>
         /// Elimina una Inscripcion de Final
         /// </summary>
-        /// <param name="id"></param>  
-        [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        /// <param name="inscription"></param>  
+        [HttpDelete]
+        public ActionResult Delete([FromBody] InscriptionFinal inscription)
         {
             try
             {
-                var inscriptionFinal = context.InscriptionFinal.FirstOrDefault(u => u.UserId == id);
+                var inscriptionFinal = context.InscriptionFinal.FirstOrDefault(i => i.UserId == inscription.UserId && i.FinalId == inscription.FinalId);
                 if (inscriptionFinal != null)
                 {
+                    if (inscriptionFinal.Score >= 4)
+                    {
+                        return Ok("No se puede dar de baja ya que el final está aprobado");
+                    }
                     context.InscriptionFinal.Remove(inscriptionFinal);
                     context.SaveChanges();
-                    return Ok();
+                    return Ok("Inscripción a final eliminada correctamente");
                 }
                 else
                 {

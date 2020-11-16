@@ -29,7 +29,7 @@ class UserGrid extends Component{
     render(){
         const {users} = this.props
         return <>
-        <TableContainer className="userDropTable" component={Paper}>
+        <TableContainer className="userDropTables" component={Paper}>
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>

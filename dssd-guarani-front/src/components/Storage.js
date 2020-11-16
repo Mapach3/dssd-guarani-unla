@@ -47,4 +47,20 @@ export class Storage {
     static getMailUser(){
         return window.localStorage.getItem('mailUser')
     }
+
+    static setUserId(userId){
+        window.localStorage.setItem('userId',userId)
+    }
+
+    static getUserId(){
+        return window.localStorage.getItem('userId')
+    }
+
+    static setCareerId(userId){
+        window.localStorage.setItem('careerId',userId)
+    }
+
+    static getCareerId(){
+        return window.localStorage.getItem('careerId')
+    }
 }

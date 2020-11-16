@@ -5,6 +5,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Add from '@material-ui/icons/Add';
 import Delete from '@material-ui/icons/Delete';
+import CreateRoundedIcon from '@material-ui/icons/CreateRounded';
+import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
 import Search from '@material-ui/icons/Search';
 import Build from '@material-ui/icons/Build';
 import Drawer from '@material-ui/core/Drawer';
@@ -42,7 +44,7 @@ const CustomDrawerAdmin = ({ classes, open, setOpen, theme, ...props }) => {
             <List>
                 <ListItem button onClick={() => props.history.push("/insertUser")}>
                     <ListItemIcon><Add /></ListItemIcon>
-                    <ListItemText primary="Agregar Usuario" />
+                    <ListItemText primary="Alta de Usuario" />
                 </ListItem>
                 <ListItem button onClick={() => props.history.push("/modifyUser")}>
                     <ListItemIcon><Add /></ListItemIcon>
@@ -52,16 +54,41 @@ const CustomDrawerAdmin = ({ classes, open, setOpen, theme, ...props }) => {
                     <ListItemIcon><Delete /></ListItemIcon>
                     <ListItemText primary="Borrar Usuario" />
                 </ListItem>
+                <ListItem button onClick={() => props.history.push("/subjectSpreadSheet")}>
+                    <ListItemIcon><ListAltRoundedIcon /></ListItemIcon>
+                    <ListItemText primary="Planilla de Cuatrimestre" />
+                </ListItem>
+                <ListItem button onClick={() => props.history.push("/finalSpreadSheet")}>
+                    <ListItemIcon><ListAltRoundedIcon /></ListItemIcon>
+                    <ListItemText primary="Planilla de Finales" />
+                </ListItem>
+
+                <ListItem button onClick={() => props.history.push("/insertSubject")}>
+                    <ListItemIcon><Add /></ListItemIcon>
+                    <ListItemText primary="Alta de Cuatrimestre" />
+                </ListItem>
+
+                <ListItem button onClick={() => props.history.push("/insertFinalCall")}>
+                    <ListItemIcon><Add /></ListItemIcon>
+                    <ListItemText primary="Alta de Finales" />
+                </ListItem>
 
                 <ListItem button onClick={() => props.history.push("/inscriptionWindow")}>
                     <ListItemIcon><Add /></ListItemIcon>
                     <ListItemText primary="Ventana de Inscripcion" />
                 </ListItem>
 
-                <ListItem button onClick={() => props.history.push("/insertSubject")}>
-                    <ListItemIcon><Add /></ListItemIcon>
-                    <ListItemText primary="Agregar Materias" />
+                <ListItem button onClick={() => props.history.push("/finalInscriptionModification")}>
+                    <ListItemIcon><CreateRoundedIcon /></ListItemIcon>
+                    <ListItemText primary="Modificación de Inscripciones a Finales" />
                 </ListItem>
+
+                <ListItem button onClick={() => props.history.push("/subjectInscriptionModification")}>
+                    <ListItemIcon><CreateRoundedIcon /></ListItemIcon>
+                    <ListItemText primary="Modificación de Inscripciones a Materias" />
+                </ListItem>
+
+                
             </List>
             <Divider />
         </Drawer>

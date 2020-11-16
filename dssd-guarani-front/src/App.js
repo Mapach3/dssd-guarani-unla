@@ -13,12 +13,8 @@ import HomeAdmin from './pages/HomeAdmin';
 import HomeStudent from './pages/HomeStudent';
 import HomeTeacher from './pages/HomeTeacher';
 import {FirstAccess} from './components/Login/FirstAccess';
-import UserModify from './components/UserModify/index'
 import { Loading } from './components/Login/Loading';
-import SubjectInscriptionModification from './components/InscriptionsModification/SubjectInscriptionModification'
-import UserInsert from './components/UserInsert';
-import SubjectInsert from './components/SubjectInsert/SubjectInsert';
-import InsertInscriptionWindow from './components/InscriptionWindow/InsertInscriptionWindow'
+
 
 const App = () => {
 
@@ -28,6 +24,8 @@ const App = () => {
   const [nameUser,setNameUser] = useState(Storage.getNameUser());
   const [passChange,setPassChange] = useState(Storage.getPassChange());
   const [mailUser,setMailUser] = useState(Storage.getMailUser());
+  const [userId,setUserId] = useState(Storage.getUserId());
+  const [careerId,setCareerId] = useState(Storage.getCareerId());
 
   
 
@@ -43,11 +41,7 @@ const App = () => {
           {userToken == null ? 
           <>
           <Redirect exact to="/login"/>
-          <Login setToken={setUserToken} setMailUser={setMailUser} setPassChange={setPassChange} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser}/>         
-          {/* <SubjectInscriptionModification /> */}
-          {/* <UserInsert /> */}
-          {/* <SubjectInsert /> */}
-          {/* <InsertInscriptionWindow /> */}
+          <Login setToken={setUserToken} setMailUser={setMailUser} setPassChange={setPassChange} setImageUser={setImageUser} setRolUser={setRolUser} setNameUser={setNameUser} setUserId={setUserId} setCareerId={setCareerId} />          
           </>
           :
           <>
@@ -55,11 +49,11 @@ const App = () => {
           {(passChange === 'false'
               ? <FirstAccess setPassChange={setPassChange}/> 
               : (rolUser === 'ADMIN' && passChange === 'true'
-                ? <HomeAdmin rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/> 
+                ? <HomeAdmin rolUser={rolUser} imageUser={imageUser} nameUser={nameUser} userId={userId}/> 
                 : (rolUser === 'STUDENT' && passChange === 'true'
-                        ? <HomeStudent rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/> 
+                        ? <HomeStudent rolUser={rolUser} imageUser={imageUser} nameUser={nameUser} userId={userId}/> 
                         : (rolUser === 'TEACHER' && passChange === 'true' 
-                            ? <HomeTeacher rolUser={rolUser} imageUser={imageUser} nameUser={nameUser}/>
+                            ? <HomeTeacher rolUser={rolUser} imageUser={imageUser} nameUser={nameUser} userId={userId}/>
                             : <Loading/>))))}
           </>
           }

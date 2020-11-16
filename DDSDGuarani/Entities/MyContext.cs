@@ -24,7 +24,7 @@ namespace DDSDGuarani.Entities
         public DbSet<FinalCall> FinalCall { get; set; }
         public DbSet<Course> Course { get; set; }
         public DbSet<InscriptionFinal> InscriptionFinal { get; set; }
-        public DbSet<EvaluationInstance> EvaluationInstance { get; set; }
+      //  public DbSet<EvaluationInstance> EvaluationInstance { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -138,7 +138,6 @@ namespace DDSDGuarani.Entities
                       Name="Matematica 1",
                       StartTime =new DateTime(2020, 6, 25),
                       EndTime=new DateTime(2020, 8, 25),
-                      ScoreUploadLimit=new DateTime(2020, 8, 20),
                       Year=2020,
                       Period=1,
                       Shift=Enums.SubjectShift.AFTERNOON,
@@ -153,7 +152,6 @@ namespace DDSDGuarani.Entities
                       Name="Matematica 2",
                       StartTime =new DateTime(2020, 6, 25),
                       EndTime=new DateTime(2020, 8, 25),
-                      ScoreUploadLimit=new DateTime(2020, 8, 20),
                       Year=2020,
                       Period=2,
                       Shift=Enums.SubjectShift.EVENING,

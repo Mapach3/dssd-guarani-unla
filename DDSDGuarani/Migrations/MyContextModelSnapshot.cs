@@ -113,37 +113,6 @@ namespace DDSDGuarani.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DDSDGuarani.Entities.EvaluationInstance", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("Score")
-                        .HasColumnType("float");
-
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubjectId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("EvaluationInstance");
-                });
-
             modelBuilder.Entity("DDSDGuarani.Entities.FinalCall", b =>
                 {
                     b.Property<int>("Id")
@@ -156,9 +125,6 @@ namespace DDSDGuarani.Migrations
 
                     b.Property<int>("InscriptionWindowId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("ScoreUploadLimit")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
@@ -178,6 +144,9 @@ namespace DDSDGuarani.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("FinalId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Score")
                         .HasColumnType("int");
 
                     b.HasKey("UserId", "FinalId");
@@ -241,14 +210,14 @@ namespace DDSDGuarani.Migrations
                     b.Property<int>("Period")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ScoreUploadLimit")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Shift")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("WeekDay")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
@@ -383,21 +352,6 @@ namespace DDSDGuarani.Migrations
 
                     b.HasOne("DDSDGuarani.Entities.User", "User")
                         .WithMany("Courses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DDSDGuarani.Entities.EvaluationInstance", b =>
-                {
-                    b.HasOne("DDSDGuarani.Entities.Subject", "Subject")
-                        .WithMany("EvaluationInstances")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DDSDGuarani.Entities.User", "User")
-                        .WithMany("EvaluationInstances")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

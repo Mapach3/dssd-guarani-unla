@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DDSDGuarani.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20201111023234_initial")]
+    [Migration("20201114160735_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,26 +46,6 @@ namespace DDSDGuarani.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Address");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "1234",
-                            Country = "Argentina",
-                            Location = "Lanus",
-                            PostalCode = "1234",
-                            StreetAndNumber = "Calle 123"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "1234",
-                            Country = "Argentina",
-                            Location = "Lanus",
-                            PostalCode = "1234",
-                            StreetAndNumber = "Calle 123"
-                        });
                 });
 
             modelBuilder.Entity("DDSDGuarani.Entities.Career", b =>
@@ -99,51 +79,6 @@ namespace DDSDGuarani.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Course");
-
-                    b.HasData(
-                        new
-                        {
-                            SubjectId = 1,
-                            UserId = 1,
-                            CourseAverage = 0.0
-                        },
-                        new
-                        {
-                            SubjectId = 2,
-                            UserId = 1,
-                            CourseAverage = 0.0
-                        });
-                });
-
-            modelBuilder.Entity("DDSDGuarani.Entities.EvaluationInstance", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("Score")
-                        .HasColumnType("float");
-
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubjectId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("EvaluationInstance");
                 });
 
             modelBuilder.Entity("DDSDGuarani.Entities.FinalCall", b =>
@@ -158,9 +93,6 @@ namespace DDSDGuarani.Migrations
 
                     b.Property<int>("InscriptionWindowId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("ScoreUploadLimit")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
@@ -180,6 +112,9 @@ namespace DDSDGuarani.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("FinalId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Score")
                         .HasColumnType("int");
 
                     b.HasKey("UserId", "FinalId");
@@ -205,20 +140,6 @@ namespace DDSDGuarani.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("InscriptionWindow");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            EndDate = new DateTime(2020, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            StartDate = new DateTime(2020, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            EndDate = new DateTime(2020, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            StartDate = new DateTime(2020, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("DDSDGuarani.Entities.Subject", b =>
@@ -243,14 +164,14 @@ namespace DDSDGuarani.Migrations
                     b.Property<int>("Period")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ScoreUploadLimit")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Shift")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("WeekDay")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
@@ -262,34 +183,6 @@ namespace DDSDGuarani.Migrations
                     b.HasIndex("InscriptionWindowId");
 
                     b.ToTable("Subject");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CareerId = 0,
-                            EndTime = new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InscriptionWindowId = 1,
-                            Name = "Matematica 1",
-                            Period = 1,
-                            ScoreUploadLimit = new DateTime(2020, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Shift = 2,
-                            StartTime = new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Year = 2020
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CareerId = 0,
-                            EndTime = new DateTime(2020, 8, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            InscriptionWindowId = 1,
-                            Name = "Matematica 2",
-                            Period = 2,
-                            ScoreUploadLimit = new DateTime(2020, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Shift = 3,
-                            StartTime = new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Year = 2020
-                        });
                 });
 
             modelBuilder.Entity("DDSDGuarani.Entities.User", b =>
@@ -343,36 +236,6 @@ namespace DDSDGuarani.Migrations
                     b.HasIndex("CareerId");
 
                     b.ToTable("User");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Active = true,
-                            AddressId = 1,
-                            CareerId = 0,
-                            Dni = "40897248",
-                            Email = "pereyratomas18@gmail.com",
-                            Name = "Tomas",
-                            Password = "1234",
-                            PasswordChanged = true,
-                            Role = 2,
-                            Surname = "Pereyra"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Active = true,
-                            AddressId = 2,
-                            CareerId = 0,
-                            Dni = "11111111",
-                            Email = "pereyratomas18@gmail.com",
-                            Name = "Juan",
-                            Password = "1234",
-                            PasswordChanged = true,
-                            Role = 2,
-                            Surname = "Manuel"
-                        });
                 });
 
             modelBuilder.Entity("DDSDGuarani.Entities.Course", b =>
@@ -385,21 +248,6 @@ namespace DDSDGuarani.Migrations
 
                     b.HasOne("DDSDGuarani.Entities.User", "User")
                         .WithMany("Courses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DDSDGuarani.Entities.EvaluationInstance", b =>
-                {
-                    b.HasOne("DDSDGuarani.Entities.Subject", "Subject")
-                        .WithMany("EvaluationInstances")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DDSDGuarani.Entities.User", "User")
-                        .WithMany("EvaluationInstances")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

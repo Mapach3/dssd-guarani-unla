@@ -35,7 +35,7 @@ namespace DDSDGuarani.Controllers
         public IEnumerable<UserResponse> Get()
         {
             IEnumerable<UserResponse> response = new List<UserResponse>();
-            var resultDb = context.User.Include(x => x.Address).Include(x => x.InscriptionFinals).Include(x => x.EvaluationInstances).Include(x => x.Courses).Include(x => x.Career).ToList().OrderBy(x => x.Id);
+            var resultDb = context.User.Include(x => x.Address).Include(x => x.InscriptionFinals).Include(x => x.Courses).Include(x => x.Career).ToList().OrderBy(x => x.Id);
             response = _mapper.Map<IEnumerable<User>, IEnumerable<UserResponse>>(resultDb);
             return response;
         }
@@ -48,7 +48,7 @@ namespace DDSDGuarani.Controllers
         public UserResponse Get(int id)
         {
             UserResponse response = new UserResponse();
-            var resultDb = context.User.Include(x => x.Address).Include(x => x.InscriptionFinals).Include(x => x.EvaluationInstances).Include(x => x.Courses).FirstOrDefault(u => u.Id == id);
+            var resultDb = context.User.Include(x => x.Address).Include(x => x.InscriptionFinals).Include(x => x.Courses).Include(x => x.Career).FirstOrDefault(u => u.Id == id);
             response = _mapper.Map<User, UserResponse>(resultDb);
             return response;
         }
@@ -62,7 +62,7 @@ namespace DDSDGuarani.Controllers
         public UserResponse Dni(int dni)
         {
             UserResponse response = new UserResponse();
-            var resultDb = context.User.FirstOrDefault(u => u.Dni == dni.ToString());
+            var resultDb = context.User.Include(x => x.Address).Include(x => x.InscriptionFinals).Include(x => x.Courses).Include(x => x.Career).FirstOrDefault(u => u.Dni == dni.ToString());
             response = _mapper.Map<User, UserResponse>(resultDb);
             return response;
         }
@@ -76,7 +76,7 @@ namespace DDSDGuarani.Controllers
         public UserResponse Email(string email)
         {
             UserResponse response = new UserResponse();
-            var resultDb = context.User.FirstOrDefault(u => u.Email == email);
+            var resultDb = context.User.Include(x => x.Address).Include(x => x.InscriptionFinals).Include(x => x.Courses).Include(x => x.Career).FirstOrDefault(u => u.Email == email);
             response = _mapper.Map<User, UserResponse>(resultDb);
             return response;
         }
@@ -202,6 +202,7 @@ namespace DDSDGuarani.Controllers
                 if (user.Id == id)
                 {
                     context.Entry(user).State = EntityState.Modified;
+                    context.Entry(user.Address).State = EntityState.Modified;
                     context.SaveChanges();
                     return Ok();
                 }

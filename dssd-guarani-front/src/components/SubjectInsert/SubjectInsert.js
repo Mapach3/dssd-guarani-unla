@@ -4,17 +4,16 @@ import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import Chip from '@material-ui/core/Chip';
 
-import moment from 'moment'
 import axios from 'axios'
 
-import {__API_CAREER, __API_INSCWINDOW, __API_SUBJECT, __API_USER} from '../../consts/consts'
+import {__API_CAREER, __API_SUBJECT, __API_USER} from '../../consts/consts'
 
 
 class SubjectInsert extends Component {
@@ -26,6 +25,7 @@ class SubjectInsert extends Component {
         formEndTime : '',
         formYear : '',
         formPeriod : '',
+        formWeekDay : '',
         formShift : '',
         errorMsg : '',
         subjectCareer : '',
@@ -46,6 +46,10 @@ class SubjectInsert extends Component {
 
     onNameChange = (ev) => {
         this.setState({ formName: ev.target.value })
+    }
+
+    onWeekDayChange = (ev) => {
+        this.setState({ formWeekDay: ev.target.value })
     }
 
     onStartTimeChange = (ev) => {
@@ -82,10 +86,10 @@ class SubjectInsert extends Component {
 
     insertSubject = () => {
         debugger;
-        const {formName,formStartTime,formEndTime,formYear,formShift,formPeriod,selectedTeachers, subjectCareer} = this.state
+        const {formName,formStartTime,formEndTime,formYear,formShift,formPeriod,selectedTeachers, subjectCareer, formWeekDay} = this.state
         if (formName.length === 0 || formStartTime.length === 0 || formEndTime.length === 0 
             || formYear.length === 0 || formShift.length === 0 || formPeriod.length === 0 
-            || subjectCareer.length === 0){
+            || subjectCareer.length === 0 || formWeekDay.length === 0){
                 this.setState({errorMsg : "Por favor, complete todos los campos"})
         } else {
 
@@ -113,6 +117,7 @@ class SubjectInsert extends Component {
                         starttime : startTime,
                         endtime : endTime,
                         year : formYear,
+                        weekday: formWeekDay,
                         period : formPeriod,
                         shift : formShift,
                         courses : teachers,
@@ -164,6 +169,19 @@ class SubjectInsert extends Component {
 
                             <Grid item sm={12} >
                                 <TextField fullWidth inputProps={{ maxLength: 100 }} variant="outlined" value={this.state.formName} onChange={(ev) => this.onNameChange(ev)} label="Nombre" type="text" />
+                            </Grid>
+                            <Grid item sm={12}>
+                                <FormControl fullWidth variant="outlined">
+                                    <InputLabel>Día de Cursada</InputLabel>
+                                    <Select onChange={(ev) => this.onWeekDayChange(ev)} value={this.state.formWeekDay}>
+                                        <MenuItem value={"Lunes"}>Lunes</MenuItem>
+                                        <MenuItem value={"Martes"}>Martes</MenuItem>
+                                        <MenuItem value={"Miércoles"}>Miércoles</MenuItem>
+                                        <MenuItem value={"Jueves"}>Jueves</MenuItem>
+                                        <MenuItem value={"Viernes"}>Viernes</MenuItem>
+                                        <MenuItem value={"Sábado"}>Sábado</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </Grid>
 
                             <Grid item sm={6}>
