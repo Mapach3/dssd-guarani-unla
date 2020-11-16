@@ -65,7 +65,7 @@ class FinalSpreadSheet extends Component{
         subjectsOfCareer.forEach( sub => {
             subjectsOfCareerIds.push(sub.id)
         })
-        let finalsOfCareer = this.state.finalList.filter( final => subjectsOfCareerIds.includes(final.subject)).sort((a,b) => a.date > b.date)
+        let finalsOfCareer = this.state.finalList.filter( final => subjectsOfCareerIds.includes(final.subject) && !final.active).sort((a,b) => a.date > b.date)
 
         this.setState({chosenCareerFinals : finalsOfCareer,
                        chosenCareerSubjects : subjectsOfCareer,
