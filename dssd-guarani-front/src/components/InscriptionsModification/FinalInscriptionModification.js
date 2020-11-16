@@ -87,15 +87,14 @@ class FinalInscriptionModification extends Component{
 
 
     onChosenFinalChange = (ev) => {
-        const {subjectList} = this.state
+        const {subjectList, chosenFinal} = this.state
         debugger;
         this.setState({chosenFinal : ev.target.value,studentsOfThisFinal : []})
-        let chosenFinal = this.state.chosenFinal
         //Elimino los que no tengan una cursada con nota mayor a 4 para esta materia.. porque sino no pueden dar final
 
         let aprobadosAndConCursada  = this.state.studentsList.filter(student => (student.courses.find(course => subjectList.find( subject => subject.id === course.subjectId).subjectCode === this.state.chosenSubject && course.courseAverage >= 4)) 
-                                                                             && (!student.inscriptionFinals.find(final => final.finalId === chosenFinal && final.score === 0)))
-        console.log(aprobadosAndConCursada)
+                                                                     && (!student.inscriptionFinals.find(final => final.finalId === chosenFinal && final.score === 0)))
+        
 
         this.setState({studentsOfThisFinal : aprobadosAndConCursada})
 
@@ -103,9 +102,10 @@ class FinalInscriptionModification extends Component{
 
     onChosenSubjectChange = (ev) => {
         debugger;
+        const {subjectList} = this.state
         this.setState({chosenSubject : ev.target.value})
         let subject = this.state.subjectList.find( subject => subject.subjectCode === ev.target.value)
-        this.setState({finalsOfChosenSubject : this.state.finalsList.filter(final => final.active && this.state.chosenCareerSubjects.find(subject => subject.id === final.subject).subjectCode === subject.subjectCode),
+        this.setState({finalsOfChosenSubject : this.state.finalsList.filter(final => final.active && subjectList.find(subject => subject.id === final.subject).subjectCode === subject.subjectCode),
                        studentsOfThisFinal : [],
                        chosenFinal : ''})
     }
