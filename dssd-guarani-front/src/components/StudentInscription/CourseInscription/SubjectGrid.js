@@ -13,6 +13,22 @@ import './style.css'
 
 class SubjectGrid extends Component{
 
+    sendUserData(ev,subjectId,active,inWindow){
+        debugger;
+        var userId = ev.currentTarget.value
+        ev.currentTarget.disabled = true
+        this.props.action(userId,subjectId,active,inWindow)
+        ev.currentTarget.disabled = false
+    }
+
+    isWindowActive(subject){
+        var startDate = subject.inscriptionWindow.startDate;
+        var endDate = subject.inscriptionWindow.endDate;
+        var currentDate = new Date(Date.now()).toISOString();
+        console.log(currentDate < endDate && currentDate > startDate)
+        return (currentDate < endDate && currentDate > startDate)
+    }
+
     isUserInSubject(subject){
         return subject.courses.find(course => course.userId == window.localStorage.getItem('userId'))
     }
@@ -41,6 +57,7 @@ class SubjectGrid extends Component{
                     <TableCell># ID</TableCell>
                     <TableCell align="left">Nombre</TableCell>
                     <TableCell align="left">Turno</TableCell>
+                    <TableCell align="left">Activo</TableCell>
                     <TableCell align="left">Acción</TableCell>
                     </TableRow>
                 </TableHead>
@@ -50,8 +67,10 @@ class SubjectGrid extends Component{
                         <TableCell component="th" scope="row">{subject.id}</TableCell>
                         <TableCell align="left">{subject.name}</TableCell>
                         <TableCell align="left">{this.getSubjectShift(subject)}</TableCell>
+                        <TableCell align="left">{this.isUserInSubject(subject) ? "Si" : "No"}</TableCell>
                         <TableCell align="left">
-                        <Button variant="contained" value={window.localStorage.getItem('userId')} disabled={false} color={this.isUserInSubject(subject) ? "secondary" : "primary"}>{this.isUserInSubject(subject) ? "Baja" : "Alta"}</Button>      
+                        <Button variant="contained" value={window.localStorage.getItem('userId')} disabled={false} 
+                        color={this.isUserInSubject(subject) ? "secondary" : "primary"} onClick={(ev) => this.sendUserData(ev, subject.id, this.isUserInSubject(subject), this.isWindowActive(subject))}>{this.isUserInSubject(subject) ? "Baja" : "Alta"}</Button>      
                         </TableCell>
                     </TableRow>
                     ))}

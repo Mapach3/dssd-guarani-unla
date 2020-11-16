@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { __API_SUBJECT, __API_USERSTUDENT } from '../../../consts/consts';
+import { __API_SUBJECT, __API_USERSTUDENT, __API_COURSESTUDENT } from '../../../consts/consts';
 import clsx from 'clsx';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -65,6 +65,34 @@ class CourseInscription extends Component {
     this.setState({ dialogOpen: !this.state.dialogOpen })
   }
 
+  createInscription(userId,subjectId,active,inWindow) {
+    this.setState({ errorMsg: '' })
+    var id = parseInt(userId)
+    var method = "POST"
+    if(active){
+      method = "DELETE"
+    }
+    if(inWindow){
+      const options = {
+        method : method,
+        url : __API_COURSESTUDENT,
+      
+        data : {
+            userid : Number(userId),
+            subjectid : Number(subjectId)
+        }
+      } 
+      axios(options).then(resp => {
+        console.log(resp.data)
+        this.setState({errorMsg : resp.data, dialogOpen : true})
+        this.updateSubjectList()
+      })
+    }
+    else{
+      this.setState({errorMsg : "La ventana de inscripcion no se encuentra activa, operacion no valida.", dialogOpen : true})
+      this.updateSubjectList()
+    }
+  }
   render() {
     const { subjectList, loading, errorMsg } = this.state
     return (
@@ -76,7 +104,7 @@ class CourseInscription extends Component {
         // <div className={this.props.classes.drawerHeader} />
         <Container maxWidth="md">
           <h3>Listado de cursadas</h3>
-          <SubjectGrid subjects={subjectList} />
+          <SubjectGrid subjects={subjectList} action={(userId,subjectId,active,inWindow) => this.createInscription(userId,subjectId,active,inWindow)}/>
           <Dialog
             open={this.state.dialogOpen}
             keepMounted
