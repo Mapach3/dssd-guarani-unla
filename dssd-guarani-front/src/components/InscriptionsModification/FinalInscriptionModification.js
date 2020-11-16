@@ -53,7 +53,6 @@ class FinalInscriptionModification extends Component{
         const getStudents = axios.get(__API_USER)
 
         axios.all([getCareers,getSubjects,getStudents]).then(axios.spread((careers,subjects,students) => {
-            console.log(careers.data,subjects.data,students.data.filter(student => student.role === 1))
             this.setState({careerList : careers.data, 
                            subjectList : subjects.data, 
                            studentsList : students.data.filter(student => student.role === 1)
@@ -100,8 +99,7 @@ class FinalInscriptionModification extends Component{
         debugger;
         this.setState({chosenSubject : ev.target.value})
         let subject = this.state.subjectList.find( subject => subject.id === ev.target.value)
-
-        this.setState({finalsOfChosenSubject : subject.finals,
+        this.setState({finalsOfChosenSubject : subject.finals.filter(final => final.active),
                        studentsOfThisFinal : [],
                        chosenFinal : ''})
     }

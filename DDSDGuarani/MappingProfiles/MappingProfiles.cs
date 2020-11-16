@@ -145,7 +145,8 @@ namespace DDSDGuarani.MappingProfiles
                         Date = x.Date,
                         Subject = x.SubjectId,
                         InscriptionWindow = new InscriptionWindowResponse { Id = x.InscriptionWindow.Id, EndDate = x.InscriptionWindow.EndDate, StartDate = x.InscriptionWindow.StartDate },
-                        InscriptionFinals = inscriptionFinalsAux_InFinalCall
+                        InscriptionFinals = inscriptionFinalsAux_InFinalCall,
+                        Active = x.Active
                     });
                 });
 
