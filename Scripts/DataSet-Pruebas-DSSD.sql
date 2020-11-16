@@ -177,7 +177,7 @@ insert into course values(11,18,0)
 insert into course values(11,19,0)
 
 
-/*graduado*/
+/*graduado cursadas*/
 insert into course values(1,12,7)
 insert into course values(3,12,8)
 insert into course values(5,12,9)
@@ -194,6 +194,38 @@ insert into course values(15,12,8)
 insert into course values(16,12,7)
 
 /*TODO: Crear finales e InscriptionFinal para el graduado*/
+
+/*Finales para el graduado*/
+insert into FinalCall values(CAST(N'2020-12-11T18:00:00.000' AS DateTime),0,1,2)
+insert into FinalCall values(CAST(N'2020-12-13T09:00:00.000' AS DateTime),0,3,2)
+insert into FinalCall values(CAST(N'2020-08-09T09:00:00.000' AS DateTime),0,5,2)
+insert into FinalCall values(CAST(N'2020-09-11T09:00:00.000' AS DateTime),0,6,2)
+insert into FinalCall values(CAST(N'2020-10-21T09:00:00.000' AS DateTime),0,7,2)
+insert into FinalCall values(CAST(N'2020-11-14T10:00:00.000' AS DateTime),0,8,2)
+insert into FinalCall values(CAST(N'2020-03-15T11:00:00.000' AS DateTime),0,9,2)
+insert into FinalCall values(CAST(N'2020-12-16T12:00:00.000' AS DateTime),0,10,2)
+insert into FinalCall values(CAST(N'2020-09-17T13:00:00.000' AS DateTime),0,11,2)
+insert into FinalCall values(CAST(N'2020-02-18T14:00:00.000' AS DateTime),0,12,2)
+insert into FinalCall values(CAST(N'2020-04-19T15:00:00.000' AS DateTime),0,13,2)
+insert into FinalCall values(CAST(N'2020-03-21T15:00:00.000' AS DateTime),0,14,2)
+insert into FinalCall values(CAST(N'2020-07-22T15:00:00.000' AS DateTime),0,15,2)
+insert into FinalCall values(CAST(N'2020-10-23T15:00:00.000' AS DateTime),0,16,2)
+
+/*InscriptionFinals SOLO PARA EL GRADUADO*/
+insert into InscriptionFinal values(12,1,8)
+insert into InscriptionFinal values(12,2,9)
+insert into InscriptionFinal values(12,3,9)
+insert into InscriptionFinal values(12,4,10)
+insert into InscriptionFinal values(12,5,10)
+insert into InscriptionFinal values(12,6,10)
+insert into InscriptionFinal values(12,7,7)
+insert into InscriptionFinal values(12,8,10)
+insert into InscriptionFinal values(11,9,8)
+insert into InscriptionFinal values(12,10,8)
+insert into InscriptionFinal values(12,11,8)
+insert into InscriptionFinal values(12,12,8)
+insert into InscriptionFinal values(12,13,9)
+insert into InscriptionFinal values(12,14,7)
 
 /*un mismo docente para matematica turno mañana y noche => cdrodriguez*/
 insert into course values(3,3,0);
