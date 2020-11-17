@@ -29,6 +29,20 @@ class SubjectGrid extends Component{
         return (currentDate < endDate && currentDate > startDate)
     }
 
+    getTeacherNames(subject, teacherList){
+        debugger;
+        var teacherNamesConcat = ""
+        subject.courses.forEach( course => {
+            var teacher = teacherList.find(teacher => teacher.id === course.userId)
+            if(teacher !== undefined){
+                teacherNamesConcat+= teacher.name + " "+teacher.surname + ", "
+            }
+        })
+        debugger;
+        teacherNamesConcat = teacherNamesConcat.slice(0, -2);
+        return teacherNamesConcat.length === 0 ? "A definir" : teacherNamesConcat
+    }
+
     isUserInSubject(subject){
         return subject.courses.find(course => course.userId == window.localStorage.getItem('userId'))
     }
@@ -47,8 +61,13 @@ class SubjectGrid extends Component{
         return ret;
     }
 
+    removePreviousCourses(courses){
+        var currentDate = new Date(Date.now()).toISOString();
+        return courses.filter(course => course.endTime > currentDate)
+    }
+
     render(){
-        const {subjects} = this.props
+        const {subjects, teacherList} = this.props
         return <>
         <TableContainer className="userDropTables" component={Paper}>
             <Table aria-label="simple table">
@@ -57,16 +76,20 @@ class SubjectGrid extends Component{
                     <TableCell># ID</TableCell>
                     <TableCell align="left">Nombre</TableCell>
                     <TableCell align="left">Turno</TableCell>
+                    <TableCell align="left">Horario</TableCell>
+                    <TableCell align="left">Docente</TableCell>
                     <TableCell align="left">Activo</TableCell>
                     <TableCell align="left">Acción</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {subjects.map((subject) => (
+                    {this.removePreviousCourses(subjects).map((subject) => (
                     <TableRow key={subject.id}>
                         <TableCell component="th" scope="row">{subject.id}</TableCell>
                         <TableCell align="left">{subject.name}</TableCell>
                         <TableCell align="left">{this.getSubjectShift(subject)}</TableCell>
+                        <TableCell align="left">{subject.weekDay}</TableCell>
+                        <TableCell align="left">{this.getTeacherNames(subject, teacherList)}</TableCell>
                         <TableCell align="left">{this.isUserInSubject(subject) ? "Si" : "No"}</TableCell>
                         <TableCell align="left">
                         <Button variant="contained" value={window.localStorage.getItem('userId')} disabled={false} 

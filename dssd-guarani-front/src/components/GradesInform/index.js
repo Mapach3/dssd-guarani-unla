@@ -59,7 +59,7 @@ class GradesInform extends Component {
   setSubjectName = (id) => {
     var name = this.state.chosenCareerSubjects.find( sub => sub.id === id).name
     return name
-}
+  }
 
   setFinalDateTime(date) {
     moment.locale('es')
