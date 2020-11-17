@@ -144,6 +144,7 @@ namespace StudentModule.MappingProfiles
                         Id = x.Id,
                         Date = x.Date,
                         Subject = x.SubjectId,
+                        Active = x.Active,
                         InscriptionWindow = new InscriptionWindowResponse { Id = x.InscriptionWindow.Id, EndDate = x.InscriptionWindow.EndDate, StartDate = x.InscriptionWindow.StartDate },
                         InscriptionFinals = inscriptionFinalsAux_InFinalCall
                     });
@@ -187,6 +188,7 @@ namespace StudentModule.MappingProfiles
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.Date, opts => opts.MapFrom(src => src.Date))
             .ForMember(dest => dest.Subject, opts => opts.MapFrom(src => src.SubjectId))
+            .ForMember(dest => dest.Active, opts => opts.MapFrom(src => src.Active))
 
             .ForPath(dest => dest.InscriptionWindow, opts => opts.MapFrom(src => new InscriptionWindowResponse
             {
@@ -248,6 +250,7 @@ namespace StudentModule.MappingProfiles
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.Date, opts => opts.MapFrom(src => src.Date))
             .ForMember(dest => dest.Subject, opts => opts.MapFrom(src => src.Subject))
+            .ForMember(dest => dest.Active, opts => opts.MapFrom(src => src.Active))
 
             .ForPath(dest => dest.InscriptionWindow, opts => opts.MapFrom(src => new InscriptionWindowResponse
             {
@@ -274,6 +277,13 @@ namespace StudentModule.MappingProfiles
              .ForMember(dest => dest.Score, opts => opts.MapFrom(src => src.Score))
              .ForMember(dest => dest.User, opts => opts.MapFrom(src => src.User))
              .ForMember(dest => dest.FinalCall, opts => opts.MapFrom(src => src.FinalCall));
+            #endregion
+
+            #region Map SubjectCodes
+            CreateMap<SubjectCodes, SubjectCodesResponse>()
+            .ForMember(dest => dest.Code, opts => opts.MapFrom(src => src.Code))
+            .ForMember(dest => dest.SubjectName, opts => opts.MapFrom(src => src.SubjectName));
+
             #endregion
         }
     }
