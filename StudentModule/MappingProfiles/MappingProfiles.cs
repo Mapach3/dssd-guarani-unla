@@ -144,6 +144,7 @@ namespace StudentModule.MappingProfiles
                         Id = x.Id,
                         Date = x.Date,
                         Subject = x.SubjectId,
+                        Active = x.Active,
                         InscriptionWindow = new InscriptionWindowResponse { Id = x.InscriptionWindow.Id, EndDate = x.InscriptionWindow.EndDate, StartDate = x.InscriptionWindow.StartDate },
                         InscriptionFinals = inscriptionFinalsAux_InFinalCall
                     });
@@ -187,6 +188,7 @@ namespace StudentModule.MappingProfiles
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.Date, opts => opts.MapFrom(src => src.Date))
             .ForMember(dest => dest.Subject, opts => opts.MapFrom(src => src.SubjectId))
+            .ForMember(dest => dest.Active, opts => opts.MapFrom(src => src.Active))
 
             .ForPath(dest => dest.InscriptionWindow, opts => opts.MapFrom(src => new InscriptionWindowResponse
             {
@@ -248,6 +250,7 @@ namespace StudentModule.MappingProfiles
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.Date, opts => opts.MapFrom(src => src.Date))
             .ForMember(dest => dest.Subject, opts => opts.MapFrom(src => src.Subject))
+            .ForMember(dest => dest.Active, opts => opts.MapFrom(src => src.Active))
 
             .ForPath(dest => dest.InscriptionWindow, opts => opts.MapFrom(src => new InscriptionWindowResponse
             {
