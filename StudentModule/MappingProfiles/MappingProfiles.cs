@@ -275,6 +275,13 @@ namespace StudentModule.MappingProfiles
              .ForMember(dest => dest.User, opts => opts.MapFrom(src => src.User))
              .ForMember(dest => dest.FinalCall, opts => opts.MapFrom(src => src.FinalCall));
             #endregion
+
+            #region Map SubjectCodes
+            CreateMap<SubjectCodes, SubjectCodesResponse>()
+            .ForMember(dest => dest.Code, opts => opts.MapFrom(src => src.Code))
+            .ForMember(dest => dest.SubjectName, opts => opts.MapFrom(src => src.SubjectName));
+
+            #endregion
         }
     }
 }
