@@ -265,3 +265,41 @@ insert into course values(7,6,0,0)
 /*Pensamiento Científico*/
 insert into course values(9,8,0,0)
 insert into course values(9,5,0,0)
+
+/*NUTRICIÓN Materias*/
+/*codes primer año*/
+insert into SubjectCodes values('SALCO1','Salúd Colectiva');-- 15
+insert into SubjectCodes values('PROBALIM1','Seminario Problemas Alimentarios');-- 16
+insert into SubjectCodes values('BIOF1','Biofísica 1');-- 17
+insert into SubjectCodes values('ANATO1','Anatomía y Fisiología');-- 18
+insert into SubjectCodes values('NUTRI11','Nutrición 1'); -- 19
+insert into SubjectCodes values('SALMEN1','Salud Mental'); -- 19
+
+/*codes segundo año*/
+insert into SubjectCodes values('NUTRI22','Nutrición 2');-- 20
+insert into SubjectCodes values('FQCUL2','Física y Química Culinaria');-- 21
+insert into SubjectCodes values('SEMOP2','Seminario Optativo');-- 22
+--
+insert into SubjectCodes values('ETICA2','Ética Profesional');-- 23
+insert into SubjectCodes values('MICROB2','Microbiología'); -- 24
+
+
+/*materias primer año PRIMER CUATRI*/
+insert into [Subject] values('Salúd Colectiva',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Jueves',1,1,1,'SALCO1',1,3)
+insert into [Subject] values('Seminario de Problemas Alimentarios',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Lunes',1,1,1,'PROBALIM1',1,3)
+insert into [Subject] values('Anatomía y Fisiología',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-12-01T12:00:00.000' AS DateTime),'Martes',1,1,1,'ANATO1',1,3)
+/*materias primer año SEGUNDO CUATRI*/
+insert into [Subject] values('Nutrición 1',CAST(N'2020-12-01T08:00:00.000' AS DateTime),CAST(N'2020-12-01T11:00:00.000' AS DateTime),'Viernes',1,2,1,'NUTRI11',1,3)
+insert into [Subject] values('Biofísica 1',CAST(N'2020-12-01T07:00:00.000' AS DateTime),CAST(N'2020-11-01T11:00:00.000' AS DateTime),'Martes',1,2,1,'BIOF1',1,3)
+insert into [Subject] values('Salud Mental',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-11-01T12:00:00.000' AS DateTime),'Jueves',1,2,1,'SALMEN1',1,3)
+
+/*materias segundo año PRIMER CUATRI*/
+insert into [Subject] values('Nutrición 2',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-11-01T12:00:00.000' AS DateTime),'Jueves',2,1,1,'NUTRI22',1,3)
+insert into [Subject] values('Física y Química Culinaria',CAST(N'2020-12-01T09:00:00.000' AS DateTime),CAST(N'2020-11-01T12:00:00.000' AS DateTime),'Martes',2,1,1,'FQCUL2',1,3)
+insert into [Subject] values('Seminario Optativo',CAST(N'2020-12-01T10:00:00.000' AS DateTime),CAST(N'2020-11-01T11:00:00.000' AS DateTime),'Sábado',2,1,1,'SEMOP2',1,3)
+
+/*materias segundo año SEGUNDO CUATRI*/
+insert into [Subject] values('Ética Profesional',CAST(N'2020-12-01T10:00:00.000' AS DateTime),CAST(N'2020-11-01T11:00:00.000' AS DateTime),'Miércoles',2,2,1,'ETICA2',1,3)
+insert into [Subject] values('Microbiología',CAST(N'2020-12-01T10:00:00.000' AS DateTime),CAST(N'2020-11-01T12:00:00.000' AS DateTime),'Viernes',2,2,1,'MICROB2',1,3)
+
+
