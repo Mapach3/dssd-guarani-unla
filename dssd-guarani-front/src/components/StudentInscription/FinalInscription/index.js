@@ -17,6 +17,7 @@ class FinalInscription extends Component {
   state = {
     finalsList: [],
     subjectsList: [],
+    teacherList: [],
     approvedFinalsCodes: [],
     loading: true,
     errorMsg: '',
@@ -24,6 +25,10 @@ class FinalInscription extends Component {
   }
 
   componentDidMount() {
+    const getUsers = axios.get(__API_USERSTUDENT)
+    axios.all([getUsers]).then(axios.spread((users) => {
+        this.setState({teacherList : users.data.filter( user => user.role === 2), })
+    }));
     axios.get(__API_SUBJECTSTUDENT).then(resp => {
       console.log(resp.data);
       this.setState({
@@ -104,8 +109,10 @@ class FinalInscription extends Component {
     }
   }
 
+  
+
   render() {
-    const { finalsList, subjectsList, loading, errorMsg } = this.state
+    const { finalsList, teacherList, subjectsList, loading, errorMsg } = this.state
     return (
       // <main
       //   className={clsx(this.props.classes.content, {
@@ -115,7 +122,7 @@ class FinalInscription extends Component {
         // <div className={this.props.classes.drawerHeader} />
         <Container maxWidth="md">
           <h3>Listado de finales</h3>
-          <SubjectGrid finals={finalsList} subjectsList={subjectsList} action={(userId,finalId,active,inWindow) => this.createInscription(userId,finalId,active,inWindow)}/>
+          <SubjectGrid finals={finalsList} teacherList={teacherList} subjectsList={subjectsList} action={(userId,finalId,active,inWindow) => this.createInscription(userId,finalId,active,inWindow)}/>
           <Dialog
             open={this.state.dialogOpen}
             keepMounted
