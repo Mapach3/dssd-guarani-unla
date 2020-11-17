@@ -40,8 +40,8 @@ class StudentBySubject extends Component {
               attributes: {
                 'xmlns:soapenv': 'http://schemas.xmlsoap.org/soap/envelope/',
                 'xmlns:gs': 'http://spring.io/guides/gs-producing-web-service'
-              },            
-                'gs:idUser': '1'
+              },           
+                'gs:idUser': window.localStorage.getItem('userId')
               
              
             }
@@ -51,6 +51,7 @@ class StudentBySubject extends Component {
           
             let doc = new DOMParser().parseFromString(soapRequest.xmlResponse, 'text/xml');
             let valueXML = doc.getElementsByTagName('SOAP-ENV:Body');
+            if(valueXML !== null && valueXML[0].children !== null ){
             let courses = valueXML[0].children[0].childNodes[0].childNodes;
             let coursesAsigned = []
             for(let i = 0; i<courses.length ; i++){
@@ -72,7 +73,7 @@ class StudentBySubject extends Component {
             }
             console.log(coursesAsigned);
             this.state.subjectList = coursesAsigned;
-    
+          }
           });        
       
          
@@ -105,6 +106,7 @@ class StudentBySubject extends Component {
             let valueXML = doc.getElementsByTagName('SOAP-ENV:Body');
             let courses = valueXML[0].children[0].childNodes[0].childNodes;
             let coursesAsigned = []
+            if(courses != null){
             for(let i = 0; i<courses.length ; i++){
               let course = courses[i].children;
               let obj = {};
@@ -120,6 +122,7 @@ class StudentBySubject extends Component {
             console.log(coursesAsigned);
             this.state.studentList = coursesAsigned;
             this.render();
+          }
     
           });        
       

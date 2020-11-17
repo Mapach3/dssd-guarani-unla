@@ -12,7 +12,7 @@ const history = createBrowserHistory();
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        display: 'flex',
+        display: 'block',
     },
     appBar: {
         transition: theme.transitions.create(['margin', 'width'], {
