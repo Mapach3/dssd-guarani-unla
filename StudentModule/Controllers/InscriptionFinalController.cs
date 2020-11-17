@@ -117,20 +117,20 @@ namespace StudentModule.Controllers
         }
 
         /// <summary>
-        /// Elimina una Inscripcion de Final
+        /// Elimina una Inscripcion de Final por ID de usuario
         /// </summary>
-        /// <param name="id"></param>  
-        [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        /// <param name="final"></param>  
+        [HttpDelete]
+        public ActionResult Delete([FromBody]InscriptionFinal final)
         {
             try
             {
-                var inscriptionFinal = context.InscriptionFinal.FirstOrDefault(u => u.UserId == id);
-                if (inscriptionFinal != null)
+                var dbFinal = context.InscriptionFinal.FirstOrDefault(u => u.UserId == final.UserId && u.FinalId == final.FinalId);
+                if (final != null)
                 {
-                    context.InscriptionFinal.Remove(inscriptionFinal);
+                    context.InscriptionFinal.Remove(dbFinal);
                     context.SaveChanges();
-                    return Ok();
+                    return Ok($"Inscripcion a final eliminada.");
                 }
                 else
                 {

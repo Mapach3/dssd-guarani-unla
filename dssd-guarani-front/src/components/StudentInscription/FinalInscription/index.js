@@ -40,7 +40,6 @@ class FinalInscription extends Component {
   }
 
   getCareerIdOfSubject(final, subjects) {
-    console.log(subjects)
     return subjects.find(subject => subject.id == final.subject).career.id
   }
 
@@ -95,7 +94,7 @@ class FinalInscription extends Component {
         }
       } 
       axios(options).then(resp => {
-        this.setState({errorMsg : "Inscripcion a final exitosa.", dialogOpen : true})
+        this.setState({errorMsg : "Solicitud exitosa.", dialogOpen : true})
         this.componentDidMount()
       })
     }
