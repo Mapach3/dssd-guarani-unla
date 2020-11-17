@@ -193,7 +193,8 @@ namespace DDSDGuarani.Migrations
                 {
                     UserId = table.Column<int>(nullable: false),
                     FinalId = table.Column<int>(nullable: false),
-                    Score = table.Column<int>(nullable: false)
+                    Score = table.Column<int>(nullable: false),
+                    InscriptionReminder = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

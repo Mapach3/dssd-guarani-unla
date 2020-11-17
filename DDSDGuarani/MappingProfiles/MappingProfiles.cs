@@ -64,7 +64,8 @@ namespace DDSDGuarani.MappingProfiles
                     {
                         FinalId = x.FinalId,
                         UserId = x.UserId,
-                        Score= x.Score
+                        Score= x.Score,
+                        InscriptionReminder = x.InscriptionReminder
                     });
                 });
 
@@ -123,7 +124,7 @@ namespace DDSDGuarani.MappingProfiles
                 {
                     x.InscriptionFinals.ForEach(y =>
                     {
-                        inscriptionFinalsAux_InFinalCall.Add(new InscriptionFinalResponse { FinalId = y.FinalId, UserId = y.UserId });
+                        inscriptionFinalsAux_InFinalCall.Add(new InscriptionFinalResponse { FinalId = y.FinalId, UserId = y.UserId, Score = y.Score, InscriptionReminder = y.InscriptionReminder});
                     });
                 });
 
@@ -187,6 +188,7 @@ namespace DDSDGuarani.MappingProfiles
             CreateMap<InscriptionFinal, InscriptionFinalResponse>()
             .ForMember(dest => dest.FinalId, opts => opts.MapFrom(src => src.FinalId))
             .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.UserId))
+            .ForMember(dest => dest.InscriptionReminder, opts => opts.MapFrom(src => src.InscriptionReminder))
             .ForMember(dest => dest.Score, opts => opts.MapFrom(src => src.Score));
             #endregion
 
@@ -209,7 +211,7 @@ namespace DDSDGuarani.MappingProfiles
                 List<InscriptionFinalResponse> inscriptionFinalsAux = new List<InscriptionFinalResponse>();
                 src.InscriptionFinals.ForEach(x =>
                 {
-                    inscriptionFinalsAux.Add(new InscriptionFinalResponse { FinalId = x.FinalId, UserId = x.UserId });
+                    inscriptionFinalsAux.Add(new InscriptionFinalResponse { FinalId = x.FinalId, UserId = x.UserId, Score = x.Score, InscriptionReminder = x.InscriptionReminder });
                 });
 
                 dest.InscriptionFinals = inscriptionFinalsAux;

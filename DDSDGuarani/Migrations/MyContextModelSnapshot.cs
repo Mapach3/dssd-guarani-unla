@@ -118,6 +118,9 @@ namespace DDSDGuarani.Migrations
                     b.Property<int>("FinalId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("InscriptionReminder")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Score")
                         .HasColumnType("int");
 
