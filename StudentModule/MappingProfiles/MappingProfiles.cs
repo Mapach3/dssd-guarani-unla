@@ -63,7 +63,8 @@ namespace StudentModule.MappingProfiles
                     {
                         FinalId = x.FinalId,
                         UserId = x.UserId,
-                        Score= x.Score
+                        Score= x.Score,
+                        InscriptionReminder = x.InscriptionReminder
                     });
                 });
 
@@ -180,6 +181,7 @@ namespace StudentModule.MappingProfiles
             CreateMap<InscriptionFinal, InscriptionFinalResponse>()
             .ForMember(dest => dest.FinalId, opts => opts.MapFrom(src => src.FinalId))
             .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.UserId))
+            .ForMember(dest => dest.InscriptionReminder, opts => opts.MapFrom(src => src.InscriptionReminder))
             .ForMember(dest => dest.Score, opts => opts.MapFrom(src => src.Score));
             #endregion
 
@@ -202,7 +204,7 @@ namespace StudentModule.MappingProfiles
                 List<InscriptionFinalResponse> inscriptionFinalsAux = new List<InscriptionFinalResponse>();
                 src.InscriptionFinals.ForEach(x =>
                 {
-                    inscriptionFinalsAux.Add(new InscriptionFinalResponse { FinalId = x.FinalId, UserId = x.UserId });
+                    inscriptionFinalsAux.Add(new InscriptionFinalResponse { FinalId = x.FinalId, UserId = x.UserId, InscriptionReminder = x.InscriptionReminder });
                 });
 
                 dest.InscriptionFinals = inscriptionFinalsAux;
@@ -264,7 +266,7 @@ namespace StudentModule.MappingProfiles
                 List<InscriptionFinalResponse> inscriptionFinalsAux = new List<InscriptionFinalResponse>();
                 src.InscriptionFinals.ForEach(x =>
                 {
-                    inscriptionFinalsAux.Add(new InscriptionFinalResponse { FinalId = x.FinalId, UserId = x.UserId });
+                    inscriptionFinalsAux.Add(new InscriptionFinalResponse { FinalId = x.FinalId, UserId = x.UserId, InscriptionReminder = x.InscriptionReminder });
                 });
 
                 dest.InscriptionFinals = inscriptionFinalsAux;

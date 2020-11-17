@@ -10,5 +10,6 @@ namespace StudentModule.DTOResponse
         public int UserId { get; set; }
         public int FinalId { get; set; }
         public int Score { get; set; }
+        public bool InscriptionReminder { get; set; }
     }
 }
