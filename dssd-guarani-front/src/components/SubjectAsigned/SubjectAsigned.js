@@ -89,6 +89,7 @@ class SubjectAsigned extends Component {
                   <TableRow>
                   <TableCell># ID</TableCell>
                   <TableCell align="left">Nombre</TableCell>
+                  <TableCell align="left">Turno</TableCell>
               
                   </TableRow>
               </TableHead>
@@ -97,6 +98,7 @@ class SubjectAsigned extends Component {
                   <TableRow key={subject.id}>
                       <TableCell component="th" scope="row">{subject.id}</TableCell>
                       <TableCell align="left">{subject.name}</TableCell>
+                      <TableCell align="left">{subject.shift}</TableCell>
                       <TableCell align="left">
                       </TableCell>
                   </TableRow>

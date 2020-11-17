@@ -1,4 +1,4 @@
-version: "3"
+version: "2"
 services:
     db:
         image:  "mcr.microsoft.com/mssql/server"
@@ -12,5 +12,13 @@ services:
             - db
         ports:
             - 8090:8090
+    react-front:
+      extends:
+        file: ../dssd-guarani-front/docker-compose.yml
+        service: react-front
+    soap-service:
+      extends:
+        file: ../servicio-soap/soap-service.yml
+        service: soap-service
 
         

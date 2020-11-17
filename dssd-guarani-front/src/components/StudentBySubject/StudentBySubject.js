@@ -137,6 +137,7 @@ class StudentBySubject extends Component {
                   <TableRow>
                   <TableCell># ID</TableCell>
                   <TableCell align="left">Nombre</TableCell>
+                  <TableCell align="left">Turno</TableCell>
                   <TableCell align="left">Action</TableCell>
               
                   </TableRow>
@@ -146,6 +147,7 @@ class StudentBySubject extends Component {
                   <TableRow key={subject.id}>
                       <TableCell component="th" scope="row">{subject.id}</TableCell>
                       <TableCell align="left">{subject.name}</TableCell>
+                      <TableCell align="left">{subject.shift}</TableCell>
                       <TableCell align="left">
                       <Button variant="contained" onClick={() => this.loadStudentBySubject(subject.id)}  value={window.localStorage.getItem('userId')}  disabled={false} color="primary">Ver estudiantes</Button>      
 
