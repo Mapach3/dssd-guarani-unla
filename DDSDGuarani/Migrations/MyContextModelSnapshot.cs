@@ -92,6 +92,9 @@ namespace DDSDGuarani.Migrations
                     b.Property<double>("CourseAverage")
                         .HasColumnType("float");
 
+                    b.Property<bool>("InscriptionReminder")
+                        .HasColumnType("bit");
+
                     b.HasKey("SubjectId", "UserId");
 
                     b.HasIndex("UserId");
@@ -120,6 +123,9 @@ namespace DDSDGuarani.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -145,6 +151,9 @@ namespace DDSDGuarani.Migrations
 
                     b.Property<int>("FinalId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("InscriptionReminder")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Score")
                         .HasColumnType("int");
@@ -216,6 +225,9 @@ namespace DDSDGuarani.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("SubjectCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("WeekDay")
                         .HasColumnType("nvarchar(max)");
 
@@ -257,6 +269,19 @@ namespace DDSDGuarani.Migrations
                             StartTime = new DateTime(2020, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Year = 2020
                         });
+                });
+
+            modelBuilder.Entity("DDSDGuarani.Entities.SubjectCodes", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SubjectName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Code");
+
+                    b.ToTable("SubjectCodes");
                 });
 
             modelBuilder.Entity("DDSDGuarani.Entities.User", b =>

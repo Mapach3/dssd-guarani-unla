@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { __API_SUBJECTSTUDENT, __API_USERSTUDENT, __API_COURSESTUDENT } from '../../../consts/consts';
+import { __API_SUBJECTSTUDENT, __API_USERSTUDENT, __API_COURSESTUDENT, __API_FINALSTUDENT, __API_FINAL } from '../../../consts/consts';
 import clsx from 'clsx';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -12,12 +12,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
 
-class CourseInscription extends Component {
+class FinalInscription extends Component {
 
   state = {
-    subjectList: [],
-    approvedSubjectsCodes: [],
+    finalsList: [],
+    subjectsList: [],
     teacherList: [],
+    approvedFinalsCodes: [],
     loading: true,
     errorMsg: '',
     dialogOpen: false
@@ -28,39 +29,49 @@ class CourseInscription extends Component {
     axios.all([getUsers]).then(axios.spread((users) => {
         this.setState({teacherList : users.data.filter( user => user.role === 2), })
     }));
-    this.updateSubjectList()
+    axios.get(__API_SUBJECTSTUDENT).then(resp => {
+      console.log(resp.data);
+      this.setState({
+        subjectsList: resp.data
+      })
+      this.updateFinalsList(resp.data)
+    })
   }
 
-  getNotApprovedSubjects(subjects) {
-    this.approvedSubjectsCodes = this.getApprovedSubjectCodes(subjects)
-    console.log(subjects.filter(subject => !this.isAnApprovedCode(subject.subjectCode) && subject.inscriptionWindow.id == 1 && subject.career.id == window.localStorage.getItem('careerId')))
-    return subjects.filter(subject => !this.isAnApprovedCode(subject.subjectCode) && subject.inscriptionWindow.id == 1 && subject.career.id == window.localStorage.getItem('careerId'))
+  getNotApprovedFinals(finals, subjects) {
+    this.approvedFinalsCodes = this.getApprovedFinalCodes(finals)
+    console.log(finals.filter(final => !this.isAnApprovedCode(final.subjectCode) && final.inscriptionWindow.id == 2 && this.getCareerIdOfSubject(final, subjects) == window.localStorage.getItem('careerId')))
+    return finals.filter(final => !this.isAnApprovedCode(final.subjectCode) && final.inscriptionWindow.id == 2 && this.getCareerIdOfSubject(final, subjects) == window.localStorage.getItem('careerId'))
+  }
+
+  getCareerIdOfSubject(final, subjects) {
+    return subjects.find(subject => subject.id == final.subject).career.id
   }
 
   isAnApprovedCode(code) {
-    return this.approvedSubjectsCodes.find(subjectCode => subjectCode == code)
+    return this.approvedFinalsCodes.find(subjectCode => subjectCode == code)
   }
 
-  subjectIsApproved(courses) {
-    return courses.find(course => course.userId == window.localStorage.getItem('userId') && Number(course.courseAverage) >= 4)
+  finalIsApproved(finals) {
+    return finals.find(final => final.userId == window.localStorage.getItem('userId') && Number(final.score) >= 4)
   }
 
-  getApprovedSubjectCodes(subjects) {
+  getApprovedFinalCodes(finals) {
     var codes = []
-    subjects.map((subject) => {
-      if(this.subjectIsApproved(subject.courses)){
-        codes.push(subject.subjectCode)
+    finals.map((final) => {
+      if(this.finalIsApproved(final.inscriptionFinals)){
+        codes.push(this.subjectsList.find(subject => subject.id == final.subjectId).subjectCode)
       }
     });
     console.log(codes);
     return codes;
   }
 
-  updateSubjectList() {
-    axios.get(__API_SUBJECTSTUDENT).then(resp => {
+  updateFinalsList(subjects) {
+    axios.get(__API_FINALSTUDENT).then(resp => {
       console.log(resp.data);
       this.setState({
-        subjectList: this.getNotApprovedSubjects(resp.data),
+        finalsList: this.getNotApprovedFinals(resp.data, subjects),
         loading: false
       })
     })
@@ -70,7 +81,7 @@ class CourseInscription extends Component {
     this.setState({ dialogOpen: !this.state.dialogOpen })
   }
 
-  createInscription(userId,subjectId,active,inWindow) {
+  createInscription(userId,finalId,active,inWindow) {
     this.setState({ errorMsg: '' })
     var id = parseInt(userId)
     var method = "POST"
@@ -80,26 +91,28 @@ class CourseInscription extends Component {
     if(inWindow){
       const options = {
         method : method,
-        url : __API_COURSESTUDENT,
+        url : __API_FINAL,
       
         data : {
             userid : Number(userId),
-            subjectid : Number(subjectId)
+            finalid : Number(finalId)
         }
       } 
       axios(options).then(resp => {
-        console.log(resp.data)
-        this.setState({errorMsg : resp.data, dialogOpen : true})
-        this.updateSubjectList()
+        this.setState({errorMsg : "Solicitud exitosa.", dialogOpen : true})
+        this.componentDidMount()
       })
     }
     else{
       this.setState({errorMsg : "La ventana de inscripcion no se encuentra activa, operacion no valida.", dialogOpen : true})
-      this.updateSubjectList()
+      this.componentDidMount()
     }
   }
+
+  
+
   render() {
-    const { subjectList, teacherList, loading, errorMsg } = this.state
+    const { finalsList, teacherList, subjectsList, loading, errorMsg } = this.state
     return (
       // <main
       //   className={clsx(this.props.classes.content, {
@@ -108,8 +121,8 @@ class CourseInscription extends Component {
       // >
         // <div className={this.props.classes.drawerHeader} />
         <Container maxWidth="md">
-          <h3>Listado de cursadas</h3>
-          <SubjectGrid subjects={subjectList} teacherList={teacherList} action={(userId,subjectId,active,inWindow) => this.createInscription(userId,subjectId,active,inWindow)}/>
+          <h3>Listado de finales</h3>
+          <SubjectGrid finals={finalsList} teacherList={teacherList} subjectsList={subjectsList} action={(userId,finalId,active,inWindow) => this.createInscription(userId,finalId,active,inWindow)}/>
           <Dialog
             open={this.state.dialogOpen}
             keepMounted
@@ -133,4 +146,4 @@ class CourseInscription extends Component {
 
 }
 
-export default CourseInscription
+export default FinalInscription

@@ -6,6 +6,7 @@ namespace DDSDGuarani.Entities
     public class Course
     {
         public double CourseAverage { get; set; }
+        public bool InscriptionReminder { get; set; }
 
         //Relation - ManyToOne - Subject
         public int SubjectId { get; set; }

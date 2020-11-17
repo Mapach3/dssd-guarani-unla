@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import Container from '@material-ui/core/Container';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import Button from '@material-ui/core/Button';
+import CustomGrid from '../Grid'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
@@ -28,6 +28,7 @@ class FinalSpreadSheet extends Component{
     state = {
         careerList : [],
         chosenCareer : '',
+        careerName : '',
         subjectList : [],
         chosenPeriod : '',
         teacherList : [],
@@ -57,15 +58,18 @@ class FinalSpreadSheet extends Component{
     onCareerChange = (ev) => {
 
         this.setState({chosenCareer : ev.target.value, gridDataSource : []})
+        debugger;
         let subjectsOfCareer = this.state.subjectList.filter( subject => subject.career.id === ev.target.value)
+        let careerName = this.state.careerList.find( career => career.id === ev.target.value).name
         let subjectsOfCareerIds =  []
         subjectsOfCareer.forEach( sub => {
             subjectsOfCareerIds.push(sub.id)
         })
-        let finalsOfCareer = this.state.finalList.filter( final => subjectsOfCareerIds.includes(final.subject)).sort((a,b) => a.date > b.date)
+        let finalsOfCareer = this.state.finalList.filter( final => subjectsOfCareerIds.includes(final.subject) && final.active).sort((a,b) => a.date > b.date)
 
         this.setState({chosenCareerFinals : finalsOfCareer,
-                       chosenCareerSubjects : subjectsOfCareer})
+                       chosenCareerSubjects : subjectsOfCareer,
+                        careerName : careerName})
         
         if (finalsOfCareer.length !== 0)
             this.generateGridDataSource(finalsOfCareer,subjectsOfCareer);        
@@ -75,7 +79,7 @@ class FinalSpreadSheet extends Component{
         var dataSource = []
         finalsOfCareer.forEach( final => 
             dataSource.push({
-                subject : subjectsOfCareer.find( sub => sub.id === final.id).name,
+                subject : subjectsOfCareer.find( sub => sub.id === final.subject).name,
                 date :    this.setFinalDateTime(final.date),
                 teachers :  this.getTeacherNames(final)
             })
@@ -124,30 +128,22 @@ class FinalSpreadSheet extends Component{
                                     </Select>
                                 </FormControl>
                             </Grid>
-                            {this.state.chosenCareer.length !== 0 ?
+                            {this.state.chosenCareerFinals.length !== 0 ?
                             <>
-                            <TableContainer component={Paper}>
-                                <Table aria-label="simple table">
-                                    <TableHead>
-                                        <TableRow>
-                                        <TableCell align="left">Materia</TableCell>
-                                        <TableCell align="left">Día y Horario</TableCell>
-                                        <TableCell align="left">Docentes</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {this.state.chosenCareerFinals.map(final => (
-                                        <TableRow key={final.id}>
-                                        <TableCell align="left">{this.setSubjectName(final.id)}</TableCell>
-                                        <TableCell align="left"> 
-                                        {this.setFinalDateTime(final.date)}
-                                        </TableCell>
-                                        <TableCell align="left">{this.getTeacherNames(final)}</TableCell>
-                                        </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
+                            <CustomGrid id='finalsGrid'
+                                dataSource={this.state.gridDataSource}
+                                toolbar={true}
+                                export={true}
+                                rowHeight={30}
+                                columns={[
+                                    { header: "Materia", field: "subject", width: '50', textAlign: 'Center' },
+                                    { header: "Día y Hora", field: "date", width: '30', textAlign: 'Center' },
+                                    { header: "Docentes", field: "teachers", width: '50', textAlign: 'Center' }
+                                ]}
+                                headerExportText={"Finales de "+this.state.careerName}
+
+                            />
+
                             </> : null
                             }
                         </Grid>

@@ -81,8 +81,20 @@ class SubjectInscriptionModification extends Component{
         var aprobados = this.state.studentsList.filter( student => student.courses.find( course => course.subjectId === subjectId && course.courseAverage !== 0))
         var availableList  = this.state.studentsList.filter((el) => !aprobados.includes(el))
         this.setState({studentsForInscription : availableList})
+    }
 
-
+    getSubjectNameAndShift(subject){
+        var ret = subject.name + " -"
+        switch(subject.shift){
+            case 1: ret+=" Mañana"
+            break;
+            case 2: ret+=" Tarde"
+            break;
+            case 3: ret+=" Noche"
+            break;
+            default: ret+=" Mañana"
+        }
+        return ret;
     }
 
     createInscription = (ev) => {
@@ -174,7 +186,7 @@ class SubjectInscriptionModification extends Component{
                                         <InputLabel>Materia</InputLabel>
                                         <Select onChange={(ev) => this.onChosenSubjectChange(ev)} value={this.state.chosenSubject}>
                                             {this.state.chosenCareerSubjects.map(subject =>
-                                                <MenuItem value={subject.id}>{subject.name}</MenuItem>
+                                                <MenuItem value={subject.id}>{this.getSubjectNameAndShift(subject)}</MenuItem>
                                             )}
                                         </Select>
                                     </FormControl>

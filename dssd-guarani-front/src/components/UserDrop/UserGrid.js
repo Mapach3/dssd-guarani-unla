@@ -34,22 +34,22 @@ class UserGrid extends Component{
                 <TableHead>
                     <TableRow>
                     <TableCell># ID</TableCell>
-                    <TableCell align="left">Nombre y Apellido</TableCell>
-                    <TableCell align="left">E-mail</TableCell>
-                    <TableCell align="left">DNI</TableCell>
-                    <TableCell align="left">Rol</TableCell>
-                    <TableCell align="left">Acción</TableCell>
+                    <TableCell align="center">Nombre y Apellido</TableCell>
+                    <TableCell align="center">E-mail</TableCell>
+                    <TableCell align="center">DNI</TableCell>
+                    <TableCell align="center">Rol</TableCell>
+                    <TableCell align="center">Acción</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {users.map((user) => (
                     <TableRow key={user.id}>
                         <TableCell component="th" scope="row">{user.id}</TableCell>
-                        <TableCell align="left">{user.name} {user.surname}</TableCell>
-                        <TableCell align="left">{user.email}</TableCell>
-                        <TableCell align="left">{user.dni}</TableCell>
-                        <TableCell align="left">{this.setUserRole(user)}</TableCell>
-                        <TableCell align="left">
+                        <TableCell align="center">{user.name} {user.surname}</TableCell>
+                        <TableCell align="center">{user.email}</TableCell>
+                        <TableCell align="center">{user.dni}</TableCell>
+                        <TableCell align="center">{this.setUserRole(user)}</TableCell>
+                        <TableCell align="center">
                         <Button variant="contained" value={user.id} disabled={false} color={user.active ? "secondary" : "primary"} onClick={(ev) => this.sendUserId(ev)}>{user.active ? "Baja" : "Alta"}</Button>      
                         </TableCell>
                     </TableRow>

@@ -4,18 +4,12 @@ import clsx from 'clsx';
 import Container from '@material-ui/core/Container';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
+import CustomGrid from '../Grid'
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+
 import moment from 'moment'
 
 
@@ -146,32 +140,32 @@ class SubjectSpreadSheet extends Component{
                                     </Select>
                                 </FormControl>
                             </Grid> : null}
-                            {this.state.chosenPeriod.length !== 0 ?
+                            {this.state.chosenCareerSubjects.length !== 0 && this.state.chosenPeriod.length !== 0 ?
                             <>
-                            <TableContainer component={Paper}>
-                                <Table aria-label="simple table">
-                                    <TableHead>
-                                        <TableRow>
-                                        <TableCell align="left">Materia</TableCell>
-                                        <TableCell align="left">Día y Horario</TableCell>
-                                        <TableCell align="left">Docentes</TableCell>
-                                        <TableCell align="left">Año</TableCell>
-                                        <TableCell align="left">Turno</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {this.state.chosenPeriodSubjects.map(subject => (
-                                        <TableRow key={subject.id}>
-                                            <TableCell align="left">{subject.name}</TableCell>
-                                            <TableCell align="left">{subject.weekDay} {moment(subject.startTime).format("hh:mm")} a {moment(subject.endTime).format("hh:mm")} </TableCell>
-                                            <TableCell align="left">{this.getTeacherNames(subject)}</TableCell>
-                                            <TableCell align="left">{this.setSubjectYear(subject.year)}</TableCell>
-                                            <TableCell align="left">{this.setSubjectShift(subject.shift)}</TableCell>
-                                        </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
+                            <CustomGrid id='subjectsGrid'
+                                dataSource={this.state.gridDataSource}
+                                pageSettings={{ pageCount: 1, pageSizes: [5, 10, 12, 15, 20, 50] }}
+                                allowPaging={false}
+                                selectionSettings={{ type: 'Multiple' }}
+                                allowResizing={true}
+                                allowSorting={true}
+                                allowTextWrap={true}
+                                searching={true}
+                                export={true}
+                                toolbar={true}
+                                rowHeight={30}
+                                columns={[
+                                        { header: "Materia", field: "name", width: '20', textAlign: 'Center' },
+                                        { header: "Día y Horario", field: "date", width: '20', textAlign: 'Center' },
+                                        { header: "Docentes", field: "teachers", width: '20', textAlign: 'Center' },
+                                        { header: "Año", field: "year", width: '10', textAlign: 'Center' },
+                                        { header: "Turno", field: "shift", width: '10', textAlign: 'Center' }
+                                    ]}
+                                headerExportText={this.state.careerList.find(career => career.id === this.state.chosenCareer).name + 
+                                                  " - "+ (this.state.chosenPeriod === 1 ? "Primer" : "Segundo")+ " Cuatrimestre"}
+                                allowGrouping={false}
+                                allowDeleting={false}
+                            />
                             </> : null
                             }
                         </Grid>

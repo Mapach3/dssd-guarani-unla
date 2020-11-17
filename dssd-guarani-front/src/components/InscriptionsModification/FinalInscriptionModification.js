@@ -23,7 +23,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
 import axios from 'axios'
-import { __API_CAREER, __API_SUBJECT, __API_USER, __API_INSCFINAL } from '../../consts/consts';
+import { __API_CAREER, __API_SUBJECT, __API_USER, __API_INSCFINAL, __API_SUBCODES, __API_FINALCALL } from '../../consts/consts';
 
 import moment from 'moment';
 import 'moment/locale/es';
@@ -42,6 +42,7 @@ class FinalInscriptionModification extends Component{
         chosenCareerSubjects : [],
         finalsOfChosenSubject : [],
         studentsOfThisFinal : [],
+        finalsList : [],
         chosenFinal : '',
         errorMsg : '',
         dialogOpen: false
@@ -51,22 +52,25 @@ class FinalInscriptionModification extends Component{
         const getCareers = axios.get(__API_CAREER)
         const getSubjects = axios.get(__API_SUBJECT)
         const getStudents = axios.get(__API_USER)
+        const getFinals = axios.get(__API_FINALCALL)
 
-        axios.all([getCareers,getSubjects,getStudents]).then(axios.spread((careers,subjects,students) => {
-            console.log(careers.data,subjects.data,students.data.filter(student => student.role === 1))
+        axios.all([getCareers,getSubjects,getStudents,getFinals]).then(axios.spread((careers,subjects,students,finals) => {
             this.setState({careerList : careers.data, 
                            subjectList : subjects.data, 
-                           studentsList : students.data.filter(student => student.role === 1)
+                           studentsList : students.data.filter(student => student.role === 1),
+                           finalsList: finals.data
                         })
         }))
     }
 
     updateStudentsList = () => {
         axios.get(__API_USER).then( resp => {
+            const {subjectList} = this.state
             var studentsFromDB = resp.data
             var chosenFinal = this.state.chosenFinal
             //Elimino los que no tengan una cursada con nota mayor a 4 para esta materia.. porque sino no pueden dar final
-            var aprobadosAndConCursada  = studentsFromDB.filter(student => student.courses.find(course => course.subjectId === this.state.chosenSubject && course.courseAverage >= 4))
+            let aprobadosAndConCursada  = studentsFromDB.filter(student => (student.courses.find(course => subjectList.find( subject => subject.id === course.subjectId).subjectCode === this.state.chosenSubject && course.courseAverage >= 4))) 
+                                                                        
     
             //elimino los estudiantes que tienen este final aprobado porque no les puedo sacar la inscripción
             var conFinalAprobado = aprobadosAndConCursada.filter( student => student.inscriptionFinals.find( final => final.finalId === chosenFinal && final.score >= 4))
@@ -83,14 +87,14 @@ class FinalInscriptionModification extends Component{
 
 
     onChosenFinalChange = (ev) => {
+        const {subjectList, chosenFinal} = this.state
         debugger;
         this.setState({chosenFinal : ev.target.value,studentsOfThisFinal : []})
-        let chosenFinal = this.state.chosenFinal
         //Elimino los que no tengan una cursada con nota mayor a 4 para esta materia.. porque sino no pueden dar final
-        let aprobadosAndConCursada  = this.state.studentsList.filter(student => (student.courses.find(course => course.subjectId === this.state.chosenSubject && course.courseAverage >= 4)) 
-                                                                             && (!student.inscriptionFinals.find(final => final.finalId === chosenFinal && final.score === 0)))
-        //TODO: REVISAR PORQUE ESTO NO FUNCIONA BIEN Y NO FILTRA POR LA SEGUNDA CONDICIÓN
-        console.log(aprobadosAndConCursada)
+
+        let aprobadosAndConCursada  = this.state.studentsList.filter(student => (student.courses.find(course => subjectList.find( subject => subject.id === course.subjectId).subjectCode === this.state.chosenSubject && course.courseAverage >= 4)) 
+                                                                     && (!student.inscriptionFinals.find(final => final.finalId === chosenFinal && final.score === 0)))
+        
 
         this.setState({studentsOfThisFinal : aprobadosAndConCursada})
 
@@ -98,10 +102,10 @@ class FinalInscriptionModification extends Component{
 
     onChosenSubjectChange = (ev) => {
         debugger;
+        const {subjectList} = this.state
         this.setState({chosenSubject : ev.target.value})
-        let subject = this.state.subjectList.find( subject => subject.id === ev.target.value)
-
-        this.setState({finalsOfChosenSubject : subject.finals,
+        let subject = this.state.subjectList.find( subject => subject.subjectCode === ev.target.value)
+        this.setState({finalsOfChosenSubject : this.state.finalsList.filter(final => final.active && subjectList.find(subject => subject.id === final.subject).subjectCode === subject.subjectCode),
                        studentsOfThisFinal : [],
                        chosenFinal : ''})
     }
@@ -110,6 +114,11 @@ class FinalInscriptionModification extends Component{
         debugger;
         this.setState({chosenCareer : ev.target.value})
         let subjectsOfCareer = this.state.subjectList.filter( subject => subject.career.id === ev.target.value)
+        for (let index in subjectsOfCareer){
+            if (subjectsOfCareer.find(sub => sub.subjectCode === subjectsOfCareer[index].subjectCode && sub.id !== subjectsOfCareer[index].id)){
+                subjectsOfCareer.splice(index,1)
+            }
+        }
         this.setState({chosenCareerSubjects : subjectsOfCareer,
                        studentsOfThisFinal : [],
                        chosenFinal : ''})        
@@ -173,6 +182,20 @@ class FinalInscriptionModification extends Component{
 
     }
 
+    getSubjectNameAndShift(subject){
+        var ret = subject.name + " -"
+        switch(subject.shift){
+            case 1: ret+=" Mañana"
+            break;
+            case 2: ret+=" Tarde"
+            break;
+            case 3: ret+=" Noche"
+            break;
+            default: ret+=" Mañana"
+        }
+        return ret;
+    }
+
     render(){
         return (
                 <Container maxWidth="md">
@@ -212,7 +235,7 @@ class FinalInscriptionModification extends Component{
                                         <InputLabel>Materia</InputLabel>
                                         <Select onChange={this.onChosenSubjectChange} value={this.state.chosenSubject}>
                                             {this.state.chosenCareerSubjects.map(subject =>
-                                                <MenuItem key={subject.id} value={subject.id}>{subject.name}</MenuItem>
+                                                <MenuItem key={subject.subjectCode} value={subject.subjectCode}>{subject.name}</MenuItem>
                                             )}
                                         </Select>
                                     </FormControl>

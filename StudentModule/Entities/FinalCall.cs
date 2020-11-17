@@ -10,6 +10,7 @@ namespace StudentModule.Entities
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
+        public bool Active { get; set; }
 
         //Relation - ManyToOne - Subject
         public int SubjectId { get; set; }

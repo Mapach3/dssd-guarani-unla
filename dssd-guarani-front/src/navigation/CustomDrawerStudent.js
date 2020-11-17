@@ -47,6 +47,10 @@ const CustomDrawerStudent = ({ classes, open, setOpen, theme, ...props }) => {
                     <ListItemIcon><Add /></ListItemIcon>
                     <ListItemText primary="Inscripcion a cursadas" />
                 </ListItem>
+                <ListItem button onClick={() => props.history.push("/inscriptionFinal")}>
+                    <ListItemIcon><Add /></ListItemIcon>
+                    <ListItemText primary="Inscripcion a finales" />
+                </ListItem>
                 <ListItem button onClick={() => props.history.push("/gradesInform")}>
                     <ListItemIcon><Add /></ListItemIcon>
                     <ListItemText primary="Informe analitico" />

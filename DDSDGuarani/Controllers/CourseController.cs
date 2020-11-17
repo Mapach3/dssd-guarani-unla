@@ -28,7 +28,7 @@ namespace DDSDGuarani.Controllers
         public IEnumerable<CourseResponse> Get()
         {
             IEnumerable<CourseResponse> response = new List<CourseResponse>();
-            var resultDb = context.Course.Include(x=>x.Subject).Include(x=>x.User).ToList().OrderBy(x => x.UserId);
+            var resultDb = context.Course.Include(x => x.Subject).Include(x => x.User).ToList().OrderBy(x => x.UserId);
             response = _mapper.Map<IEnumerable<Course>, IEnumerable<CourseResponse>>(resultDb);
             return response;
         }
@@ -55,6 +55,17 @@ namespace DDSDGuarani.Controllers
         {
             try
             {
+                var subjectToInscript = context.Subject.SingleOrDefault(x => x.Id == course.SubjectId);
+                var subjectDifferentShift = context.Subject.SingleOrDefault(x => x.Name == subjectToInscript.Name && x.Shift != subjectToInscript.Shift);
+
+                if (subjectDifferentShift != null)
+                {
+                    var courseAlreadyInscripted = context.Course.SingleOrDefault(x => x.UserId == course.UserId && x.SubjectId == subjectDifferentShift.Id);
+                    if (courseAlreadyInscripted != null)
+                    {
+                        return Ok("No se puede inscribir ya que existe una inscripción a esa materia en otro horario");
+                    }
+                }
                 context.Course.Add(course);
                 context.SaveChanges();
                 return Ok("Inscripción añadida exitosamente");
@@ -99,7 +110,7 @@ namespace DDSDGuarani.Controllers
         /// </summary>
         /// <param name="course"></param>  
         [HttpDelete]
-        public ActionResult Delete([FromBody]Course course)
+        public ActionResult Delete([FromBody] Course course)
         {
             try
             {

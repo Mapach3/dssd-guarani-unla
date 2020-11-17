@@ -63,7 +63,8 @@ namespace StudentModule.MappingProfiles
                     {
                         FinalId = x.FinalId,
                         UserId = x.UserId,
-                        Score= x.Score
+                        Score= x.Score,
+                        InscriptionReminder = x.InscriptionReminder
                     });
                 });
 
@@ -96,6 +97,7 @@ namespace StudentModule.MappingProfiles
             .ForMember(dest => dest.Year, opts => opts.MapFrom(src => src.Year))
             .ForMember(dest => dest.Period, opts => opts.MapFrom(src => src.Period))
             .ForMember(dest => dest.Shift, opts => opts.MapFrom(src => src.Shift))
+            .ForMember(dest => dest.SubjectCode, opts => opts.MapFrom(src => src.SubjectCode))
 
             .ForPath(dest => dest.InscriptionWindow, opts => opts.MapFrom(src => new InscriptionWindowResponse
             {
@@ -143,6 +145,7 @@ namespace StudentModule.MappingProfiles
                         Id = x.Id,
                         Date = x.Date,
                         Subject = x.SubjectId,
+                        Active = x.Active,
                         InscriptionWindow = new InscriptionWindowResponse { Id = x.InscriptionWindow.Id, EndDate = x.InscriptionWindow.EndDate, StartDate = x.InscriptionWindow.StartDate },
                         InscriptionFinals = inscriptionFinalsAux_InFinalCall
                     });
@@ -178,6 +181,7 @@ namespace StudentModule.MappingProfiles
             CreateMap<InscriptionFinal, InscriptionFinalResponse>()
             .ForMember(dest => dest.FinalId, opts => opts.MapFrom(src => src.FinalId))
             .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.UserId))
+            .ForMember(dest => dest.InscriptionReminder, opts => opts.MapFrom(src => src.InscriptionReminder))
             .ForMember(dest => dest.Score, opts => opts.MapFrom(src => src.Score));
             #endregion
 
@@ -186,6 +190,7 @@ namespace StudentModule.MappingProfiles
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.Date, opts => opts.MapFrom(src => src.Date))
             .ForMember(dest => dest.Subject, opts => opts.MapFrom(src => src.SubjectId))
+            .ForMember(dest => dest.Active, opts => opts.MapFrom(src => src.Active))
 
             .ForPath(dest => dest.InscriptionWindow, opts => opts.MapFrom(src => new InscriptionWindowResponse
             {
@@ -199,7 +204,7 @@ namespace StudentModule.MappingProfiles
                 List<InscriptionFinalResponse> inscriptionFinalsAux = new List<InscriptionFinalResponse>();
                 src.InscriptionFinals.ForEach(x =>
                 {
-                    inscriptionFinalsAux.Add(new InscriptionFinalResponse { FinalId = x.FinalId, UserId = x.UserId });
+                    inscriptionFinalsAux.Add(new InscriptionFinalResponse { FinalId = x.FinalId, UserId = x.UserId, InscriptionReminder = x.InscriptionReminder });
                 });
 
                 dest.InscriptionFinals = inscriptionFinalsAux;
@@ -232,7 +237,8 @@ namespace StudentModule.MappingProfiles
             CreateMap<Course, CourseResponse>()
             .ForMember(dest => dest.UserId, opts => opts.MapFrom(src => src.UserId))
             .ForMember(dest => dest.SubjectId, opts => opts.MapFrom(src => src.SubjectId))
-            .ForMember(dest => dest.CourseAverage, opts => opts.MapFrom(src => src.CourseAverage));
+            .ForMember(dest => dest.CourseAverage, opts => opts.MapFrom(src => src.CourseAverage))
+            .ForMember(dest => dest.InscriptionReminder, opts => opts.MapFrom(src => src.InscriptionReminder));
             #endregion
 
             #region Map Career
@@ -246,6 +252,7 @@ namespace StudentModule.MappingProfiles
             .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
             .ForMember(dest => dest.Date, opts => opts.MapFrom(src => src.Date))
             .ForMember(dest => dest.Subject, opts => opts.MapFrom(src => src.Subject))
+            .ForMember(dest => dest.Active, opts => opts.MapFrom(src => src.Active))
 
             .ForPath(dest => dest.InscriptionWindow, opts => opts.MapFrom(src => new InscriptionWindowResponse
             {
@@ -259,7 +266,7 @@ namespace StudentModule.MappingProfiles
                 List<InscriptionFinalResponse> inscriptionFinalsAux = new List<InscriptionFinalResponse>();
                 src.InscriptionFinals.ForEach(x =>
                 {
-                    inscriptionFinalsAux.Add(new InscriptionFinalResponse { FinalId = x.FinalId, UserId = x.UserId });
+                    inscriptionFinalsAux.Add(new InscriptionFinalResponse { FinalId = x.FinalId, UserId = x.UserId, InscriptionReminder = x.InscriptionReminder });
                 });
 
                 dest.InscriptionFinals = inscriptionFinalsAux;
@@ -272,6 +279,13 @@ namespace StudentModule.MappingProfiles
              .ForMember(dest => dest.Score, opts => opts.MapFrom(src => src.Score))
              .ForMember(dest => dest.User, opts => opts.MapFrom(src => src.User))
              .ForMember(dest => dest.FinalCall, opts => opts.MapFrom(src => src.FinalCall));
+            #endregion
+
+            #region Map SubjectCodes
+            CreateMap<SubjectCodes, SubjectCodesResponse>()
+            .ForMember(dest => dest.Code, opts => opts.MapFrom(src => src.Code))
+            .ForMember(dest => dest.SubjectName, opts => opts.MapFrom(src => src.SubjectName));
+
             #endregion
         }
     }

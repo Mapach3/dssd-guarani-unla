@@ -16,6 +16,7 @@ namespace StudentModule.Entities
         public int Year { get; set; }
         public int Period { get; set; }
         public SubjectShift Shift { get; set; }
+        public string SubjectCode { get; set; }
 
         //Relation - OneToMany - Course (Muchos a muchos con User, Course es la intermedia)
         public List<Course> Courses { get; set; } = new List<Course>();

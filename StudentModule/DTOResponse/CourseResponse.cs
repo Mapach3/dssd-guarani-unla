@@ -10,5 +10,6 @@ namespace StudentModule.DTOResponse
         public int SubjectId { get; set; }
         public int UserId { get; set; }
         public double CourseAverage { get; set; }
+        public bool InscriptionReminder { get; set; }
     }
 }
