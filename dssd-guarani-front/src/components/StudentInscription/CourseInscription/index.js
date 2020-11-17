@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { __API_SUBJECT, __API_USERSTUDENT, __API_COURSESTUDENT } from '../../../consts/consts';
+import { __API_SUBJECTSTUDENT, __API_USERSTUDENT, __API_COURSESTUDENT } from '../../../consts/consts';
 import clsx from 'clsx';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -17,12 +17,17 @@ class CourseInscription extends Component {
   state = {
     subjectList: [],
     approvedSubjectsCodes: [],
+    teacherList: [],
     loading: true,
     errorMsg: '',
     dialogOpen: false
   }
 
   componentDidMount() {
+    const getUsers = axios.get(__API_USERSTUDENT)
+    axios.all([getUsers]).then(axios.spread((users) => {
+        this.setState({teacherList : users.data.filter( user => user.role === 2), })
+    }));
     this.updateSubjectList()
   }
 
@@ -52,7 +57,7 @@ class CourseInscription extends Component {
   }
 
   updateSubjectList() {
-    axios.get(__API_SUBJECT).then(resp => {
+    axios.get(__API_SUBJECTSTUDENT).then(resp => {
       console.log(resp.data);
       this.setState({
         subjectList: this.getNotApprovedSubjects(resp.data),
@@ -94,7 +99,7 @@ class CourseInscription extends Component {
     }
   }
   render() {
-    const { subjectList, loading, errorMsg } = this.state
+    const { subjectList, teacherList, loading, errorMsg } = this.state
     return (
       // <main
       //   className={clsx(this.props.classes.content, {
@@ -104,7 +109,7 @@ class CourseInscription extends Component {
         // <div className={this.props.classes.drawerHeader} />
         <Container maxWidth="md">
           <h3>Listado de cursadas</h3>
-          <SubjectGrid subjects={subjectList} action={(userId,subjectId,active,inWindow) => this.createInscription(userId,subjectId,active,inWindow)}/>
+          <SubjectGrid subjects={subjectList} teacherList={teacherList} action={(userId,subjectId,active,inWindow) => this.createInscription(userId,subjectId,active,inWindow)}/>
           <Dialog
             open={this.state.dialogOpen}
             keepMounted

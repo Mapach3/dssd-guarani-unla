@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-
+import moment from 'moment'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -42,8 +42,28 @@ class finalGrid extends Component{
         return finals.filter(final => final.date > currentDate)
     }
 
+    setFinalDateTime(date) {
+        moment.locale('es')
+        return moment(date).format('DD [de] MMMM [de] YYYY [-] hh:mm')
+    }
+
+    getTeacherNames(subjects, subjectId, teacherList){
+        debugger;
+        var subject = subjects.find(subject => subject.id == subjectId)
+        var teacherNamesConcat = ""
+        subject.courses.forEach( course => {
+            var teacher = teacherList.find(teacher => teacher.id === course.userId)
+            if(teacher !== undefined){
+                teacherNamesConcat+= teacher.name + " "+teacher.surname + ", "
+            }
+        })
+        debugger;
+        teacherNamesConcat = teacherNamesConcat.slice(0, -2);
+        return teacherNamesConcat.length === 0 ? "A definir" : teacherNamesConcat
+    }
+
     render(){
-        const {finals, subjectsList} = this.props
+        const {finals, subjectsList, teacherList} = this.props
         return <>
         <TableContainer className="userDropTables" component={Paper}>
             <Table aria-label="simple table">
@@ -52,6 +72,7 @@ class finalGrid extends Component{
                     <TableCell># ID</TableCell>
                     <TableCell align="left">Nombre</TableCell>
                     <TableCell align="left">Fecha</TableCell>
+                    <TableCell align="left">Docente</TableCell>
                     <TableCell align="left">Activo</TableCell>
                     <TableCell align="left">Acción</TableCell>
                     </TableRow>
@@ -61,7 +82,8 @@ class finalGrid extends Component{
                     <TableRow key={final.id}>
                         <TableCell component="th" scope="row">{final.id}</TableCell>
                         <TableCell align="left">{this.getSubject(final, subjectsList)}</TableCell>
-                        <TableCell align="left">{final.date}</TableCell>
+                        <TableCell align="left">{this.setFinalDateTime(final.date)}</TableCell>
+                        <TableCell align="left">{this.getTeacherNames(subjectsList, final.subject, teacherList)}</TableCell>
                         <TableCell align="left">{this.isUserInfinal(final) ? "Si" : "No"}</TableCell>
                         <TableCell align="left">
                         <Button variant="contained" value={window.localStorage.getItem('userId')} disabled={false} 
