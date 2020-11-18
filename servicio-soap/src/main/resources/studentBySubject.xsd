@@ -1,0 +1,41 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://spring.io/guides/gs-producing-web-service"
+           targetNamespace="http://spring.io/guides/gs-producing-web-service" elementFormDefault="qualified">
+        <xs:element name="getStudentsBySubjectRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="idSubject" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getStudentsBySubjectResponse">
+        <xs:complexType >
+            <xs:sequence>
+                <xs:element name="students" type="tns:studentList" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+   <xs:complexType name="studentList">
+            <xs:sequence>
+                <xs:element name="students" type="tns:Student" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    
+    <xs:complexType name="Student">
+        <xs:sequence>
+            <xs:element name="id" type="xs:int"/>
+            <xs:element name="email" type="xs:string"/>
+            <xs:element name="userName" type="xs:string"/>
+            <xs:element name="password" type="xs:string"/> 
+            <xs:element name="name" type="xs:string"/>  
+            <xs:element name="surname" type="xs:string"/>  
+            <xs:element name="dni" type="xs:string"/>  
+            <xs:element name="active" type="xs:boolean"/>    
+             <xs:element name="passwordChanged" type="xs:boolean"/>
+             <xs:element name="role" type="xs:int"/>
+                       
+        </xs:sequence>
+    </xs:complexType>
+     
+           
+           
+</xs:schema>

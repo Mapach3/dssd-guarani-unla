@@ -1,4 +1,4 @@
-export const __API__URL = "https://localhost:64567/api"
+export const __API__URL = "http://0.0.0.0:8090/api"
 export const __API__STUDENT = "https://localhost:64568/api"
 export const __API_LOGIN = __API__URL + "/Auth/Login"
 export const __API_FIND_USER_DNI = __API__URL + "/User/Dni/"

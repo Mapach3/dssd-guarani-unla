@@ -40,7 +40,18 @@ const CustomDrawerTeacher = ({ classes, open, setOpen, theme, ...props }) => {
             </div>
             <Divider />
             <List>
-
+                <ListItem button onClick={() => props.history.push("/courseAsigned")}>
+                    <ListItemIcon><Add /></ListItemIcon>
+                    <ListItemText primary="Materias asignadas" />
+                </ListItem>
+                <ListItem button onClick={() => props.history.push("/studentBySubject")}>
+                    <ListItemIcon><Add /></ListItemIcon>
+                    <ListItemText primary="Listado de alumnos por materia" />
+                </ListItem>
+                <ListItem button onClick={() => props.history.push("/finalCall")}>
+                    <ListItemIcon><Add /></ListItemIcon>
+                    <ListItemText primary="Cargar notas de finales" />
+                </ListItem>
             </List>
             <Divider />
         </Drawer>
